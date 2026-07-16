@@ -3,6 +3,20 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.4.2 — 2026-07-16
+
+Code-review pass: two real bugs found and fixed.
+
+- Saying "got it" / "missed it" while the card was still face-up had no
+  matching handler — the SDK threw and the generic "Something glitched"
+  error speech fired. Now answers: "Flip the card first — say flip, or
+  tap it."
+- Editing a deck from the phone **while studying it** could crash the
+  session: the live 60-second deck refresh meant a deleted card (or
+  deleted deck) left the session pointing at nothing. Flip/advance now
+  detect it and reset gracefully ("That deck just changed…") instead of
+  erroring.
+
 ## v0.4.1 — 2026-07-16
 
 Fix: accented characters could render/speak garbled (first hit: Brasília).

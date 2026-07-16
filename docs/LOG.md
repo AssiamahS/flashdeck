@@ -3,6 +3,13 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-07-16 · v0.4.2 — code-review pass
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Full sweep (codehawk + manual read) | codehawk: only known false positives + trivial boilerplate dups. Manual read found the real ones: (1) grading intents unhandled on the card front → generic error speech; (2) live phone edits mid-session can orphan the current card → crash | ✅ the live-update feature needs guards everywhere a session dereferences a deck |
+| Handler-coverage rule of thumb | Every custom intent needs a handler for EVERY state it can fire in — canHandle guards that narrow to one state silently drop the rest to the error handler | ✅ audit canHandle conditions per intent, not per handler |
+
 ## 2026-07-16 · v0.4.1 — the Brazil bug
 
 | Tried | Result | Verdict |

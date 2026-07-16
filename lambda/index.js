@@ -226,6 +226,7 @@ async function advance(handlerInput, correct) {
   const persistent = await getPersistent(handlerInput);
   const decks = await allDecks(persistent);
   const deck = decks[session.deckId];
+  if (!deck) return deckChangedReset(handlerInput, decks, persistent);
   const cardIndex = session.order[session.pos];
 
   if (correct !== null) {
@@ -257,13 +258,25 @@ async function advance(handlerInput, correct) {
       .getResponse();
   }
 
-  handlerInput.attributesManager.setSessionAttributes({ study: session });
   const card = deck.cards[session.order[session.pos]];
+  if (!card) return deckChangedReset(handlerInput, decks, persistent);
+  handlerInput.attributesManager.setSessionAttributes({ study: session });
   renderCard(handlerInput, deck, session);
   const prefix = correct === null ? 'Skipped. ' : correct ? 'Nice. ' : 'It’ll come back around. ';
   return handlerInput.responseBuilder
     .speak(`${prefix}Next: ${card.front}.`)
     .reprompt('Say flip to see the answer.')
+    .getResponse();
+}
+
+// A deck can change under a live session (phone edits land within a minute) —
+// if the card we're on no longer exists, reset instead of crashing.
+function deckChangedReset(handlerInput, decks, persistent) {
+  handlerInput.attributesManager.setSessionAttributes({});
+  renderMenu(handlerInput, decks, persistent);
+  return handlerInput.responseBuilder
+    .speak('That deck just changed, so I reset the session. Pick a deck to keep going.')
+    .reprompt('Say a deck name to start.')
     .getResponse();
 }
 
@@ -279,10 +292,12 @@ async function flip(handlerInput) {
   const session = attrs.study;
   if (!session) return notStudying(handlerInput);
   const persistent = await getPersistent(handlerInput);
-  const deck = (await allDecks(persistent))[session.deckId];
+  const decks = await allDecks(persistent);
+  const deck = decks[session.deckId];
+  const card = deck && deck.cards[session.order[session.pos]];
+  if (!card) return deckChangedReset(handlerInput, decks, persistent);
   session.side = session.side === 'front' ? 'back' : 'front';
   handlerInput.attributesManager.setSessionAttributes({ study: session });
-  const card = deck.cards[session.order[session.pos]];
   renderCard(handlerInput, deck, session);
   const speech =
     session.side === 'back'
@@ -356,6 +371,21 @@ const MissedIntentHandler = {
     h.attributesManager.getSessionAttributes().study &&
     h.attributesManager.getSessionAttributes().study.side === 'back',
   handle: (h) => advance(h, false)
+};
+
+// "got it" / "missed it" while the card is still face-up — without this the
+// SDK has no matching handler and the generic error speech fires.
+const GradeBeforeFlipHandler = {
+  canHandle: (h) =>
+    Alexa.getRequestType(h.requestEnvelope) === 'IntentRequest' &&
+    ['GotItIntent', 'MissedIntent'].includes(Alexa.getIntentName(h.requestEnvelope)),
+  handle(h) {
+    if (!h.attributesManager.getSessionAttributes().study) return notStudying(h);
+    return h.responseBuilder
+      .speak('Flip the card first — say flip, or tap it.')
+      .reprompt('Say flip to see the answer.')
+      .getResponse();
+  }
 };
 
 const NextIntentHandler = {
@@ -528,6 +558,7 @@ exports.handler = builder
     FlipIntentHandler,
     GotItIntentHandler,
     MissedIntentHandler,
+    GradeBeforeFlipHandler,
     NextIntentHandler,
     AddNoteIntentHandler,
     ListDecksIntentHandler,
