@@ -58,11 +58,13 @@ function fetchRemoteDecks() {
         res.resume();
         return resolve(null);
       }
-      let body = '';
-      res.on('data', (c) => (body += c));
+      // accumulate as buffers — per-chunk string conversion mangles multi-byte
+      // utf-8 chars (Brasília, ¿Cómo?) that straddle a chunk boundary
+      const chunks = [];
+      res.on('data', (c) => chunks.push(c));
       res.on('end', () => {
         try {
-          const parsed = JSON.parse(body);
+          const parsed = JSON.parse(Buffer.concat(chunks).toString('utf8'));
           resolve(Array.isArray(parsed) ? parsed : parsed.decks || null);
         } catch (e) {
           console.log('remote decks parse failed:', e.message);

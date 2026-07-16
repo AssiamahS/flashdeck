@@ -3,6 +3,18 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.4.1 — 2026-07-16
+
+Fix: accented characters could render/speak garbled (first hit: Brasília).
+
+- The runtime `decks.json` fetch accumulated the HTTP body with per-chunk
+  string conversion; a multi-byte UTF-8 character straddling a chunk boundary
+  decoded as `��` (so "Brasília" → "Bras��lia", intermittently, depending on
+  how the network chunked the response). Now buffers are concatenated before
+  a single UTF-8 decode. Reproduced deterministically with a forced
+  mid-character split; also protects "¿Cómo estás?" and every future
+  non-English deck.
+
 ## v0.4.0 — 2026-07-16
 
 Store-quality: real home screen, brand assets, website, release channel.

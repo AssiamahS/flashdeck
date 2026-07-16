@@ -3,6 +3,13 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-07-16 · v0.4.1 — the Brazil bug
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| User report: "messed up a bit when I got to Brazil" | Brasília is the FIRST non-ASCII text in the capitals deck — `body += chunk` in the decks.json fetch converts each chunk separately, so a í split across chunks decodes as `��`. Proved with a forced mid-character split (old: `Bras��lia`, new: clean). Fixed with `Buffer.concat(chunks)` before one decode | ✅ always concat buffers before decoding; never `+=` HTTP chunks |
+| Reading the live CloudWatch line for it | Alexa-hosted skill logs aren't reachable from ask-cli — console-only | ⚠️ debugging hosted skills = reproduce locally, not log-dive |
+
 ## 2026-07-16 · v0.4.0 — store-quality pass
 
 | Tried | Result | Verdict |
