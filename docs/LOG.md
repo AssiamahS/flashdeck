@@ -3,6 +3,15 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-07-15 · v0.3.0 — phone editing via runtime decks
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| "Do we need an iPhone app to add cards?" | No native app: lambda now pulls `decks.json` from GitHub raw at runtime; anything that can commit to the repo is an editor. Built a mobile web editor on GitHub Pages (PAT in localStorage, contents API PUT) — Add to Home Screen ≈ app | ✅ zero App Store, zero backend |
+| raw.githubusercontent freshness | ~5 min CDN cache would lag edits; minute-bucketed `?v=` query busts it → edits live in ~1 min | ✅ |
+| New decks without model rebuild | Custom slot types pass out-of-list values through, `findDeck` loose-matches the transcript | ✅ say the deck name naturally |
+| Leitner progress vs edits | Progress keyed by card index — inserting/deleting mid-deck shifts mappings | ⚠️ acceptable; revisit with per-card ids if it annoys |
+
 ## 2026-07-15 · v0.2.0 — animated (GIF→mp4) cards
 
 | Tried | Result | Verdict |

@@ -3,6 +3,24 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.3.0 — 2026-07-15
+
+Add cards from your phone — no redeploy needed.
+
+- `decks.json` (repo root) is now the live deck source: the lambda fetches it
+  from GitHub raw at runtime (60s in-memory cache + minute-bucketed cache
+  buster), overriding bundled decks by id. Bundled `lambda/decks/` remain the
+  offline fallback. Edit → commit → live on the Show in ~1 minute.
+- Phone editor at `docs/index.html` (GitHub Pages): mobile-first deck editor —
+  browse decks, add/delete cards (front/back/image/video), create decks.
+  Saves by committing `decks.json` via the GitHub contents API with a
+  fine-grained PAT stored only in the phone's localStorage. Add to Home
+  Screen for an app-like feel.
+- New decks studyable by name immediately: custom slot types accept
+  out-of-list values, and `findDeck` loose-matches, so no model rebuild.
+- Known tradeoff: Leitner progress is keyed by card index, so inserting or
+  deleting cards mid-deck shifts what progress maps to. Fine at this scale.
+
 ## v0.2.0 — 2026-07-15
 
 Animated cards (GIF workflow) + new home at github.com/AssiamahS/flashdeck.

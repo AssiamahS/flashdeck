@@ -1,6 +1,7 @@
 const Alexa = require('ask-sdk-core');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 const CARD_DOC = require('./apl/card.json');
 const MENU_DOC = require('./apl/menu.json');
@@ -42,8 +43,53 @@ async function savePersistent(handlerInput, attrs) {
   }
 }
 
-function allDecks(persistent) {
+// decks.json in the GitHub repo is the live source of truth — edited from the
+// phone (docs/ editor). Remote decks override bundled ones by id; bundled
+// decks are the offline fallback. raw.githubusercontent caches ~5min, so the
+// minute-bucketed query param keeps edits showing up within ~a minute.
+const REMOTE_DECKS_URL = 'https://raw.githubusercontent.com/AssiamahS/flashdeck/main/decks.json';
+let remoteDecksCache = { at: 0, decks: null };
+
+function fetchRemoteDecks() {
+  return new Promise((resolve) => {
+    const bust = Math.floor(Date.now() / 60000);
+    const req = https.get(`${REMOTE_DECKS_URL}?v=${bust}`, { timeout: 3500 }, (res) => {
+      if (res.statusCode !== 200) {
+        res.resume();
+        return resolve(null);
+      }
+      let body = '';
+      res.on('data', (c) => (body += c));
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(body);
+          resolve(Array.isArray(parsed) ? parsed : parsed.decks || null);
+        } catch (e) {
+          console.log('remote decks parse failed:', e.message);
+          resolve(null);
+        }
+      });
+    });
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(null);
+    });
+    req.on('error', (e) => {
+      console.log('remote decks fetch failed:', e.message);
+      resolve(null);
+    });
+  });
+}
+
+async function allDecks(persistent) {
   const decks = { ...BUNDLED_DECKS };
+  if (Date.now() - remoteDecksCache.at > 60000) {
+    const remote = await fetchRemoteDecks();
+    remoteDecksCache = { at: Date.now(), decks: remote || remoteDecksCache.decks };
+  }
+  for (const d of remoteDecksCache.decks || []) {
+    if (d && d.id && Array.isArray(d.cards)) decks[d.id] = d;
+  }
   decks.notes = { id: 'notes', name: 'My Notes', cards: persistent.notes || [] };
   return decks;
 }
@@ -115,7 +161,7 @@ function renderCard(handlerInput, deck, session) {
 
 async function startStudy(handlerInput, deckId) {
   const persistent = await getPersistent(handlerInput);
-  const decks = allDecks(persistent);
+  const decks = await allDecks(persistent);
   const deck = decks[deckId];
   if (!deck || deck.cards.length === 0) {
     const names = Object.values(decks)
@@ -152,7 +198,7 @@ async function advance(handlerInput, correct) {
   if (!session) return notStudying(handlerInput);
 
   const persistent = await getPersistent(handlerInput);
-  const decks = allDecks(persistent);
+  const decks = await allDecks(persistent);
   const deck = decks[session.deckId];
   const cardIndex = session.order[session.pos];
 
@@ -207,7 +253,7 @@ async function flip(handlerInput) {
   const session = attrs.study;
   if (!session) return notStudying(handlerInput);
   const persistent = await getPersistent(handlerInput);
-  const deck = allDecks(persistent)[session.deckId];
+  const deck = (await allDecks(persistent))[session.deckId];
   session.side = session.side === 'front' ? 'back' : 'front';
   handlerInput.attributesManager.setSessionAttributes({ study: session });
   const card = deck.cards[session.order[session.pos]];
@@ -228,7 +274,7 @@ const LaunchRequestHandler = {
   canHandle: (h) => Alexa.getRequestType(h.requestEnvelope) === 'LaunchRequest',
   async handle(h) {
     const persistent = await getPersistent(h);
-    const decks = allDecks(persistent);
+    const decks = await allDecks(persistent);
     const names = Object.values(decks)
       .filter((d) => d.cards.length > 0)
       .map((d) => d.name)
@@ -248,7 +294,7 @@ const StudyIntentHandler = {
   async handle(h) {
     const spoken = Alexa.getSlotValue(h.requestEnvelope, 'deck');
     const persistent = await getPersistent(h);
-    const decks = allDecks(persistent);
+    const decks = await allDecks(persistent);
     const deck = findDeck(decks, spoken);
     if (deck) return startStudy(h, deck.id);
     const names = Object.values(decks)
@@ -305,7 +351,7 @@ const YesNoFallthroughHandler = {
       return h.responseBuilder.speak('Okay, happy studying!').getResponse();
     }
     const persistent = await getPersistent(h);
-    const decks = allDecks(persistent);
+    const decks = await allDecks(persistent);
     renderMenu(h, decks);
     return h.responseBuilder
       .speak('Which deck?')
@@ -365,7 +411,7 @@ const ListDecksIntentHandler = {
     Alexa.getIntentName(h.requestEnvelope) === 'ListDecksIntent',
   async handle(h) {
     const persistent = await getPersistent(h);
-    const decks = allDecks(persistent);
+    const decks = await allDecks(persistent);
     const names = Object.values(decks)
       .filter((d) => d.cards.length > 0)
       .map((d) => `${d.name}, ${d.cards.length} cards`)
