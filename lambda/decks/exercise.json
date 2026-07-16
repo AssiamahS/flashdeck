@@ -1,0 +1,19 @@
+{
+  "id": "exercise",
+  "name": "Exercise Form",
+  "cards": [
+    {
+      "front": "Squat — name the primary muscles working",
+      "back": "Quads, glutes, hamstrings — core and spinal erectors stabilize",
+      "video": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/squat.mp4"
+    },
+    {
+      "front": "Squat depth: where should your hips get to?",
+      "back": "Hip crease at or below the top of the knee — 'parallel' or lower",
+      "video": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/squat.mp4"
+    },
+    { "front": "Where should your knees track during a squat?", "back": "In line with your toes — pushed out, never caving inward" },
+    { "front": "When do you brace your core in a squat?", "back": "Big breath and brace at the top, before you descend — hold it through the rep" },
+    { "front": "Where does the weight sit on your feet?", "back": "Mid-foot — heels and big toe stay planted the whole rep" }
+  ]
+}

@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-07-15 · v0.2.0 — animated (GIF→mp4) cards
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| GIF on a card via makeagif URL | Reconfirmed: APL Image = static first frame. Converted with `tools/gif2mp4.sh` (ffmpeg h264/yuv420p/even-dims/faststart) → plays looping + muted in APL Video | ✅ this is the pattern for all animated cards |
+| Hosting card mp4s | Committed to `media/` in the GitHub repo, served via jsDelivr (`cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/squat.mp4`). raw.githubusercontent.com sends `application/octet-stream`, which the Show's player can refuse; jsDelivr sends real `video/mp4` | ✅ jsDelivr; keep files small (CDN cap 20MB) |
+| Squat anatomy source | makeagif user upload (unknown license) — fine for a personal dev-mode skill, but swap for wger/everkinetic (CC) assets before any store submission | ⚠️ licensing note |
+
 ## 2026-07-15 · v0.1.0
 
 | Tried | Result | Verdict |

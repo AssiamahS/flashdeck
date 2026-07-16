@@ -100,6 +100,7 @@
             { "name": { "value": "world capitals", "synonyms": ["capitals", "geography", "the capitals"] } },
             { "name": { "value": "spanish basics", "synonyms": ["spanish", "the spanish one"] } },
             { "name": { "value": "security plus", "synonyms": ["security", "cyber security", "comptia", "cert prep"] } },
+            { "name": { "value": "exercise form", "synonyms": ["exercise", "exercises", "workout", "workout form", "the gym one", "fitness"] } },
             { "name": { "value": "my notes", "synonyms": ["notes", "the notes", "my note"] } }
           ]
         }
