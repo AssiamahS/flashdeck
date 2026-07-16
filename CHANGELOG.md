@@ -3,6 +3,26 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.4.0 — 2026-07-16
+
+Store-quality: real home screen, brand assets, website, release channel.
+
+- **Home screen v2** ("Alexa, open flash deck"): 2-column tappable deck-tile
+  grid with per-deck accent colors, live stats line (decks · cards · mastered,
+  computed from Leitner progress), rotating "try saying" hint bar. Same
+  trigger, same tap-to-study — just a real product home now.
+- Launch speech tightened to match ("N decks, M cards ready").
+- **Brand assets**: 108/512 skill icons (stacked-cards + Leitner dots),
+  generated in `media/icons/`, wired into the manifest via jsDelivr.
+- **Manifest**: store-grade summary/description/keywords, real testing
+  instructions, privacy policy URL.
+- **Website** (GitHub Pages root): landing page with hero, demo video,
+  feature grid, phrase chips, Download button (latest GitHub release) —
+  the deck editor moved to `/editor.html` (tokens carry over automatically).
+- `docs/privacy.html` — required for store certification.
+- README rebuilt as a marketable repo front page (badges, website/editor/
+  download links, run-your-own guide, roadmap). MIT LICENSE added.
+
 ## v0.3.0 — 2026-07-15
 
 Add cards from your phone — no redeploy needed.

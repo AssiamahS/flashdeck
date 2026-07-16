@@ -116,7 +116,28 @@ function studyOrder(deck, progress) {
     .map((x) => x.i);
 }
 
-function renderMenu(handlerInput, decks) {
+const TILE_COLORS = ['#4F8EF7', '#8FD6A8', '#F7B84F', '#E86A8A', '#9B7FF7', '#5AC8D8'];
+const HOME_HINTS = [
+  'Try: “study exercise form” · “note buy milk” · “list decks”',
+  'Grade yourself with “got it” or “missed it” — missed cards come back sooner',
+  'Say “note” plus anything to pin it to My Notes',
+  'Tap any card while studying to flip it'
+];
+
+function menuStats(decks, persistent) {
+  const deckList = Object.values(decks).filter((d) => d.cards.length > 0);
+  const totalCards = deckList.reduce((n, d) => n + d.cards.length, 0);
+  let mastered = 0;
+  const progress = (persistent && persistent.progress) || {};
+  for (const deckProgress of Object.values(progress)) {
+    for (const entry of Object.values(deckProgress)) {
+      if (entry && entry.box >= 5) mastered += 1;
+    }
+  }
+  return `${deckList.length} decks · ${totalCards} cards · ${mastered} mastered`;
+}
+
+function renderMenu(handlerInput, decks, persistent) {
   if (!supportsAPL(handlerInput)) return;
   handlerInput.responseBuilder.addDirective({
     type: 'Alexa.Presentation.APL.RenderDocument',
@@ -124,11 +145,14 @@ function renderMenu(handlerInput, decks) {
     document: MENU_DOC,
     datasources: {
       menuData: {
-        decks: Object.values(decks).map((d) => ({
+        decks: Object.values(decks).map((d, i) => ({
           id: d.id,
           name: d.name,
-          count: d.cards.length
-        }))
+          count: d.cards.length,
+          color: TILE_COLORS[i % TILE_COLORS.length]
+        })),
+        stats: menuStats(decks, persistent),
+        hint: HOME_HINTS[Math.floor(Math.random() * HOME_HINTS.length)]
       }
     }
   });
@@ -168,7 +192,7 @@ async function startStudy(handlerInput, deckId) {
       .filter((d) => d.cards.length > 0)
       .map((d) => d.name)
       .join(', ');
-    renderMenu(handlerInput, decks);
+    renderMenu(handlerInput, decks, persistent);
     return handlerInput.responseBuilder
       .speak(`That deck is empty. You can study: ${names}. Which one?`)
       .reprompt('Which deck do you want to study?')
@@ -224,7 +248,7 @@ async function advance(handlerInput, correct) {
         ? `Deck done! You got ${session.right} out of ${total}. Cards you missed will come up first next time.`
         : 'Deck done!';
     handlerInput.attributesManager.setSessionAttributes({});
-    renderMenu(handlerInput, decks);
+    renderMenu(handlerInput, decks, persistent);
     return handlerInput.responseBuilder
       .speak(`${summary} Want to study another deck?`)
       .reprompt('Say a deck name, or say stop.')
@@ -275,14 +299,12 @@ const LaunchRequestHandler = {
   async handle(h) {
     const persistent = await getPersistent(h);
     const decks = await allDecks(persistent);
-    const names = Object.values(decks)
-      .filter((d) => d.cards.length > 0)
-      .map((d) => d.name)
-      .join(', ');
-    renderMenu(h, decks);
+    const deckList = Object.values(decks).filter((d) => d.cards.length > 0);
+    const totalCards = deckList.reduce((n, d) => n + d.cards.length, 0);
+    renderMenu(h, decks, persistent);
     return h.responseBuilder
-      .speak(`Welcome to Flash Deck. You have: ${names}. Say study and a deck name — or say, note something, to save a quick note.`)
-      .reprompt('Which deck do you want to study?')
+      .speak(`Welcome to Flash Deck — ${deckList.length} decks, ${totalCards} cards ready. Tap a deck, or say study and a deck name.`)
+      .reprompt('Which deck do you want to study? You can also say, note, followed by anything, to save a quick note.')
       .getResponse();
   }
 };
@@ -301,7 +323,7 @@ const StudyIntentHandler = {
       .filter((d) => d.cards.length > 0)
       .map((d) => d.name)
       .join(', ');
-    renderMenu(h, decks);
+    renderMenu(h, decks, persistent);
     return h.responseBuilder
       .speak(`Which deck? You have: ${names}.`)
       .reprompt('Say a deck name.')
@@ -352,7 +374,7 @@ const YesNoFallthroughHandler = {
     }
     const persistent = await getPersistent(h);
     const decks = await allDecks(persistent);
-    renderMenu(h, decks);
+    renderMenu(h, decks, persistent);
     return h.responseBuilder
       .speak('Which deck?')
       .reprompt('Say a deck name.')
@@ -416,7 +438,7 @@ const ListDecksIntentHandler = {
       .filter((d) => d.cards.length > 0)
       .map((d) => `${d.name}, ${d.cards.length} cards`)
       .join('. ');
-    renderMenu(h, decks);
+    renderMenu(h, decks, persistent);
     return h.responseBuilder
       .speak(`${names}. Which one?`)
       .reprompt('Say a deck name to start.')

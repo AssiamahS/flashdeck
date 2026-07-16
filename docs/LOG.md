@@ -3,6 +3,15 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-07-16 · v0.4.0 — store-quality pass
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| GridSequence for the home deck grid | 2-col tile grid with childWidth 49% renders on APL 1.3 (Show 11 runtime) | ✅ home feels like an app, not a list |
+| Manifest icons via jsDelivr URLs | smallIconUri/largeIconUri accept any HTTPS URL — no S3/console upload needed | ✅ icons versioned in the repo like everything else |
+| Editor moved / to /editor.html | localStorage is per-origin not per-path — saved token survives the move | ✅ landing takes the root URL |
+| Store cert reality check | Needs: icons ✅ privacy policy ✅ example phrases ✅ … but certification review will test everything; personal decks (exercise mp4 licensing!) must be swapped for licensed content first | ⚠️ dev-mode is fine today; swap media before submitting |
+
 ## 2026-07-15 · v0.3.0 — phone editing via runtime decks
 
 | Tried | Result | Verdict |

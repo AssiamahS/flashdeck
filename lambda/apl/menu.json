@@ -8,40 +8,60 @@
         "type": "Frame",
         "width": "100vw",
         "height": "100vh",
-        "backgroundColor": "#10151F",
+        "backgroundColor": "#0D1117",
         "item": {
           "type": "Container",
           "width": "100vw",
           "height": "100vh",
-          "paddingLeft": "6vw",
-          "paddingRight": "6vw",
-          "paddingTop": "4vh",
+          "paddingLeft": "5vw",
+          "paddingRight": "5vw",
+          "paddingTop": "3.5vh",
+          "paddingBottom": "2.5vh",
           "direction": "column",
           "items": [
             {
-              "type": "Text",
-              "text": "Flash Deck",
-              "fontSize": "44dp",
-              "fontWeight": "700",
-              "color": "#FFFFFF"
+              "type": "Container",
+              "direction": "row",
+              "width": "100%",
+              "alignItems": "center",
+              "items": [
+                {
+                  "type": "Text",
+                  "text": "⚡ Flash Deck",
+                  "fontSize": "42dp",
+                  "fontWeight": "800",
+                  "color": "#FFFFFF"
+                },
+                {
+                  "type": "Container",
+                  "grow": 1
+                },
+                {
+                  "type": "Text",
+                  "text": "${payload.menuData.stats}",
+                  "fontSize": "22dp",
+                  "color": "#8B98AB"
+                }
+              ]
             },
             {
               "type": "Text",
-              "text": "Say “study” and a deck name — or tap one",
-              "fontSize": "24dp",
-              "color": "#FFFFFF",
-              "opacity": 0.5,
-              "paddingBottom": "3vh"
+              "text": "Tap a deck — or say “study” and its name",
+              "fontSize": "22dp",
+              "color": "#8B98AB",
+              "paddingTop": "4dp",
+              "paddingBottom": "18dp"
             },
             {
-              "type": "Sequence",
+              "type": "GridSequence",
               "grow": 1,
               "width": "100%",
+              "childWidth": ["49%", "49%"],
+              "childHeight": "150dp",
               "data": "${payload.menuData.decks}",
               "items": [
                 {
                   "type": "TouchWrapper",
-                  "width": "100%",
                   "onPress": [
                     {
                       "type": "SendEvent",
@@ -50,42 +70,56 @@
                   ],
                   "item": {
                     "type": "Frame",
-                    "width": "100%",
-                    "backgroundColor": "#1E2735",
-                    "borderRadius": "16dp",
+                    "width": "97%",
+                    "height": "138dp",
+                    "backgroundColor": "#161D29",
+                    "borderRadius": "18dp",
                     "item": {
                       "type": "Container",
-                      "direction": "row",
                       "width": "100%",
-                      "paddingLeft": "24dp",
-                      "paddingRight": "24dp",
-                      "paddingTop": "20dp",
-                      "paddingBottom": "20dp",
-                      "justifyContent": "spaceBetween",
-                      "alignItems": "center",
+                      "height": "100%",
+                      "direction": "column",
+                      "paddingLeft": "20dp",
+                      "paddingRight": "20dp",
+                      "paddingTop": "16dp",
+                      "paddingBottom": "14dp",
                       "items": [
+                        {
+                          "type": "Frame",
+                          "width": "44dp",
+                          "height": "6dp",
+                          "borderRadius": "3dp",
+                          "backgroundColor": "${data.color}"
+                        },
                         {
                           "type": "Text",
                           "text": "${data.name}",
-                          "fontSize": "32dp",
-                          "fontWeight": "600",
-                          "color": "#FFFFFF"
+                          "fontSize": "28dp",
+                          "fontWeight": "700",
+                          "color": "#FFFFFF",
+                          "maxLines": 2,
+                          "paddingTop": "12dp",
+                          "grow": 1
                         },
                         {
                           "type": "Text",
                           "text": "${data.count} cards",
-                          "fontSize": "24dp",
-                          "color": "#8FD6A8"
+                          "fontSize": "20dp",
+                          "color": "${data.color}"
                         }
                       ]
                     }
                   }
-                },
-                {
-                  "type": "Frame",
-                  "height": "12dp"
                 }
               ]
+            },
+            {
+              "type": "Text",
+              "text": "${payload.menuData.hint}",
+              "fontSize": "20dp",
+              "color": "#5C6B80",
+              "textAlign": "center",
+              "paddingTop": "14dp"
             }
           ]
         }

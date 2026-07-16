@@ -5,19 +5,21 @@
       "locales": {
         "en-US": {
           "name": "Flash Deck",
-          "summary": "Voice flashcards with pictures for Echo Show",
-          "description": "Study flashcards hands-free. Say a deck name, flip cards by voice or tap, grade yourself with 'got it' or 'missed it', and the skill schedules the cards you miss more often (spaced repetition). Also takes quick voice notes that become a reviewable deck — like post-its for your Echo Show.",
+          "summary": "Flashcards with pictures and animations for Echo Show — study by voice, edit from your phone.",
+          "description": "Flash Deck turns your Echo Show into a study machine.\n\nSTUDY BY VOICE OR TOUCH\nSay a deck name, flip cards by voice or with a tap, and grade yourself with \"got it\" or \"missed it\". Spaced repetition (Leitner boxes) brings back the cards you miss more often, so your weak spots get the reps.\n\nCARDS WITH PICTURES AND ANIMATIONS\nCards can carry images or looping animations — see the flag, watch the exercise, not just read the word.\n\nEDIT FROM YOUR PHONE\nAdd cards and whole decks from a companion web editor on your phone; they appear on your Echo Show within a minute. No app install required.\n\nVOICE NOTES\nSay \"note\" plus anything — it becomes a card on your My Notes deck, like a post-it board for your kitchen.\n\nStarter decks include World Capitals, Spanish Basics, Security Plus, and Exercise Form.",
           "examplePhrases": [
             "Alexa, open flash deck",
             "Alexa, ask flash deck to quiz me on world capitals",
             "Alexa, tell flash deck to note buy milk"
           ],
-          "keywords": ["flashcards", "study", "quiz", "memorize", "notes", "spaced repetition"]
+          "keywords": ["flashcards", "study", "quiz", "memorize", "notes", "spaced repetition", "learning", "exam prep", "vocabulary"],
+          "smallIconUri": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/icons/icon108.png",
+          "largeIconUri": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/icons/icon512.png"
         }
       },
       "category": "EDUCATION_AND_REFERENCE",
       "isAvailableWorldwide": true,
-      "testingInstructions": "Personal-use skill. Open it, say 'study world capitals', flip and grade cards.",
+      "testingInstructions": "Open the skill ('Alexa, open flash deck') — a deck menu renders on screen. Say 'study world capitals' (or tap a deck tile), say 'flip' to reveal the answer, then 'got it' or 'missed it'. Say 'note test note' to save a voice note, then 'study my notes' to review it. Requires an APL device for visuals; voice-only devices get speech without screens.",
       "distributionCountries": []
     },
     "apis": {
@@ -35,7 +37,7 @@
       "containsAds": false,
       "locales": {
         "en-US": {
-          "privacyPolicyUrl": "",
+          "privacyPolicyUrl": "https://assiamahs.github.io/flashdeck/privacy.html",
           "termsOfUseUrl": ""
         }
       }
