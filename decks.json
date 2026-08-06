@@ -4,48 +4,148 @@
       "id": "capitals",
       "name": "World Capitals",
       "cards": [
-        { "front": "France", "back": "Paris", "image": "https://flagcdn.com/w640/fr.png" },
-        { "front": "Ghana", "back": "Accra", "image": "https://flagcdn.com/w640/gh.png" },
-        { "front": "Japan", "back": "Tokyo", "image": "https://flagcdn.com/w640/jp.png" },
-        { "front": "Brazil", "back": "Brasília", "image": "https://flagcdn.com/w640/br.png" },
-        { "front": "Canada", "back": "Ottawa", "image": "https://flagcdn.com/w640/ca.png" },
-        { "front": "Egypt", "back": "Cairo", "image": "https://flagcdn.com/w640/eg.png" },
-        { "front": "Australia", "back": "Canberra", "image": "https://flagcdn.com/w640/au.png" },
-        { "front": "South Korea", "back": "Seoul", "image": "https://flagcdn.com/w640/kr.png" },
-        { "front": "Nigeria", "back": "Abuja", "image": "https://flagcdn.com/w640/ng.png" },
-        { "front": "Mexico", "back": "Mexico City", "image": "https://flagcdn.com/w640/mx.png" }
+        {
+          "front": "France",
+          "back": "Paris",
+          "image": "https://flagcdn.com/w640/fr.png"
+        },
+        {
+          "front": "Ghana",
+          "back": "Accra",
+          "image": "https://flagcdn.com/w640/gh.png"
+        },
+        {
+          "front": "Japan",
+          "back": "Tokyo",
+          "image": "https://flagcdn.com/w640/jp.png"
+        },
+        {
+          "front": "Brazil",
+          "back": "Brasília",
+          "image": "https://flagcdn.com/w640/br.png"
+        },
+        {
+          "front": "Canada",
+          "back": "Ottawa",
+          "image": "https://flagcdn.com/w640/ca.png"
+        },
+        {
+          "front": "Egypt",
+          "back": "Cairo",
+          "image": "https://flagcdn.com/w640/eg.png"
+        },
+        {
+          "front": "Australia",
+          "back": "Canberra",
+          "image": "https://flagcdn.com/w640/au.png"
+        },
+        {
+          "front": "South Korea",
+          "back": "Seoul",
+          "image": "https://flagcdn.com/w640/kr.png"
+        },
+        {
+          "front": "Nigeria",
+          "back": "Abuja",
+          "image": "https://flagcdn.com/w640/ng.png"
+        },
+        {
+          "front": "Mexico",
+          "back": "Mexico City",
+          "image": "https://flagcdn.com/w640/mx.png"
+        }
       ]
     },
     {
       "id": "spanish",
       "name": "Spanish Basics",
       "cards": [
-        { "front": "Hola", "back": "Hello" },
-        { "front": "Gracias", "back": "Thank you" },
-        { "front": "Por favor", "back": "Please" },
-        { "front": "Buenos días", "back": "Good morning" },
-        { "front": "Buenas noches", "back": "Good night" },
-        { "front": "¿Cómo estás?", "back": "How are you?" },
-        { "front": "Me llamo...", "back": "My name is..." },
-        { "front": "Agua", "back": "Water" },
-        { "front": "Comida", "back": "Food" },
-        { "front": "Adiós", "back": "Goodbye" }
+        {
+          "front": "Hola",
+          "back": "Hello"
+        },
+        {
+          "front": "Gracias",
+          "back": "Thank you"
+        },
+        {
+          "front": "Por favor",
+          "back": "Please"
+        },
+        {
+          "front": "Buenos días",
+          "back": "Good morning"
+        },
+        {
+          "front": "Buenas noches",
+          "back": "Good night"
+        },
+        {
+          "front": "¿Cómo estás?",
+          "back": "How are you?"
+        },
+        {
+          "front": "Me llamo...",
+          "back": "My name is..."
+        },
+        {
+          "front": "Agua",
+          "back": "Water"
+        },
+        {
+          "front": "Comida",
+          "back": "Food"
+        },
+        {
+          "front": "Adiós",
+          "back": "Goodbye"
+        }
       ]
     },
     {
       "id": "security-plus",
       "name": "Security Plus",
       "cards": [
-        { "front": "CIA triad", "back": "Confidentiality, Integrity, Availability — the three pillars of information security" },
-        { "front": "Phishing", "back": "Social engineering attack using fraudulent messages to steal credentials or data" },
-        { "front": "MFA", "back": "Multi-Factor Authentication — something you know, have, and are" },
-        { "front": "Zero Trust", "back": "Security model: never trust, always verify — no implicit trust by network location" },
-        { "front": "Symmetric vs asymmetric encryption", "back": "Symmetric = one shared key (AES). Asymmetric = public/private key pair (RSA)" },
-        { "front": "DDoS", "back": "Distributed Denial of Service — flooding a target from many sources to make it unavailable" },
-        { "front": "Least privilege", "back": "Users get only the minimum access needed to do their job" },
-        { "front": "SIEM", "back": "Security Information and Event Management — aggregates and analyzes security logs in real time" },
-        { "front": "Ransomware", "back": "Malware that encrypts data and demands payment for the decryption key" },
-        { "front": "Social engineering", "back": "Manipulating people, not systems, to gain access or information" }
+        {
+          "front": "CIA triad",
+          "back": "Confidentiality, Integrity, Availability — the three pillars of information security"
+        },
+        {
+          "front": "Phishing",
+          "back": "Social engineering attack using fraudulent messages to steal credentials or data"
+        },
+        {
+          "front": "MFA",
+          "back": "Multi-Factor Authentication — something you know, have, and are"
+        },
+        {
+          "front": "Zero Trust",
+          "back": "Security model: never trust, always verify — no implicit trust by network location"
+        },
+        {
+          "front": "Symmetric vs asymmetric encryption",
+          "back": "Symmetric = one shared key (AES). Asymmetric = public/private key pair (RSA)"
+        },
+        {
+          "front": "DDoS",
+          "back": "Distributed Denial of Service — flooding a target from many sources to make it unavailable"
+        },
+        {
+          "front": "Least privilege",
+          "back": "Users get only the minimum access needed to do their job"
+        },
+        {
+          "front": "SIEM",
+          "back": "Security Information and Event Management — aggregates and analyzes security logs in real time"
+        },
+        {
+          "front": "Ransomware",
+          "back": "Malware that encrypts data and demands payment for the decryption key"
+        },
+        {
+          "front": "Social engineering",
+          "back": "Manipulating people, not systems, to gain access or information"
+        }
       ]
     },
     {
@@ -62,10 +162,32 @@
           "back": "Hip crease at or below the top of the knee — 'parallel' or lower",
           "video": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/squat.mp4"
         },
-        { "front": "Where should your knees track during a squat?", "back": "In line with your toes — pushed out, never caving inward" },
-        { "front": "When do you brace your core in a squat?", "back": "Big breath and brace at the top, before you descend — hold it through the rep" },
-        { "front": "Where does the weight sit on your feet?", "back": "Mid-foot — heels and big toe stay planted the whole rep" },
-        { "front": "Lunge — where should your front knee track?", "back": "Over the middle of your foot — not past the toes, never caving inward" }
+        {
+          "front": "Where should your knees track during a squat?",
+          "back": "In line with your toes — pushed out, never caving inward"
+        },
+        {
+          "front": "When do you brace your core in a squat?",
+          "back": "Big breath and brace at the top, before you descend — hold it through the rep"
+        },
+        {
+          "front": "Where does the weight sit on your feet?",
+          "back": "Mid-foot — heels and big toe stay planted the whole rep"
+        },
+        {
+          "front": "Lunge — where should your front knee track?",
+          "back": "Over the middle of your foot — not past the toes, never caving inward"
+        }
+      ]
+    },
+    {
+      "id": "network-plus",
+      "name": "Network Plus",
+      "cards": [
+        {
+          "front": "DHCP: which message designates the end of a successful address assignment?",
+          "back": "Acknowledge (DHCPACK) — the DORA process is Discover, Offer, Request, Acknowledge; the server's ACK finalizes the lease"
+        }
       ]
     }
   ]

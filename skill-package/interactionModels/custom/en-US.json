@@ -3,20 +3,46 @@
     "languageModel": {
       "invocationName": "flash deck",
       "intents": [
-        { "name": "AMAZON.CancelIntent", "samples": [] },
-        { "name": "AMAZON.HelpIntent", "samples": [] },
-        { "name": "AMAZON.StopIntent", "samples": [] },
-        { "name": "AMAZON.NavigateHomeIntent", "samples": [] },
-        { "name": "AMAZON.FallbackIntent", "samples": [] },
-        { "name": "AMAZON.YesIntent", "samples": [] },
-        { "name": "AMAZON.NoIntent", "samples": [] },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
         {
           "name": "AMAZON.NextIntent",
           "samples": []
         },
         {
           "name": "StudyIntent",
-          "slots": [{ "name": "deck", "type": "DECK" }],
+          "slots": [
+            {
+              "name": "deck",
+              "type": "DECK"
+            }
+          ],
           "samples": [
             "study {deck}",
             "quiz me on {deck}",
@@ -70,7 +96,12 @@
         },
         {
           "name": "AddNoteIntent",
-          "slots": [{ "name": "text", "type": "AMAZON.SearchQuery" }],
+          "slots": [
+            {
+              "name": "text",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
           "samples": [
             "add a note {text}",
             "note {text}",
@@ -97,11 +128,72 @@
         {
           "name": "DECK",
           "values": [
-            { "name": { "value": "world capitals", "synonyms": ["capitals", "geography", "the capitals"] } },
-            { "name": { "value": "spanish basics", "synonyms": ["spanish", "the spanish one"] } },
-            { "name": { "value": "security plus", "synonyms": ["security", "cyber security", "comptia", "cert prep"] } },
-            { "name": { "value": "exercise form", "synonyms": ["exercise", "exercises", "workout", "workout form", "the gym one", "fitness"] } },
-            { "name": { "value": "my notes", "synonyms": ["notes", "the notes", "my note"] } }
+            {
+              "name": {
+                "value": "world capitals",
+                "synonyms": [
+                  "capitals",
+                  "geography",
+                  "the capitals"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "spanish basics",
+                "synonyms": [
+                  "spanish",
+                  "the spanish one"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "security plus",
+                "synonyms": [
+                  "security",
+                  "cyber security",
+                  "comptia",
+                  "cert prep"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "network plus",
+                "synonyms": [
+                  "network",
+                  "net plus",
+                  "networking",
+                  "prof messer",
+                  "professor messer",
+                  "network cert"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "exercise form",
+                "synonyms": [
+                  "exercise",
+                  "exercises",
+                  "workout",
+                  "workout form",
+                  "the gym one",
+                  "fitness"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "my notes",
+                "synonyms": [
+                  "notes",
+                  "the notes",
+                  "my note"
+                ]
+              }
+            }
           ]
         }
       ]
