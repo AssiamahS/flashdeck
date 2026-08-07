@@ -46,3 +46,4 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck.uitests
       TEST_TARGET_NAME: FlashDeck
+      GENERATE_INFOPLIST_FILE: YES
