@@ -1,0 +1,35 @@
+name: FlashDeck
+options:
+  bundleIdPrefix: com.djsly
+  deploymentTarget:
+    iOS: "26.0"
+  xcodeVersion: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: QGMAWHX827
+    MARKETING_VERSION: 1.0
+    CURRENT_PROJECT_VERSION: 1
+targets:
+  FlashDeck:
+    type: application
+    platform: iOS
+    sources:
+      - path: FlashDeck
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck
+      CODE_SIGN_STYLE: Automatic
+      TARGETED_DEVICE_FAMILY: 1
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      SUPPORTS_XR_DESIGNED_FOR: NO
+    info:
+      path: FlashDeck/Resources/Info.plist
+      properties:
+        CFBundleName: FlashDeck
+        CFBundleDisplayName: Flash Deck
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
