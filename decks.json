@@ -53,6 +53,31 @@
           "front": "Mexico",
           "back": "Mexico City",
           "image": "https://flagcdn.com/w640/mx.png"
+        },
+        {
+          "front": "Germany",
+          "back": "Berlin",
+          "image": "https://flagcdn.com/w640/de.png"
+        },
+        {
+          "front": "Italy",
+          "back": "Rome",
+          "image": "https://flagcdn.com/w640/it.png"
+        },
+        {
+          "front": "United Kingdom",
+          "back": "London",
+          "image": "https://flagcdn.com/w640/gb.png"
+        },
+        {
+          "front": "Spain",
+          "back": "Madrid",
+          "image": "https://flagcdn.com/w640/es.png"
+        },
+        {
+          "front": "Kenya",
+          "back": "Nairobi",
+          "image": "https://flagcdn.com/w640/ke.png"
         }
       ]
     },
