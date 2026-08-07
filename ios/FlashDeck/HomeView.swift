@@ -35,6 +35,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("addButton")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -42,6 +43,7 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "gearshape")
                     }
+                    .accessibilityIdentifier("settingsButton")
                 }
             }
             .refreshable { await store.load() }

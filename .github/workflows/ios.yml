@@ -34,6 +34,34 @@ jobs:
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
+  screenshots:
+    name: App Store screenshots (simulator)
+    runs-on: macos-26
+    timeout-minutes: 45
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: UI test with screenshots
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project FlashDeck.xcodeproj \
+            -scheme FlashDeck \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max' \
+            -resultBundlePath build/ui.xcresult
+      - name: Export attachments
+        run: |
+          xcrun xcresulttool export attachments --path build/ui.xcresult --output-path build/shots
+          ls -la build/shots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: ios/build/shots
+
   testflight:
     name: Sign & upload to TestFlight
     runs-on: macos-26

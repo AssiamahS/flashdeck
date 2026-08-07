@@ -33,3 +33,16 @@ targets:
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+    scheme:
+      testTargets:
+        - FlashDeckUITests
+  FlashDeckUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: FlashDeckUITests
+    dependencies:
+      - target: FlashDeck
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck.uitests
+      TEST_TARGET_NAME: FlashDeck
