@@ -1,3 +1,4 @@
+import AppIntents
 import Foundation
 
 struct Card: Codable, Hashable {
@@ -57,6 +58,8 @@ final class DeckStore: ObservableObject {
             let file = try JSONDecoder().decode(DeckFile.self, from: data)
             decks = file.decks
             UserDefaults.standard.set(data, forKey: "decksCache")
+            // Re-register deck names so "quiz me on <deck> in Flash Deck" tracks decks.json.
+            FlashDeckShortcuts.updateAppShortcutParameters()
         } catch {
             if let cached = UserDefaults.standard.data(forKey: "decksCache"),
                let file = try? JSONDecoder().decode(DeckFile.self, from: cached) {
