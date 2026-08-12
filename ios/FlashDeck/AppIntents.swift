@@ -66,12 +66,12 @@ struct DeckQuery: EntityQuery {
 
 struct QuizMeIntent: AppIntent {
     static let title: LocalizedStringResource = "Quiz Me"
-    static let description = IntentDescription("Siri reads one flashcard, takes your spoken answer, and grades it.")
+    static let description = IntentDescription("Reads one flashcard out loud, takes your spoken answer, and grades it.")
 
     @Parameter(title: "Deck", requestValueDialog: "Which deck?") var deck: DeckEntity
     @Parameter(title: "Answer") var answer: String?
 
-    private static let pendingKey = "siriPendingCard"
+    private static let pendingKey = "pendingVoiceCard"
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let defaults = UserDefaults.standard
