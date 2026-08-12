@@ -26,12 +26,10 @@ enum DeckData {
 
 enum QuizError: Error, CustomLocalizedStringResourceConvertible {
     case deckNotFound
-    case noDecks
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
         case .deckNotFound: "I couldn't find that deck. Open Flash Deck once to refresh your decks."
-        case .noDecks: "No decks are loaded yet. Open Flash Deck once so I can fetch them."
         }
     }
 }
@@ -70,7 +68,7 @@ struct QuizMeIntent: AppIntent {
     static let title: LocalizedStringResource = "Quiz Me"
     static let description = IntentDescription("Siri reads one flashcard, takes your spoken answer, and grades it.")
 
-    @Parameter(title: "Deck") var deck: DeckEntity?
+    @Parameter(title: "Deck", requestValueDialog: "Which deck?") var deck: DeckEntity
     @Parameter(title: "Answer") var answer: String?
 
     private static let pendingKey = "siriPendingCard"
@@ -95,9 +93,8 @@ struct QuizMeIntent: AppIntent {
             return .result(dialog: dialog)
         }
 
-        // First entry: pick a deck and a due card, then ask the question.
-        let chosen = try await resolveDeck()
-        let fullDeck = try await DeckData.deck(id: chosen.id)
+        // First entry: pick a due card from the deck, then ask the question.
+        let fullDeck = try await DeckData.deck(id: deck.id)
         let boxes = defaults.dictionary(forKey: "leitner") as? [String: Int] ?? [:]
         guard let card = fullDeck.cards.shuffled()
             .min(by: { (boxes["\(fullDeck.id)|\($0.front)"] ?? 1) < (boxes["\(fullDeck.id)|\($1.front)"] ?? 1) }) else {
@@ -105,14 +102,6 @@ struct QuizMeIntent: AppIntent {
         }
         defaults.set(["deckID": fullDeck.id, "front": card.front, "back": card.back], forKey: Self.pendingKey)
         throw $answer.needsValueError(IntentDialog("\(card.front)?"))
-    }
-
-    private func resolveDeck() async throws -> DeckEntity {
-        if let deck { return deck }
-        let all = try await DeckQuery.all()
-        guard !all.isEmpty else { throw QuizError.noDecks }
-        if all.count == 1 { return all[0] }
-        return try await $deck.requestDisambiguation(among: all, dialog: "Which deck?")
     }
 
     /// Forgiving spoken-answer match: case/punctuation-insensitive, and accepts
@@ -138,20 +127,12 @@ struct ContinuousQuizIntent: AudioPlaybackIntent {
     static let title: LocalizedStringResource = "Nonstop Quiz"
     static let description = IntentDescription("Hands-free audio quiz — reads card after card with a pause before each answer. Keeps going over CarPlay until you stop.")
 
-    @Parameter(title: "Deck") var deck: DeckEntity?
+    @Parameter(title: "Deck", requestValueDialog: "Which deck?") var deck: DeckEntity
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let chosen: DeckEntity
-        if let deck {
-            chosen = deck
-        } else {
-            let all = try await DeckQuery.all()
-            guard !all.isEmpty else { throw QuizError.noDecks }
-            chosen = all.count == 1 ? all[0] : try await $deck.requestDisambiguation(among: all, dialog: "Which deck?")
-        }
-        let fullDeck = try await DeckData.deck(id: chosen.id)
+        let fullDeck = try await DeckData.deck(id: deck.id)
         try await VoiceQuizEngine.shared.start(deck: fullDeck)
-        return .result(dialog: "Starting \(chosen.name). I'll read a card, give you a moment, then say the answer. Use next to skip, pause to stop.")
+        return .result(dialog: "Starting \(deck.name). I'll read a card, give you a moment, then say the answer. Use next to skip, pause to stop.")
     }
 }
 
