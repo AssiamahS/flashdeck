@@ -4,3 +4,4 @@ ask-states.json
 .DS_Store
 *.log
 NOTES.md
+*.xcodeproj/

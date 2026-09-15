@@ -115,7 +115,7 @@ struct WatchCardFace: View {
     private var text: String { flipped ? card.back : card.front }
     private var imageURL: URL? {
         let raw = flipped ? (card.backImage ?? card.image) : card.image
-        return raw.flatMap(URL.init(string:))
+        return raw.flatMap(ImageURL.normalize).flatMap(URL.init(string:))
     }
 
     var body: some View {

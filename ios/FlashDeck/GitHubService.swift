@@ -35,6 +35,19 @@ enum Keychain {
 struct GitHubService {
     static let apiURL = URL(string: "https://api.github.com/repos/AssiamahS/flashdeck/contents/decks.json")!
 
+    /// CI bakes a fine-grained token (Contents: read/write on AssiamahS/flashdeck only)
+    /// into Info.plist from the FLASHDECK_GITHUB_TOKEN secret, so the phone never needs
+    /// one typed in. A token pasted in Settings still wins if present.
+    static var bundledToken: String? {
+        let value = Bundle.main.object(forInfoDictionaryKey: "FlashDeckGitHubToken") as? String
+        return (value?.isEmpty == false && value?.hasPrefix("$(") == false) ? value : nil
+    }
+
+    static var token: String? {
+        if let saved = Keychain.readToken(), !saved.isEmpty { return saved }
+        return bundledToken
+    }
+
     struct ContentsResponse: Decodable {
         let sha: String
         let content: String
@@ -46,14 +59,14 @@ struct GitHubService {
 
         var errorDescription: String? {
             switch self {
-            case .noToken: return "No GitHub token set — add one in Settings."
+            case .noToken: return "This build has no editor access. Set the FLASHDECK_GITHUB_TOKEN repo secret and let CI rebuild, or paste a token in Settings."
             case .http(let code, let body): return "GitHub \(code): \(body)"
             }
         }
     }
 
     static func fetch() async throws -> (file: DeckFile, sha: String) {
-        guard let token = Keychain.readToken() else { throw GitHubError.noToken }
+        guard let token else { throw GitHubError.noToken }
         var request = URLRequest(url: apiURL)
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -72,7 +85,7 @@ struct GitHubService {
     }
 
     static func commit(_ file: DeckFile, sha: String, message: String) async throws {
-        guard let token = Keychain.readToken() else { throw GitHubError.noToken }
+        guard let token else { throw GitHubError.noToken }
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
         let data = try encoder.encode(file)

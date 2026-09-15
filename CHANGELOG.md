@@ -3,6 +3,31 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.7.0 — 2026-09-16
+
+iPhone app 1.3: read-aloud, smart image links, no token to type.
+
+- **Read cards aloud**: the study screen speaks the question when a card
+  appears and the answer when you flip (AVSpeechSynthesizer, same text
+  cleanup the Echo uses for exam cards). Speaker icon in the nav bar mutes /
+  unmutes and the choice sticks; a speaker button on the card reads that side
+  on demand even while muted. Toggle also lives in Settings → Voice.
+- **Paste any image link**: `ImageURL.normalize` rewrites what people
+  actually paste — Google Images result pages (`imgres?imgurl=`), Wikipedia /
+  Commons `File:` pages, bare SVGs on upload.wikimedia.org (→ the 1280px PNG
+  thumb), Dropbox `dl=0`, Drive `file/d/…/view`, imgur and giphy pages — and
+  strips `utm_*` / `fbclid` junk. Other SVGs go through wsrv.nl as PNG. Runs at
+  save time so decks.json stays clean for the Show, and at display time for
+  old cards. The editor shows a live preview under the URL field.
+- **GIFs animate**: `RemoteImage` replaces AsyncImage on the phone. It decodes
+  GIF frames with ImageIO, sends a real User-Agent (Wikimedia throttles the
+  default one) and caches 300 MB on disk.
+- **No GitHub token on the phone**: CI bakes a fine-grained PAT (Contents
+  read/write on this repo only) into Info.plist from the
+  `FLASHDECK_GITHUB_TOKEN` secret. A token pasted in Settings still overrides
+  it. Until the secret exists the editor says so instead of asking for one.
+- Watch: image links go through the same normalizer.
+
 ## v0.6.0 — 2026-09-16
 
 Apple Watch app.

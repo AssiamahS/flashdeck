@@ -3,6 +3,16 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-09-16 · v0.7.0 — read-aloud + image links + bundled token
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Deploy a Cloudflare Worker to hold the GitHub token so the app carries no secret | wrangler logged out on this Mac (clock 25h behind kills OAuth), Dia CDP down, fine-grained PATs are UI-only | ❌ for now — bake a repo-scoped PAT into the TestFlight build via CI secret instead; only the user's own IPA carries it |
+| Wikimedia `Special:FilePath/<name>?width=1280` for pasted `File:` pages | 302 → 301 → PNG for SVG sources, 200 image/png | ✅ one rewrite covers every Wikipedia flag/diagram link |
+| `thumb.wikimedia.org` link with `?utm_*` (what the iPhone share sheet hands you) | 200 as-is; stripping utm keeps decks.json clean | ✅ |
+| SwiftUI `Image` for animated GIFs | first frame only | ❌ → UIImageView + `UIImage.animatedImage` via UIViewRepresentable |
+| `xcrun swiftc` on CLT-only Mac to unit-run `ImageURL.normalize` | compiles with Foundation, 12/12 cases | ✅ cheap pre-CI check for pure-Foundation files |
+
 ## 2026-07-16 · v0.4.2 — code-review pass
 
 | Tried | Result | Verdict |

@@ -32,6 +32,18 @@ struct EditorView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                         .keyboardType(.URL)
+                    if let normalized = ImageURL.normalize(imageURL) {
+                        // Live preview: paste a Google Images / Wikipedia / gif link and see it pull.
+                        RemoteImage(source: normalized)
+                            .frame(maxWidth: .infinity, maxHeight: 180)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        if normalized != imageURL.trimmingCharacters(in: .whitespacesAndNewlines) {
+                            Text("Saving as \(normalized)")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(2)
+                        }
+                    }
                 } else {
                     TextField("Deck name", text: $newDeckName)
                 }
@@ -74,7 +86,7 @@ struct EditorView: View {
                     return
                 }
                 var card = Card(front: front, back: back, image: nil, video: nil)
-                if !imageURL.isEmpty { card.image = imageURL }
+                card.image = ImageURL.normalize(imageURL)
                 file.decks[i].cards.append(card)
                 try await GitHubService.commit(file, sha: sha, message: "feat: add card to \(deckId) from phone")
                 front = ""

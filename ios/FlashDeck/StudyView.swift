@@ -9,6 +9,7 @@ struct StudyView: View {
     @State private var flipped = false
     @State private var gotCount = 0
     @State private var missedCount = 0
+    @ObservedObject private var speaker = CardSpeaker.shared
 
     var body: some View {
         VStack(spacing: 16) {
@@ -20,6 +21,20 @@ struct StudyView: View {
                 CardFace(card: card, flipped: flipped)
                     .onTapGesture {
                         withAnimation(.spring(duration: 0.35)) { flipped.toggle() }
+                    }
+                    .overlay(alignment: .topTrailing) {
+                        // Read this side on demand — works even when auto-read is muted.
+                        Button {
+                            speaker.speaking ? speaker.stop() : speaker.speak(flipped ? card.back : card.front)
+                        } label: {
+                            Image(systemName: speaker.speaking ? "stop.circle.fill" : "speaker.wave.2.circle.fill")
+                                .font(.title)
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundStyle(.blue)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(12)
+                        .accessibilityLabel(speaker.speaking ? "Stop reading" : "Read card aloud")
                     }
                 if flipped {
                     HStack(spacing: 12) {
@@ -63,7 +78,34 @@ struct StudyView: View {
         .padding()
         .navigationTitle(deck.name)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { if queue.isEmpty { start() } }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    speaker.enabled.toggle()
+                    if speaker.enabled { readCurrent() }
+                } label: {
+                    Image(systemName: speaker.enabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                }
+                .accessibilityLabel(speaker.enabled ? "Mute read-aloud" : "Unmute read-aloud")
+            }
+        }
+        .onAppear {
+            if queue.isEmpty { start() }
+            readCurrent()
+        }
+        .onChange(of: flipped) { _, _ in readCurrent() }
+        .onChange(of: index) { _, _ in readCurrent() }
+        .onDisappear { speaker.release() }
+    }
+
+    /// Auto-read the visible side whenever a new card or the answer shows (if not muted).
+    private func readCurrent() {
+        guard speaker.enabled, index < queue.count else {
+            speaker.stop()
+            return
+        }
+        let card = queue[index]
+        speaker.speak(flipped ? card.back : card.front)
     }
 
     private func start() {
@@ -106,14 +148,10 @@ struct CardFace: View {
                     LoopingVideoView(url: url)
                         .frame(height: 180)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
-                } else if let image = flipped ? (card.backImage ?? card.image) : card.image, let url = URL(string: image) {
-                    AsyncImage(url: url) { img in
-                        img.resizable().scaledToFit()
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .frame(maxHeight: text.count < 90 ? 360 : 180)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                } else if let image = flipped ? (card.backImage ?? card.image) : card.image {
+                    RemoteImage(source: image)
+                        .frame(maxHeight: text.count < 90 ? 360 : 180)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
                 // Exam-style cards (question + A/B/C/D) run long: smaller, left-aligned text
                 Text(text)
