@@ -63,7 +63,7 @@
                     "when": "${payload.cardData.video != ''}",
                     "type": "Video",
                     "width": "80vw",
-                    "height": "42vh",
+                    "height": "${payload.cardData.imageHeight || '42vh'}",
                     "source": "${payload.cardData.video}",
                     "autoplay": true,
                     "audioTrack": "none",
@@ -74,18 +74,19 @@
                     "when": "${payload.cardData.video == '' && payload.cardData.image != ''}",
                     "type": "Image",
                     "width": "80vw",
-                    "height": "42vh",
+                    "height": "${payload.cardData.imageHeight || '42vh'}",
                     "source": "${payload.cardData.image}",
                     "scale": "best-fit"
                   },
                   {
                     "type": "Text",
                     "text": "${payload.cardData.text}",
-                    "fontSize": "52dp",
+                    "fontSize": "${payload.cardData.fontSize || '52dp'}",
                     "fontWeight": "700",
                     "color": "#FFFFFF",
-                    "textAlign": "center",
-                    "maxLines": 5,
+                    "textAlign": "${payload.cardData.textAlign || 'center'}",
+                    "maxLines": "${payload.cardData.maxLines || 5}",
+                    "width": "92vw",
                     "paddingTop": "2vh"
                   }
                 ]

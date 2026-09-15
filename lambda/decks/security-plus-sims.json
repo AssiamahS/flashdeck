@@ -1,0 +1,78 @@
+{
+  "id": "security-plus-sims",
+  "name": "Security Plus Simulations",
+  "cards": [
+    {
+      "front": "Simulation 1 — Drag & Drop. Work it out, then flip.",
+      "back": "Simulation 1 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q001-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q001-back.png"
+    },
+    {
+      "front": "Simulation 2 — Hotspot. Work it out, then flip.",
+      "back": "Simulation 2 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q002-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q002-back.png"
+    },
+    {
+      "front": "Simulation 3 — Drag & Drop. Work it out, then flip.",
+      "back": "Simulation 3 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q003-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q003-back.png"
+    },
+    {
+      "front": "Simulation 168 — Drag & Drop. Work it out, then flip.",
+      "back": "Simulation 168 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q168-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q168-back.png"
+    },
+    {
+      "front": "Simulation 221 — Drag & Drop. Work it out, then flip.",
+      "back": "Simulation 221 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q221-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q221-back.png"
+    },
+    {
+      "front": "Simulation 236 — Drag & Drop. Work it out, then flip.",
+      "back": "Simulation 236 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q236-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q236-back.png"
+    },
+    {
+      "front": "Simulation 247 — Drag & Drop. Work it out, then flip.",
+      "back": "Simulation 247 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q247-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q247-back.png"
+    },
+    {
+      "front": "Simulation 248 — Fill-in. Work it out, then flip.",
+      "back": "Simulation 248 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q248-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q248-back.png"
+    },
+    {
+      "front": "Simulation 249 — Fill-in. Work it out, then flip.",
+      "back": "Simulation 249 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q249-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q249-back.png"
+    },
+    {
+      "front": "Simulation 250 — Hotspot. Work it out, then flip.",
+      "back": "Simulation 250 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q250-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q250-back.png"
+    },
+    {
+      "front": "Simulation 252 — Hotspot. Work it out, then flip.",
+      "back": "Simulation 252 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q252-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q252-back.png"
+    },
+    {
+      "front": "Simulation 253 — Fill-in. Work it out, then flip.",
+      "back": "Simulation 253 — answer key",
+      "image": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q253-front.png",
+      "backImage": "https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/secplus-sims/q253-back.png"
+    }
+  ]
+}

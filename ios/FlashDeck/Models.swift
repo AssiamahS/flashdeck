@@ -6,6 +6,7 @@ struct Card: Codable, Hashable {
     var back: String
     var image: String?
     var video: String?
+    var backImage: String?
 }
 
 struct Deck: Codable, Identifiable, Hashable {

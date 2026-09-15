@@ -95,6 +95,8 @@ struct CardFace: View {
     let card: Card
     let flipped: Bool
 
+    private var text: String { flipped ? card.back : card.front }
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 24)
@@ -105,18 +107,20 @@ struct CardFace: View {
                     LoopingVideoView(url: url)
                         .frame(height: 180)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
-                } else if !flipped, let image = card.image, let url = URL(string: image) {
+                } else if let image = flipped ? (card.backImage ?? card.image) : card.image, let url = URL(string: image) {
                     AsyncImage(url: url) { img in
                         img.resizable().scaledToFit()
                     } placeholder: {
                         ProgressView()
                     }
-                    .frame(maxHeight: 180)
+                    .frame(maxHeight: text.count < 90 ? 360 : 180)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
-                Text(flipped ? card.back : card.front)
-                    .font(.title2.weight(.semibold))
-                    .multilineTextAlignment(.center)
+                // Exam-style cards (question + A/B/C/D) run long: smaller, left-aligned text
+                Text(text)
+                    .font(text.count > 320 ? .subheadline.weight(.medium) : text.count > 120 ? .body.weight(.semibold) : .title2.weight(.semibold))
+                    .multilineTextAlignment(text.contains("\n") ? .leading : .center)
+                    .frame(maxWidth: .infinity, alignment: text.contains("\n") ? .leading : .center)
                     .padding(.horizontal)
                 Text(flipped ? "answer" : "tap to flip")
                     .font(.caption)

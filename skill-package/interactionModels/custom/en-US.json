@@ -193,6 +193,37 @@
                   "my note"
                 ]
               }
+            },
+            {
+              "name": {
+                "value": "security plus exam dump",
+                "synonyms": [
+                  "exam dump",
+                  "the dump",
+                  "security dump",
+                  "security plus dump",
+                  "the big security deck",
+                  "security practice exam",
+                  "practice exam",
+                  "security two"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "security plus simulations",
+                "synonyms": [
+                  "sims",
+                  "simulations",
+                  "the sims",
+                  "security sims",
+                  "security plus sims",
+                  "security simulations",
+                  "the simulations",
+                  "drag and drop",
+                  "performance based"
+                ]
+              }
             }
           ]
         }

@@ -20,6 +20,46 @@ for (const f of fs.readdirSync(path.join(__dirname, 'decks'))) {
 
 /* ---------- helpers ---------- */
 
+/* ---------- card text helpers ----------
+ * Cards can be multi-line (multiple-choice questions: question + A./B./C./D.).
+ * decks.json keeps real newlines; APL wants <br>, SSML wants plain sentences. */
+function aplText(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>');
+}
+
+function say(s) {
+  return String(s || '')
+    .replace(/&/g, ' and ').replace(/[<>]/g, ' ')
+    .split('\n').map((l) => l.trim()).filter(Boolean).join(', ');
+}
+
+// Shrink the card font as the text grows so a full exam question still fits the Show.
+function fitText(s) {
+  const n = String(s || '').length;
+  const multi = /\n/.test(s || '');
+  let fontSize = '52dp', maxLines = 5;
+  if (n > 900) { fontSize = '19dp'; maxLines = 26; }
+  else if (n > 600) { fontSize = '22dp'; maxLines = 20; }
+  else if (n > 320) { fontSize = '26dp'; maxLines = 15; }
+  else if (n > 160) { fontSize = '32dp'; maxLines = 10; }
+  else if (n > 60) { fontSize = '40dp'; maxLines = 7; }
+  return { fontSize, maxLines, textAlign: multi ? 'left' : 'center' };
+}
+
+// Entity-resolved slot value (synonym → canonical) when Alexa matched one, else the raw utterance.
+function resolvedSlot(handlerInput, name) {
+  const raw = Alexa.getSlotValue(handlerInput.requestEnvelope, name);
+  try {
+    const slot = handlerInput.requestEnvelope.request.intent.slots[name];
+    for (const auth of slot.resolutions.resolutionsPerAuthority) {
+      if (auth.status && auth.status.code === 'ER_SUCCESS_MATCH') return auth.values[0].value.name;
+    }
+  } catch (e) { /* no resolutions */ }
+  return raw;
+}
+
 function supportsAPL(handlerInput) {
   const interfaces = Alexa.getSupportedInterfaces(handlerInput.requestEnvelope);
   return interfaces['Alexa.Presentation.APL'] !== undefined;
@@ -173,9 +213,11 @@ function renderCard(handlerInput, deck, session) {
         deckName: deck.name,
         progress: `${session.pos + 1} / ${session.order.length}`,
         side: session.side,
-        text: isFront ? card.front : card.back,
-        image: card.image || '',
+        text: aplText(isFront ? card.front : card.back),
+        ...fitText(isFront ? card.front : card.back),
+        image: (isFront ? card.image : card.backImage || card.image) || '',
         video: card.video || '',
+        imageHeight: String(isFront ? card.front : card.back).length < 90 ? '66vh' : '42vh',
         hint: isFront
           ? 'Say “flip” — or tap the card'
           : 'Say “got it” or “missed it”',
@@ -213,7 +255,7 @@ async function startStudy(handlerInput, deckId) {
   const card = deck.cards[session.order[0]];
   renderCard(handlerInput, deck, session);
   return handlerInput.responseBuilder
-    .speak(`${deck.name}, ${deck.cards.length} cards. First card: ${card.front}. Say flip when you're ready.`)
+    .speak(`${deck.name}, ${deck.cards.length} cards. First card: ${say(card.front)}. Say flip when you're ready.`)
     .reprompt('Say flip to see the answer.')
     .getResponse();
 }
@@ -264,7 +306,7 @@ async function advance(handlerInput, correct) {
   renderCard(handlerInput, deck, session);
   const prefix = correct === null ? 'Skipped. ' : correct ? 'Nice. ' : 'It’ll come back around. ';
   return handlerInput.responseBuilder
-    .speak(`${prefix}Next: ${card.front}.`)
+    .speak(`${prefix}Next: ${say(card.front)}.`)
     .reprompt('Say flip to see the answer.')
     .getResponse();
 }
@@ -301,8 +343,8 @@ async function flip(handlerInput) {
   renderCard(handlerInput, deck, session);
   const speech =
     session.side === 'back'
-      ? `${card.back}. Did you get it?`
-      : `${card.front}. Say flip for the answer.`;
+      ? `${say(card.back)}. Did you get it?`
+      : `${say(card.front)}. Say flip for the answer.`;
   return handlerInput.responseBuilder
     .speak(speech)
     .reprompt(session.side === 'back' ? 'Got it, or missed it?' : 'Say flip when ready.')
@@ -331,7 +373,7 @@ const StudyIntentHandler = {
     Alexa.getRequestType(h.requestEnvelope) === 'IntentRequest' &&
     Alexa.getIntentName(h.requestEnvelope) === 'StudyIntent',
   async handle(h) {
-    const spoken = Alexa.getSlotValue(h.requestEnvelope, 'deck');
+    const spoken = resolvedSlot(h, 'deck');
     const persistent = await getPersistent(h);
     const decks = await allDecks(persistent);
     const deck = findDeck(decks, spoken);

