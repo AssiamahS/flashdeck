@@ -32,7 +32,8 @@ function aplText(s) {
 function say(s) {
   return String(s || '')
     .replace(/&/g, ' and ').replace(/[<>]/g, ' ')
-    .split('\n').map((l) => l.trim()).filter(Boolean).join(', ');
+    .split('\n').map((l) => l.replace(/\s+/g, ' ').trim()).filter(Boolean).join(', ')
+    .replace(/[.]+$/, '');
 }
 
 // Shrink the card font as the text grows so a full exam question still fits the Show.

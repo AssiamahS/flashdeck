@@ -3,6 +3,24 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.5.0 — 2026-09-14
+
+Security+ exam prep, built from the two practice PDFs Ivy sent.
+
+- **Three Security+ decks**: `security plus` (+226 multiple-choice from the
+  2017-2018 set), `security plus exam dump` (532 questions, SY0-501 v13.1),
+  `security plus simulations` (12 drag-drop / hotspot / fill-in sims rendered
+  from the PDF as image cards; flip shows the answer page). Say "study the
+  dump" / "study the sims".
+- **Long cards fit the Show**: font and line count scale with card length
+  (52dp → 19dp), multi-line cards left-align, `&<>` are escaped for APL and
+  newlines become line breaks. Speech reads options as "A. …, B. …".
+- **`backImage`**: a card can show a different image on its answer side
+  (lambda + iPhone app).
+- **Deck slot uses entity resolution**: synonyms ("sims", "the dump", "cert
+  prep") land on the canonical deck instead of a loose word match.
+- iPhone: long cards shrink + left-align; sims show the answer image on flip.
+
 ## v0.4.2 — 2026-07-16
 
 Code-review pass: two real bugs found and fixed.

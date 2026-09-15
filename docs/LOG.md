@@ -70,3 +70,11 @@ Show) + `ask configure`. Everything after that is automated.
 - Deploy vehicle: CodeCommit repo `b1f80163-...` — push to `master` = deploy. Credential helper wired via ask-cli; re-clone anytime with `ask init --hosted-skill-id <id>`.
 - Simulator smoke test passed: "open flash deck" → welcome speech w/ 3 decks + APL RenderDocument.
 - LESSON: `ask new` driven by expect mangles typed skill name (prompt echo re-triggers matches) — name defaulted to "hosted hello world"; harmless, first manifest push renames it.
+
+## 2026-09-14 — Security+ decks from Ivy's PDFs
+- PDFs came in on the hcp Gmail; the Gmail MCP has no attachment download, so pulled them over IMAP (`cony-hcp-imap` keychain app password, `[Gmail]/All Mail`, search FROM).
+- `pdftotext -layout` + a small state-machine parser: 226/226 and 532/532 questions parsed, 0 rejects. Dump options sit on their own line ("A." then text) — the regex must allow empty option text. `\s*` before the sim-type group swallowed newlines and made every question a "sim" (1090 renders) — use `[ \t]*`.
+- Sims: `pdftoppm -r 110` one page per side, crop 5% header/footer, autocrop whitespace (Pillow). 12 sims → 24 PNGs, 5.5 MB, served by jsDelivr.
+- **TRAP: never rsync skill.json from GitHub over the hosted repo copy.** The hosted manifest carries the Lambda `endpoint` + `regions` block that the GitHub copy lacks; the deploy went green but every simulation failed with "No endpoint was found for the specified region". Fix = `git checkout HEAD~1 -- skill-package/skill.json` in the hosted clone + `ask smapi update-skill-manifest` (the hosted pipeline alone did not restore it).
+- Hosted repo clone: `printf 'FlashDeck\n' | ask init --hosted-skill-id <id>` (the folder-name prompt blocks otherwise). Push `master` = deploy; `ask smapi get-skill-status` shows hostedSkillDeployment/manifest/interactionModel.
+- Simulator: `ask smapi simulate-skill` returns 409 while a previous simulation is still IN_PROGRESS — poll `get-skill-simulation` to completion before the next utterance. Session persists across calls unless `--session-mode FORCE_NEW_SESSION`.
