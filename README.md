@@ -41,6 +41,11 @@ while you name the muscles:
 
 https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/squat.mp4
 
+**On your wrist too.** The iPhone app carries an Apple Watch app: cards learned this
+week, Continue learning, a mastery ring per deck, tap-to-flip lessons with ✗ / ✓ and
+haptics. Grades sync both ways with the phone, so the Show, the phone and the watch
+all agree on what you know.
+
 ## Edit decks from your phone — no app install
 
 Decks live in [`decks.json`](decks.json). The skill pulls it from this repo **at
@@ -79,6 +84,7 @@ lambda/index.js           all skill logic; fetches decks.json from GitHub at run
 lambda/apl/               Echo Show screens: home grid + tap-to-flip card
 decks.json                THE live deck source — what the phone editor edits
 lambda/decks/*.json       bundled fallback decks (offline / first boot)
+ios/                      iPhone app + Apple Watch app (XcodeGen, CI builds + TestFlight)
 docs/                     website + phone editor + privacy (GitHub Pages)
 media/                    card videos + icons, served via jsDelivr
 tools/gif2mp4.sh          GIF → APL-safe looping mp4

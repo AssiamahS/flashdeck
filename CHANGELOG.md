@@ -3,6 +3,22 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.6.0 — 2026-09-16
+
+Apple Watch app.
+
+- **Flash Deck on the wrist**: a watchOS app ships inside the iPhone app
+  (`ios/FlashDeckWatch`). Home shows cards learned this week + "Continue
+  learning" (last deck) + "Decks"; the deck list has a mastery ring per deck
+  and a Completed section; a lesson is a progress bar, tap-to-flip card, then
+  ✗ / ✓ with haptics; the session ends on a got-it ring. Same `decks.json`,
+  same Leitner order as the phone and the Show.
+- **Boxes sync phone ⇄ watch** over WatchConnectivity: the watch queues each
+  grade, the phone applies it and answers with the full snapshot. Mastery and
+  "learned this week" match on both devices.
+- iPhone app 1.2: `grade(deck:card:got:)` replaces the box arithmetic in the
+  study view; `learnedAt` dates are stored as Doubles (watch `Int` is 32-bit).
+
 ## v0.5.0 — 2026-09-14
 
 Security+ exam prep, built from the two practice PDFs Ivy sent.

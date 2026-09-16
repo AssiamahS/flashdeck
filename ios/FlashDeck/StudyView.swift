@@ -79,8 +79,7 @@ struct StudyView: View {
 
     private func grade(got: Bool) {
         let card = queue[index]
-        let current = store.box(deck: deck, card: card)
-        store.setBox(got ? current + 1 : 1, deck: deck, card: card)
+        store.grade(deck: deck, card: card, got: got)
         if got { gotCount += 1 } else { missedCount += 1 }
         advance()
     }

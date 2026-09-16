@@ -3,12 +3,13 @@ options:
   bundleIdPrefix: com.djsly
   deploymentTarget:
     iOS: "26.0"
+    watchOS: "26.0"
   xcodeVersion: "26.0"
 settings:
   base:
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: QGMAWHX827
-    MARKETING_VERSION: 1.1
+    MARKETING_VERSION: 1.2
     CURRENT_PROJECT_VERSION: 1
 targets:
   FlashDeck:
@@ -16,6 +17,8 @@ targets:
     platform: iOS
     sources:
       - path: FlashDeck
+    dependencies:
+      - target: FlashDeckWatch
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck
       CODE_SIGN_STYLE: Automatic
@@ -38,6 +41,28 @@ targets:
     scheme:
       testTargets:
         - FlashDeckUITests
+  FlashDeckWatch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: FlashDeckWatch
+      - path: FlashDeck/Models.swift
+      - path: FlashDeck/LeitnerSync.swift
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck.watchkitapp
+      CODE_SIGN_STYLE: Automatic
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: FlashDeckWatch/Resources/Info.plist
+      properties:
+        CFBundleName: FlashDeck
+        CFBundleDisplayName: Flash Deck
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.djsly.flashdeck
+        WKRunsIndependentlyOfCompanionApp: true
   FlashDeckUITests:
     type: bundle.ui-testing
     platform: iOS

@@ -78,3 +78,9 @@ Show) + `ask configure`. Everything after that is automated.
 - **TRAP: never rsync skill.json from GitHub over the hosted repo copy.** The hosted manifest carries the Lambda `endpoint` + `regions` block that the GitHub copy lacks; the deploy went green but every simulation failed with "No endpoint was found for the specified region". Fix = `git checkout HEAD~1 -- skill-package/skill.json` in the hosted clone + `ask smapi update-skill-manifest` (the hosted pipeline alone did not restore it).
 - Hosted repo clone: `printf 'FlashDeck\n' | ask init --hosted-skill-id <id>` (the folder-name prompt blocks otherwise). Push `master` = deploy; `ask smapi get-skill-status` shows hostedSkillDeployment/manifest/interactionModel.
 - Simulator: `ask smapi simulate-skill` returns 409 while a previous simulation is still IN_PROGRESS — poll `get-skill-simulation` to completion before the next utterance. Session persists across calls unless `--session-mode FORCE_NEW_SESSION`.
+
+## 2026-09-16 — Apple Watch app
+- Single-target watch app (`type: application, platform: watchOS`, `WKApplication` + `WKCompanionAppBundleIdentifier`) added to the same XcodeGen project; the iOS target lists it as a dependency so xcodegen emits "Embed Watch Content". Models.swift + LeitnerSync.swift are shared by path; the App Intents hook in `load()` is `#if os(iOS)`.
+- Sync = WatchConnectivity. Phone is the source of truth: `updateApplicationContext` with the full boxes + learnedAt snapshot on every change and on activation; the watch sends one `transferUserInfo` per grade (delivered even when the phone app is closed — iOS launches it in the background), the phone applies it and re-pushes the snapshot. No merge rules beyond "latest learnedAt wins".
+- All timestamps stay `Double` epoch seconds — watch hardware is arm64_32 (32-bit Int), `Int(epoch)` traps on device only.
+- Watch icon = the same 1024 PNG in its own asset catalog with `platform: watchos` (no alpha, already checked).
