@@ -69,6 +69,9 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 45
     if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+      pages: write
     steps:
       - uses: actions/checkout@v4
       - name: Write App Store Connect API key
@@ -86,10 +89,8 @@ jobs:
           sed -i '' "s/^    CURRENT_PROJECT_VERSION: .*/    CURRENT_PROJECT_VERSION: $GITHUB_RUN_NUMBER/" project.yml
           sed -i '' '/^    dependencies:$/{N;/FlashDeckWatch/d;}' project.yml
           xcodegen generate
-      - name: Archive (cloud-managed signing)
+      - name: Archive (unsigned — export does the cloud signing)
         env:
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           FLASHDECK_GITHUB_TOKEN: ${{ secrets.FLASHDECK_GITHUB_TOKEN }}
         run: |
           set -o pipefail
@@ -99,11 +100,7 @@ jobs:
             -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath build/FlashDeck.xcarchive \
-            -allowProvisioningUpdates \
-            -allowProvisioningDeviceRegistration \
-            -authenticationKeyPath "$RUNNER_TEMP/asc/AuthKey.p8" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             CURRENT_PROJECT_VERSION=$GITHUB_RUN_NUMBER \
             FLASHDECK_GITHUB_TOKEN="$FLASHDECK_GITHUB_TOKEN"
       - name: Export ad-hoc IPA
@@ -125,6 +122,25 @@ jobs:
         with:
           name: FlashDeck-adhoc-ipa
           path: ios/build/adhoc/*.ipa
+      - name: Publish install page (docs/ → GitHub Pages)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' ios/build/FlashDeck.xcarchive/Products/Applications/FlashDeck.app/Info.plist)
+          mkdir -p docs/ipa
+          cp ios/build/adhoc/*.ipa docs/ipa/FlashDeck.ipa
+          sed -i '' -E "s#<key>bundle-version</key><string>[^<]*</string>#<key>bundle-version</key><string>${VERSION}</string>#" docs/ipa/manifest.plist
+          sed -i '' -E "s/Build [0-9]+ \(v[^)]*\) · [0-9-]+ ·/Build $GITHUB_RUN_NUMBER (v$VERSION) · $(date -u +%Y-%m-%d) ·/" docs/install.html
+          git checkout -- ios/project.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ipa docs/install.html
+          git commit -m "build: ad hoc IPA build $GITHUB_RUN_NUMBER (v$VERSION)" || exit 0
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+          # Pages here is the legacy /docs build; a bot push may not trigger it, so request one
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null || true
 
   testflight:
     name: Sign & upload to TestFlight
