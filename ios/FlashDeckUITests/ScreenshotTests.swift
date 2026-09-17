@@ -15,7 +15,7 @@ final class ScreenshotTests: XCTestCase {
 
         // study front, give the flag image a moment
         capitals.tap()
-        let card = app.buttons["studyCard"]
+        let card = app.descendants(matching: .any).matching(identifier: "studyCard").firstMatch
         XCTAssertTrue(card.waitForExistence(timeout: 10))
         sleep(3)
         attach("02-study")

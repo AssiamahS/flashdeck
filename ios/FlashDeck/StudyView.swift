@@ -105,6 +105,7 @@ struct StudyView: View {
                     skip()
                 }
                 .simultaneousGesture(swipe)
+                .accessibilityElement(children: .contain)   // one element carries the id, not every child
                 .accessibilityAddTraits(.isButton)
                 .accessibilityIdentifier("studyCard")
                 .accessibilityHint("Tap to flip. Swipe right for got it, left for missed it, hold to skip.")
