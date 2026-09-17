@@ -15,13 +15,14 @@ final class ScreenshotTests: XCTestCase {
 
         // study front, give the flag image a moment
         capitals.tap()
-        let card = app.descendants(matching: .any).matching(identifier: "studyCard").firstMatch
-        XCTAssertTrue(card.waitForExistence(timeout: 10))
+        // first card of World Capitals is France (all boxes equal → deck order)
+        let front = app.staticTexts["France"]
+        XCTAssertTrue(front.waitForExistence(timeout: 10))
         sleep(3)
         attach("02-study")
 
-        // answer side — tap the card centre to flip it (the stack isn't "hittable" to XCUI)
-        card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        // answer side — tapping the front text taps the card, which flips it
+        front.tap()
         XCTAssertTrue(app.staticTexts["Paris"].waitForExistence(timeout: 5))
         sleep(1)
         attach("03-answer")
