@@ -3,6 +3,23 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.8.0 — 2026-09-17
+
+iPhone app 1.4: swipe to grade.
+
+- **Card stack**: the study screen is a Tinder-style deck. The next card
+  peeks out behind the current one, the top card tilts as you drag, and a
+  GOT IT / MISSED stamp fades in. Swipe right = got it, swipe left = missed
+  it, flipped or not; a short drag springs back. Tap still flips.
+- **Hold to skip** (0.6 s) — swipe up stays free for scrolling long exam
+  cards, which now scroll inside the card.
+- **Undo**: the arrow between ✗ and ✓ brings the last card back and restores
+  its Leitner box (and the learned stamp), synced to the watch.
+- The ✗ / ✓ buttons stay as a fallback under the card. Drags that start in
+  the left edge are ignored so the system back-swipe still works.
+- Progress bar + counter above the deck, like the watch lesson screen.
+- Watch and Echo Show unchanged (buttons / voice).
+
 ## v0.7.0 — 2026-09-16
 
 iPhone app 1.3: read-aloud, smart image links, no token to type.

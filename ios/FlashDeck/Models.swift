@@ -80,6 +80,25 @@ final class DeckStore: ObservableObject {
         sync.didGrade(key: key, box: next, learnedAt: got ? learned[key] : nil, boxes: all, learned: learned)
     }
 
+    /// Undo support: the learned stamp a card currently carries (nil = never got it).
+    func learnedStamp(deck: Deck, card: Card) -> Double? {
+        learnedAt[Self.key(deck, card)]
+    }
+
+    /// Undo of a grade: put the box (and learned stamp) back exactly as they were, still synced.
+    func restore(box value: Int, learnedAt stamp: Double?, deck: Deck, card: Card) {
+        let key = Self.key(deck, card)
+        let clamped = min(max(value, 1), 5)
+        var all = boxes
+        all[key] = clamped
+        boxes = all
+        var learned = learnedAt
+        if let stamp { learned[key] = stamp } else { learned.removeValue(forKey: key) }
+        learnedAt = learned
+        objectWillChange.send()
+        sync.didGrade(key: key, box: clamped, learnedAt: stamp, boxes: all, learned: learned)
+    }
+
     func masteredCount(_ deck: Deck) -> Int {
         deck.cards.filter { box(deck: deck, card: $0) >= 5 }.count
     }
