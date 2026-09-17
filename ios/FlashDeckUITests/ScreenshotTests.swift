@@ -27,8 +27,9 @@ final class ScreenshotTests: XCTestCase {
         sleep(1)
         attach("03-answer")
 
-        // editor
-        app.navigationBars.buttons.firstMatch.tap()
+        // editor — go back explicitly (firstMatch would hit the mute button since 1.3)
+        let back = app.navigationBars.buttons.matching(NSPredicate(format: "label == 'Flash Deck' OR label == 'Back'")).firstMatch
+        if back.waitForExistence(timeout: 3) { back.tap() } else { app.navigationBars.buttons.element(boundBy: 0).tap() }
         XCTAssertTrue(app.buttons["addButton"].waitForExistence(timeout: 5))
         app.buttons["addButton"].tap()
         XCTAssertTrue(app.staticTexts["Edit Decks"].waitForExistence(timeout: 5))
