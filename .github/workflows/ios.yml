@@ -84,7 +84,7 @@ jobs:
       - name: Generate Xcode project (iPhone only)
         run: |
           sed -i '' "s/^    CURRENT_PROJECT_VERSION: .*/    CURRENT_PROJECT_VERSION: $GITHUB_RUN_NUMBER/" project.yml
-          sed -i '' '/^      - target: FlashDeckWatch$/d' project.yml
+          sed -i '' '/^    dependencies:$/{N;/FlashDeckWatch/d;}' project.yml
           xcodegen generate
       - name: Archive (cloud-managed signing)
         env:
