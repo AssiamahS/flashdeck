@@ -20,8 +20,8 @@ final class ScreenshotTests: XCTestCase {
         sleep(3)
         attach("02-study")
 
-        // answer side — tap the card to flip it
-        card.tap()
+        // answer side — tap the card centre to flip it (the stack isn't "hittable" to XCUI)
+        card.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         XCTAssertTrue(app.staticTexts["Paris"].waitForExistence(timeout: 5))
         sleep(1)
         attach("03-answer")
