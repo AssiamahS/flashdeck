@@ -106,6 +106,7 @@ struct StudyView: View {
                 }
                 .simultaneousGesture(swipe)
                 .accessibilityAddTraits(.isButton)
+                .accessibilityIdentifier("studyCard")
                 .accessibilityHint("Tap to flip. Swipe right for got it, left for missed it, hold to skip.")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

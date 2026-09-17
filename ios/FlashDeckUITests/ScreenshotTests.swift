@@ -15,14 +15,14 @@ final class ScreenshotTests: XCTestCase {
 
         // study front, give the flag image a moment
         capitals.tap()
-        let flip = app.buttons["Flip"]
-        XCTAssertTrue(flip.waitForExistence(timeout: 10))
+        let card = app.buttons["studyCard"]
+        XCTAssertTrue(card.waitForExistence(timeout: 10))
         sleep(3)
         attach("02-study")
 
-        // answer side
-        flip.tap()
-        XCTAssertTrue(app.buttons["Got it"].waitForExistence(timeout: 5))
+        // answer side — tap the card to flip it
+        card.tap()
+        XCTAssertTrue(app.staticTexts["Paris"].waitForExistence(timeout: 5))
         sleep(1)
         attach("03-answer")
 
