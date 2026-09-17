@@ -32,7 +32,7 @@ final class ScreenshotTests: XCTestCase {
         if back.waitForExistence(timeout: 3) { back.tap() } else { app.navigationBars.buttons.element(boundBy: 0).tap() }
         XCTAssertTrue(app.buttons["addButton"].waitForExistence(timeout: 5))
         app.buttons["addButton"].tap()
-        XCTAssertTrue(app.staticTexts["Edit Decks"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["Edit Decks"].firstMatch.waitForExistence(timeout: 5))
         sleep(1)
         attach("04-editor")
     }
