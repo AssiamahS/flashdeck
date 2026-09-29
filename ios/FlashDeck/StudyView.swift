@@ -1,6 +1,8 @@
 import SwiftUI
 import AVKit
+#if canImport(UIKit)
 import UIKit
+#endif
 
 /// Tinder-style study: the deck is a stack, the top card flips on tap, swipe right = got it,
 /// swipe left = missed it (flipped or not), hold = skip, undo brings the last card back.
@@ -220,8 +222,7 @@ struct StudyView: View {
         guard !flyingOff, index < queue.count, verdict != .skipped else { return }
         flyingOff = true
         let dir: CGFloat = verdict == .got ? 1 : -1
-        let feedback = UINotificationFeedbackGenerator()
-        feedback.notificationOccurred(verdict == .got ? .success : .error)
+        Haptics.verdict(success: verdict == .got)
         withAnimation(.easeIn(duration: 0.22)) {
             drag = CGSize(width: dir * 700, height: drag.height + 40)
         } completion: {
