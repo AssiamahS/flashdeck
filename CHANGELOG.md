@@ -3,6 +3,19 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.10.1 — 2026-09-28
+
+Mac 1.6.1: saving imported decks works.
+
+- The `FLASHDECK_GITHUB_TOKEN` repo secret was never created, so every
+  build (iPhone and Mac) shipped with no editor access and Save failed
+  with "This build has no editor access". The Mac app now uses this Mac's
+  GitHub CLI login (`gh auth token`, the app isn't sandboxed); nothing is
+  baked into the public download. iPhone still needs a token pasted in
+  Settings once.
+- Mac sheets (Import, Edit, Settings) use the grouped form style; the
+  default two-column macOS form clipped the link, deck name and status.
+
 ## v0.10.0 — 2026-09-28
 
 Import a whole flashcard set from a link (iPhone + Mac 1.6).

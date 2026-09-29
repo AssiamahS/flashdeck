@@ -138,6 +138,7 @@ struct ImportView: View {
                     }
                 }
             }
+            .platformFormStyle()
             .navigationTitle("Import Cards")
             .inlineTitleBar()
             .toolbar {

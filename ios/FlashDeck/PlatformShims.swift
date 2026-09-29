@@ -22,6 +22,16 @@ extension View {
         #endif
     }
 
+    /// macOS Forms default to a two-column label layout that clips long rows in a sheet;
+    /// grouped matches the iPhone look.
+    func platformFormStyle() -> some View {
+        #if os(macOS)
+        return formStyle(.grouped)
+        #else
+        return self
+        #endif
+    }
+
     func urlKeyboard() -> some View {
         #if os(iOS)
         return keyboardType(.URL)

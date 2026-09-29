@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-09-28 · v0.10.1 — Mac save
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Save an imported Quizlet deck (31 cards) from the Mac app | "This build has no editor access" — `gh secret list` has no FLASHDECK_GITHUB_TOKEN; CI log shows it expanding to empty on every build since 1.3 | ❌ the baked-token plan never ran |
+| Mac: `gh auth token` via `Process` (absolute path, unsandboxed app) | harness using the app's own `GitHubService.fetch()` → 7 decks, sha 56bb255 | ✅ Mac saves with the CLI login; nothing secret in the zip |
+| macOS default `Form` style in a sheet | two-column labels, long rows clipped off the right edge | ❌ → `.formStyle(.grouped)` via `platformFormStyle()` |
+
 ## 2026-09-28 · v0.10.0 — import from a link
 
 | Tried | Result | Verdict |

@@ -24,6 +24,12 @@ struct SettingsView: View {
                         Label("Editor access is built into this build", systemImage: "checkmark.seal.fill")
                             .foregroundStyle(.green)
                     }
+                    #if os(macOS)
+                    if GitHubService.ghCLIToken != nil {
+                        Label("Using this Mac's GitHub CLI login", systemImage: "checkmark.seal.fill")
+                            .foregroundStyle(.green)
+                    }
+                    #endif
                     SecureField("Fine-grained PAT", text: $token)
                         .noAutocapitalization()
                         .autocorrectionDisabled()
@@ -39,10 +45,11 @@ struct SettingsView: View {
                     }
                 }
                 Section {
-                    Text("Editing decks commits straight to the flashdeck repo, so changes go live on the Echo Show and the watch too. TestFlight builds carry their own token; paste one here only to override it. Studying works without a token.")
+                    Text("Editing and importing decks commits straight to the flashdeck repo, so changes go live on the Echo Show, the watch and the Mac too. The Mac app uses its GitHub CLI login automatically; on the iPhone, paste a token here once. Studying works without one.")
                         .font(.footnote)
                 }
             }
+            .platformFormStyle()
             .navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

@@ -45,8 +45,32 @@ struct GitHubService {
 
     static var token: String? {
         if let saved = Keychain.readToken(), !saved.isEmpty { return saved }
+        #if os(macOS)
+        if let cli = ghCLIToken { return cli }
+        #endif
         return bundledToken
     }
+
+    #if os(macOS)
+    /// The Mac app isn't sandboxed, so it borrows the GitHub CLI login already on this Mac
+    /// (`gh auth token`). Nothing is baked into the public download.
+    static let ghCLIToken: String? = {
+        for path in ["/opt/homebrew/bin/gh", "/usr/local/bin/gh"] where FileManager.default.isExecutableFile(atPath: path) {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: path)
+            process.arguments = ["auth", "token", "--hostname", "github.com"]
+            let out = Pipe()
+            process.standardOutput = out
+            process.standardError = Pipe()
+            do { try process.run() } catch { continue }
+            let data = out.fileHandleForReading.readDataToEndOfFile()
+            process.waitUntilExit()
+            let value = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
+            if process.terminationStatus == 0, !value.isEmpty { return value }
+        }
+        return nil
+    }()
+    #endif
 
     struct ContentsResponse: Decodable {
         let sha: String
@@ -59,7 +83,12 @@ struct GitHubService {
 
         var errorDescription: String? {
             switch self {
-            case .noToken: return "This build has no editor access. Set the FLASHDECK_GITHUB_TOKEN repo secret and let CI rebuild, or paste a token in Settings."
+            case .noToken:
+                #if os(macOS)
+                return "No GitHub access on this Mac. Run `gh auth login` in Terminal once, or paste a token in Settings."
+                #else
+                return "No GitHub access on this iPhone yet. Paste a GitHub token (flashdeck repo, Contents read/write) in Settings."
+                #endif
             case .http(let code, let body): return "GitHub \(code): \(body)"
             }
         }

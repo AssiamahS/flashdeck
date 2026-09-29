@@ -55,6 +55,7 @@ struct EditorView: View {
                 }
                 .disabled(busy || !valid)
             }
+            .platformFormStyle()
             .navigationTitle("Edit Decks")
             .inlineTitleBar()
             .toolbar {
