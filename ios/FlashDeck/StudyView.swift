@@ -17,6 +17,14 @@ struct StudyView: View {
     @State private var history: [Step] = []
     @ObservedObject private var speaker = CardSpeaker.shared
 
+    /// Which face is on screen right now; the read-aloud trigger keys off this.
+    private var shownSide: ShownSide { ShownSide(index: index, flipped: flipped) }
+
+    private struct ShownSide: Equatable {
+        let index: Int
+        let flipped: Bool
+    }
+
     /// One graded / skipped card, enough to put it back.
     private struct Step {
         let box: Int
@@ -63,8 +71,10 @@ struct StudyView: View {
             if queue.isEmpty { start() }
             readCurrent()
         }
-        .onChange(of: flipped) { _, _ in readCurrent() }
-        .onChange(of: index) { _, _ in readCurrent() }
+        // One trigger for both: swiping a flipped card resets `flipped` and bumps
+        // `index` in the same update, and two separate onChange hooks read the
+        // new card twice (the second utterance queued behind the first).
+        .onChange(of: shownSide) { _, _ in readCurrent() }
         .onDisappear { speaker.release() }
     }
 

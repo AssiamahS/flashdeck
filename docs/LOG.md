@@ -3,6 +3,12 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-09-28 · v0.8.1 — double read-aloud
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Two `onChange` hooks (`flipped`, `index`) both calling `readCurrent()` | swipe on a flipped card fires both in one update; `synth.isSpeaking` is still false for the just-queued utterance so `stop()` skipped it → card read twice from card 2 on | ❌ replaced with one `onChange` on an `(index, flipped)` struct + unconditional `stopSpeaking` |
+
 ## 2026-09-16 · v0.7.0 — read-aloud + image links + bundled token
 
 | Tried | Result | Verdict |

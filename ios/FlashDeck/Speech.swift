@@ -38,7 +38,9 @@ final class CardSpeaker: NSObject, ObservableObject {
     }
 
     func stop() {
-        if synth.isSpeaking { synth.stopSpeaking(at: .immediate) }
+        // Unconditional: `isSpeaking` is still false for an utterance that was just
+        // queued and hasn't started, and that one must go too or it plays after ours.
+        synth.stopSpeaking(at: .immediate)
         speaking = false
     }
 

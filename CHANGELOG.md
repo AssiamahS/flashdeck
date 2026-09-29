@@ -3,6 +3,17 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.8.1 — 2026-09-28
+
+iPhone app 1.4.1: read-aloud no longer says a card twice.
+
+- Swiping a flipped card reset `flipped` and bumped `index` in the same
+  SwiftUI update, and each had its own `onChange` hook calling the reader.
+  The second utterance queued behind the first (the synthesizer isn't
+  "speaking" yet when the first was just queued), so every card after the
+  first was read twice. One trigger keyed on (index, flipped) now, and
+  `stop()` clears the queue unconditionally.
+
 ## v0.8.0 — 2026-09-17
 
 iPhone app 1.4: swipe to grade.
