@@ -55,9 +55,9 @@ struct StudyView: View {
         }
         .padding()
         .navigationTitle(deck.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineTitleBar()
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button {
                     speaker.enabled.toggle()
                     if speaker.enabled { readCurrent() }
@@ -271,7 +271,7 @@ struct StudyView: View {
     private func skip() {
         guard !flyingOff, index < queue.count else { return }
         let card = queue[index]
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        Haptics.medium()
         history.append(Step(box: store.box(deck: deck, card: card),
                             learnedAt: store.learnedStamp(deck: deck, card: card),
                             verdict: .skipped))
@@ -291,7 +291,7 @@ struct StudyView: View {
         if step.verdict != .skipped {
             store.restore(box: step.box, learnedAt: step.learnedAt, deck: deck, card: card)
         }
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        Haptics.light()
     }
 
     private func advance() {

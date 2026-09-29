@@ -29,9 +29,9 @@ struct EditorView: View {
                     TextField("Front", text: $front, axis: .vertical)
                     TextField("Back", text: $back, axis: .vertical)
                     TextField("Image URL (optional)", text: $imageURL)
-                        .textInputAutocapitalization(.never)
+                        .noAutocapitalization()
                         .autocorrectionDisabled()
-                        .keyboardType(.URL)
+                        .urlKeyboard()
                     if let normalized = ImageURL.normalize(imageURL) {
                         // Live preview: paste a Google Images / Wikipedia / gif link and see it pull.
                         RemoteImage(source: normalized)
@@ -56,7 +56,7 @@ struct EditorView: View {
                 .disabled(busy || !valid)
             }
             .navigationTitle("Edit Decks")
-            .navigationBarTitleDisplayMode(.inline)
+            .inlineTitleBar()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }

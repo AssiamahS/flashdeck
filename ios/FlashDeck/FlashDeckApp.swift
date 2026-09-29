@@ -8,6 +8,12 @@ struct FlashDeckApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(store)
+                #if os(macOS)
+                .frame(minWidth: 420, minHeight: 640)
+                #endif
         }
+        #if os(macOS)
+        .defaultSize(width: 520, height: 860)
+        #endif
     }
 }

@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(WatchConnectivity)
 import WatchConnectivity
 
 /// Keeps Leitner boxes in step between the iPhone and the watch.
@@ -69,3 +70,16 @@ final class LeitnerSync: NSObject, WCSessionDelegate {
         }
     }
 }
+
+#else
+
+/// No watch link on this platform (Mac); the store still reports grades, they just go nowhere.
+@MainActor
+final class LeitnerSync: NSObject {
+    var onSnapshot: (([String: Int], [String: Double]) -> Void)?
+    var onGrade: ((String, Int, Double?) -> Void)?
+    func start() {}
+    func didGrade(key: String, box: Int, learnedAt: Double?, boxes: [String: Int], learned: [String: Double]) {}
+}
+
+#endif

@@ -29,7 +29,7 @@ struct HomeView: View {
                 StudyView(deck: deck)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Button {
                         showEditor = true
                     } label: {
@@ -37,7 +37,7 @@ struct HomeView: View {
                     }
                     .accessibilityIdentifier("addButton")
                 }
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Button {
                         showSettings = true
                     } label: {

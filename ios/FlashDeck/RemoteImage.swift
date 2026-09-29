@@ -1,13 +1,19 @@
 import ImageIO
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+typealias PlatformImage = UIImage
+#else
+import AppKit
+typealias PlatformImage = NSImage
+#endif
 
 /// Loads a card image by URL. Unlike AsyncImage it plays animated GIFs, sends a
 /// real User-Agent (Wikimedia rate-limits the default one), and runs the link
 /// through ImageURL.normalize first so pasted page links still show a picture.
 struct RemoteImage: View {
     let source: String
-    @State private var image: UIImage?
+    @State private var image: PlatformImage?
     @State private var failed = false
 
     var body: some View {
@@ -66,7 +72,9 @@ enum ImageLoader {
     }
 
     /// Animated GIF → UIImage.animatedImage with the file's frame timing; anything else → UIImage(data:).
-    static func decode(_ data: Data) -> UIImage? {
+    /// On the Mac NSImage keeps the GIF frames itself and NSImageView plays them.
+    static func decode(_ data: Data) -> PlatformImage? {
+        #if canImport(UIKit)
         let isGIF = data.starts(with: [0x47, 0x49, 0x46]) // "GIF"
         guard isGIF, let src = CGImageSourceCreateWithData(data as CFData, nil) else {
             return UIImage(data: data)
@@ -87,9 +95,13 @@ enum ImageLoader {
             total += delay
         }
         return UIImage.animatedImage(with: frames, duration: total)
+        #else
+        return NSImage(data: data)
+        #endif
     }
 }
 
+#if canImport(UIKit)
 /// UIImageView plays animated UIImages; SwiftUI's Image shows only the first frame.
 struct AnimatedImageView: UIViewRepresentable {
     let image: UIImage
@@ -109,3 +121,23 @@ struct AnimatedImageView: UIViewRepresentable {
         if view.image !== image { view.image = image }
     }
 }
+#else
+struct AnimatedImageView: NSViewRepresentable {
+    let image: NSImage
+
+    func makeNSView(context: Context) -> NSImageView {
+        let view = NSImageView()
+        view.imageScaling = .scaleProportionallyUpOrDown
+        view.animates = true
+        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        view.setContentHuggingPriority(.defaultLow, for: .vertical)
+        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        return view
+    }
+
+    func updateNSView(_ view: NSImageView, context: Context) {
+        if view.image !== image { view.image = image }
+    }
+}
+#endif

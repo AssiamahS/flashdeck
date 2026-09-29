@@ -33,6 +33,16 @@ jobs:
             -destination 'generic/platform=iOS' \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+      - name: Build Mac app (unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project FlashDeck.xcodeproj \
+            -scheme FlashDeckMac \
+            -configuration Release \
+            -destination 'generic/platform=macOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
   screenshots:
     name: App Store screenshots (simulator)
@@ -140,6 +150,68 @@ jobs:
           git pull --rebase --autostash origin main
           git push origin HEAD:main
           # Pages here is the legacy /docs build; a bot push may not trigger it, so request one
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null || true
+
+  mac:
+    # Mac build: same code, ad hoc signed (no Developer ID on this account), zipped onto the install page.
+    # First launch needs right-click → Open (or System Settings → Privacy & Security → Open Anyway).
+    name: Mac app (ad hoc zip)
+    runs-on: macos-26
+    timeout-minutes: 30
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: |
+          sed -i '' "s/^    CURRENT_PROJECT_VERSION: .*/    CURRENT_PROJECT_VERSION: $GITHUB_RUN_NUMBER/" project.yml
+          xcodegen generate
+      - name: Build, ad hoc sign, zip
+        env:
+          FLASHDECK_GITHUB_TOKEN: ${{ secrets.FLASHDECK_GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project FlashDeck.xcodeproj \
+            -scheme FlashDeckMac \
+            -configuration Release \
+            -destination 'generic/platform=macOS' \
+            -derivedDataPath build/mac \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            CURRENT_PROJECT_VERSION=$GITHUB_RUN_NUMBER \
+            FLASHDECK_GITHUB_TOKEN="$FLASHDECK_GITHUB_TOKEN"
+          APP="build/mac/Build/Products/Release/Flash Deck.app"
+          codesign --force --deep --sign - "$APP"
+          codesign --verify --deep --strict "$APP"
+          mkdir -p build/macdist
+          ditto -c -k --keepParent "$APP" build/macdist/FlashDeck-mac.zip
+          ls -la build/macdist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FlashDeck-mac
+          path: ios/build/macdist/FlashDeck-mac.zip
+      - name: Publish to the install page (docs/ → GitHub Pages)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "ios/build/mac/Build/Products/Release/Flash Deck.app/Contents/Info.plist")
+          mkdir -p docs/mac
+          cp ios/build/macdist/FlashDeck-mac.zip docs/mac/FlashDeck-mac.zip
+          sed -i '' -E "s/Mac build [0-9]+ \(v[^)]*\) · [0-9-]+/Mac build $GITHUB_RUN_NUMBER (v$VERSION) · $(date -u +%Y-%m-%d)/" docs/install.html
+          git checkout -- ios/project.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/mac docs/install.html
+          git commit -m "build: mac app build $GITHUB_RUN_NUMBER (v$VERSION)" || exit 0
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && break
+            sleep 10
+          done
           gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null || true
 
   testflight:

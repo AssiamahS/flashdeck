@@ -25,7 +25,7 @@ struct SettingsView: View {
                             .foregroundStyle(.green)
                     }
                     SecureField("Fine-grained PAT", text: $token)
-                        .textInputAutocapitalization(.never)
+                        .noAutocapitalization()
                         .autocorrectionDisabled()
                     Button("Save token") {
                         Keychain.saveToken(token)

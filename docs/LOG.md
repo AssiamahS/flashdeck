@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-09-28 · v0.9.0 — Mac target
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Separate macOS target on the shared `FlashDeck/` sources instead of Catalyst / "Designed for iPad" | those two need App Store distribution; a native target + `codesign -s -` zip works with the ad hoc lane; ~10 iOS-only call sites, all shimmed | ✅ `FlashDeckMac` in project.yml, own icon set (mac idiom needs the 10 sizes, `sips` from icon1024) |
+| `ToolbarItem(placement: .topBarTrailing)` | not available on macOS | ❌ → `.primaryAction` (same spot on iPhone) |
+| `WatchConnectivity` on macOS | framework doesn't exist there | ❌ → `#if canImport(WatchConnectivity)` with a no-op `LeitnerSync` stub so `DeckStore` is untouched |
+
 ## 2026-09-28 · v0.8.1 — double read-aloud
 
 | Tried | Result | Verdict |

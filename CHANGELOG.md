@@ -3,6 +3,21 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.9.0 — 2026-09-28
+
+Mac app.
+
+- **FlashDeckMac target**: the same SwiftUI app builds for macOS 26 from the
+  same sources. iPhone-only bits (audio session, haptics, keyboard type,
+  inline title bar) sit behind `PlatformShims.swift` / `#if os(iOS)`;
+  WatchConnectivity is stubbed out (no watch link from the Mac); card images
+  use `NSImage` + `NSImageView`, which plays GIFs natively.
+- CI: `mac` job builds, ad hoc signs, zips and publishes
+  `docs/mac/FlashDeck-mac.zip`; the install page has a Mac section. Not
+  notarized, so the first launch is right-click → Open. The compile check on
+  every push builds the Mac target too.
+- App version 1.5.
+
 ## v0.8.1 — 2026-09-28
 
 iPhone app 1.4.1: read-aloud no longer says a card twice.

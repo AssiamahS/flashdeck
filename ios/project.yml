@@ -4,12 +4,13 @@ options:
   deploymentTarget:
     iOS: "26.0"
     watchOS: "26.0"
+    macOS: "26.0"
   xcodeVersion: "26.0"
 settings:
   base:
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: QGMAWHX827
-    MARKETING_VERSION: 1.4.1
+    MARKETING_VERSION: 1.5
     CURRENT_PROJECT_VERSION: 1
 targets:
   FlashDeck:
@@ -65,6 +66,34 @@ targets:
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.djsly.flashdeck
         WKRunsIndependentlyOfCompanionApp: true
+  FlashDeckMac:
+    # Same SwiftUI app on the Mac; iPhone-only bits are behind PlatformShims / #if os(iOS).
+    type: application
+    platform: macOS
+    sources:
+      - path: FlashDeck
+        excludes:
+          - "Resources/**"
+          - "Assets.xcassets/**"
+      - path: FlashDeckMac
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck.mac
+      PRODUCT_NAME: Flash Deck
+      CODE_SIGN_STYLE: Automatic
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      ENABLE_HARDENED_RUNTIME: NO
+      COMBINE_HIDPI_IMAGES: YES
+    info:
+      path: FlashDeckMac/Info.plist
+      properties:
+        CFBundleName: FlashDeck
+        CFBundleDisplayName: Flash Deck
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationCategoryType: public.app-category.education
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        FlashDeckGitHubToken: $(FLASHDECK_GITHUB_TOKEN)
   FlashDeckUITests:
     type: bundle.ui-testing
     platform: iOS

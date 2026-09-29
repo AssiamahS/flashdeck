@@ -32,9 +32,11 @@ final class VoiceQuizEngine: NSObject {
 
     func start(deck: Deck) throws {
         stopSpeech()
+        #if os(iOS)
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
         try session.setActive(true)
+        #endif
 
         self.deck = deck
         queue = Self.leitnerOrder(deck)
@@ -49,7 +51,9 @@ final class VoiceQuizEngine: NSObject {
         isRunning = false
         deck = nil
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+        #if os(iOS)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        #endif
     }
 
     // MARK: - Speech loop

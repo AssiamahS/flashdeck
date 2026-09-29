@@ -28,9 +28,11 @@ final class CardSpeaker: NSObject, ObservableObject {
 
     func speak(_ text: String) {
         stop()
+        #if os(iOS)
         let session = AVAudioSession.sharedInstance()
         try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
         try? session.setActive(true)
+        #endif
         let utterance = AVSpeechUtterance(string: Self.spoken(text))
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
         speaking = true
@@ -48,7 +50,9 @@ final class CardSpeaker: NSObject, ObservableObject {
     func release() {
         stop()
         guard !VoiceQuizEngine.shared.isRunning else { return }
+        #if os(iOS)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        #endif
     }
 
     /// Same cleanup the Echo skill does before speaking: each line of an exam card
