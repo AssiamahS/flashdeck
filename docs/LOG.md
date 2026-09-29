@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-09-28 · v0.10.0 — import from a link
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| `curl` a Quizlet set with a Safari UA from the home IP | 403 "Captcha Challenge" (PerimeterX), 0 terms | ❌ plain fetch is dead, worker-side fetch would be worse (datacenter IP) |
+| Offscreen `WKWebView` (CLT `swiftc` probe, `probe.swift`) + DOM extractor | real page on try 1, 99 `.TermText` pairs, title "Duolingo flash cards" | ✅ in-app WebKit view + `CardExtractor.script`; keep the view visible so a press-and-hold check can be completed |
+| "Duolingo flashcard set URL" | Tinycards is dead; Duolingo has no shareable set links — the sets people share are Quizlet | ℹ️ importer is site-agnostic (TermText → card layouts → dl → 2-col tables) |
+
 ## 2026-09-28 · v0.9.0 — Mac target
 
 | Tried | Result | Verdict |

@@ -3,6 +3,21 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.10.0 — 2026-09-28
+
+Import a whole flashcard set from a link (iPhone + Mac 1.6).
+
+- **Import Cards** (↓ button on the home screen): paste a Quizlet (or any
+  flashcard page) link, the page loads in an in-app WebKit view, and
+  `CardExtractor` reads every term/definition pair off the rendered page.
+  Preview, name the deck, Save → new deck in decks.json (or new cards into
+  a deck with that name, duplicates skipped) → Echo Show + watch + Mac.
+- Why a browser view: Quizlet answers plain HTTP fetches with a captcha
+  page even from a home IP; WebKit with the normal Safari fingerprint gets
+  the real page (99/99 cards on the first try in testing). If a site does
+  show a press-and-hold check, it's right there in the sheet to complete.
+- Deck slug logic shared (`Deck.slug`).
+
 ## v0.9.0 — 2026-09-28
 
 Mac app.

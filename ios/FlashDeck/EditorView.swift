@@ -93,9 +93,7 @@ struct EditorView: View {
                 back = ""
                 imageURL = ""
             } else {
-                let id = newDeckName.lowercased()
-                    .replacingOccurrences(of: " ", with: "-")
-                    .filter { $0.isLetter || $0.isNumber || $0 == "-" }
+                let id = Deck.slug(newDeckName)
                 file.decks.append(Deck(id: id, name: newDeckName, cards: []))
                 try await GitHubService.commit(file, sha: sha, message: "feat: new deck \(id) from phone")
                 newDeckName = ""

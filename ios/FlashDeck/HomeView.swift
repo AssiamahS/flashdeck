@@ -4,6 +4,7 @@ struct HomeView: View {
     @EnvironmentObject var store: DeckStore
     @State private var showSettings = false
     @State private var showEditor = false
+    @State private var showImport = false
 
     var body: some View {
         NavigationStack {
@@ -39,6 +40,14 @@ struct HomeView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button {
+                        showImport = true
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                    }
+                    .accessibilityIdentifier("importButton")
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
                         showSettings = true
                     } label: {
                         Image(systemName: "gearshape")
@@ -50,6 +59,7 @@ struct HomeView: View {
             .task { await store.load() }
             .sheet(isPresented: $showSettings) { SettingsView() }
             .sheet(isPresented: $showEditor) { EditorView() }
+            .sheet(isPresented: $showImport) { ImportView() }
             .overlay {
                 if store.loading && store.decks.isEmpty { ProgressView() }
             }
