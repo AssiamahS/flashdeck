@@ -3,6 +3,13 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.11.0 — 2026-09-30
+
+Keyboard study controls (iPhone/iPad with a keyboard + Mac 1.7).
+
+- Space or ↑ flips the card, ↓ skips it, ← = missed, → = got it
+  (same directions as the swipes). Works flipped or unflipped.
+
 ## v0.10.1 — 2026-09-28
 
 Mac 1.6.1: saving imported decks works.

@@ -17,6 +17,7 @@ struct StudyView: View {
     @State private var drag: CGSize = .zero
     @State private var flyingOff = false
     @State private var history: [Step] = []
+    @FocusState private var keyboardFocus: Bool
     @ObservedObject private var speaker = CardSpeaker.shared
 
     /// Which face is on screen right now; the read-aloud trigger keys off this.
@@ -56,6 +57,13 @@ struct StudyView: View {
             }
         }
         .padding()
+        // Hardware keyboard (Mac, iPad, iPhone + keyboard): space/↑ flip, ↓ skip, ← missed, → got it
+        .focusable()
+        .focused($keyboardFocus)
+        .focusEffectDisabled()
+        .onKeyPress(keys: [.space, .upArrow, .downArrow, .leftArrow, .rightArrow]) { press in
+            handleKey(press.key)
+        }
         .navigationTitle(deck.name)
         .inlineTitleBar()
         .toolbar {
@@ -70,6 +78,7 @@ struct StudyView: View {
             }
         }
         .onAppear {
+            keyboardFocus = true
             if queue.isEmpty { start() }
             readCurrent()
         }
@@ -110,9 +119,7 @@ struct StudyView: View {
                 .overlay { stamps(dx: dx) }
                 .rotationEffect(.degrees(Double(dx / 18)))
                 .offset(drag)
-                .onTapGesture {
-                    withAnimation(.spring(duration: 0.35)) { flipped.toggle() }
-                }
+                .onTapGesture { flip() }
                 .onLongPressGesture(minimumDuration: 0.6) {
                     skip()
                 }
@@ -193,6 +200,22 @@ struct StudyView: View {
     }
 
     // MARK: gestures
+
+    private func flip() {
+        withAnimation(.spring(duration: 0.35)) { flipped.toggle() }
+    }
+
+    private func handleKey(_ key: KeyEquivalent) -> KeyPress.Result {
+        guard index < queue.count, !flyingOff else { return .ignored }
+        switch key {
+        case .space, .upArrow: flip()
+        case .downArrow: skip()
+        case .leftArrow: fly(.missed)
+        case .rightArrow: fly(.got)
+        default: return .ignored
+        }
+        return .handled
+    }
 
     private var swipe: some Gesture {
         DragGesture(minimumDistance: 14, coordinateSpace: .global)
