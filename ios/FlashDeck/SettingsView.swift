@@ -6,6 +6,13 @@ struct SettingsView: View {
     @State private var hasToken = Keychain.readToken() != nil
     @ObservedObject private var speaker = CardSpeaker.shared
 
+    static let appVersion: String = {
+        let info = Bundle.main.infoDictionary
+        let short = info?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info?["CFBundleVersion"] as? String ?? "?"
+        return "\(short) (build \(build))"
+    }()
+
     var body: some View {
         NavigationStack {
             Form {
@@ -47,6 +54,9 @@ struct SettingsView: View {
                 Section {
                     Text("Editing and importing decks commits straight to the flashdeck repo, so changes go live on the Echo Show, the watch and the Mac too. The Mac app uses its GitHub CLI login automatically; on the iPhone, paste a token here once. Studying works without one.")
                         .font(.footnote)
+                }
+                Section {
+                    LabeledContent("Version", value: Self.appVersion)
                 }
             }
             .platformFormStyle()
