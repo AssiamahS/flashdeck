@@ -124,6 +124,8 @@ def save_set(set_id: str, name: str, drop: list[int]) -> dict:
         if deck:
             have = {c["front"] for c in deck["cards"]}
             fresh = [c for c in cards if c["front"] not in have]
+            if not fresh:
+                return {"saved": f"All {len(cards)} cards are already in {deck['name']} — nothing new to add", "added": 0}
             deck["cards"] += fresh
             message = f"feat: import {len(fresh)} cards into {deck_id} from quizlet.com"
             skipped = len(cards) - len(fresh)
@@ -136,7 +138,7 @@ def save_set(set_id: str, name: str, drop: list[int]) -> dict:
         try:
             gh("-X", "PUT", f"repos/{REPO}/contents/decks.json",
                body={"message": message, "branch": "main", "sha": f["sha"], "content": content})
-            return {"saved": saved}
+            return {"saved": saved, "added": len(fresh) if deck else len(cards)}
         except RuntimeError as e:
             if "409" not in str(e) and "does not match" not in str(e) or attempt == 2:
                 raise  # anything but "edited elsewhere" is final

@@ -297,7 +297,7 @@ async function saveViaMac(name) {
     const d = await res.json().catch(() => ({ error: 'Bad reply from the relay.' }));
     if (d.error === 'mac-offline') return status('Your Mac went offline — try again when it’s back.', 'err');
     if (d.error) return status(d.error, 'err');
-    $('status').innerHTML = `${esc(d.saved)} — live on the Echo Show, phone, watch and Mac in about a minute. <a href="study.html">Study it now</a>`;
+    $('status').innerHTML = d.added === 0 ? esc(d.saved) : `${esc(d.saved)} — live on the Echo Show, phone, watch and Mac in about a minute. <a href="study.html">Study it now</a>`;
     $('status').className = 'status ok';
   } catch {
     status('Couldn’t reach the relay — check your connection.', 'err');
@@ -332,6 +332,7 @@ $('saveBtn').onclick = async () => {
       if (deck) {
         const have = new Set(deck.cards.map(c => c.front));
         const fresh = cards.filter(c => !have.has(c.front));
+        if (!fresh.length) { status(`All ${cards.length} cards are already in ${deck.name} — nothing new to add`, 'ok'); return; }
         deck.cards.push(...fresh);
         message = `feat: import ${fresh.length} cards into ${id} from ${source}`;
         const skipped = cards.length - fresh.length;

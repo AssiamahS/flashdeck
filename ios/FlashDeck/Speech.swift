@@ -10,7 +10,9 @@ final class CardSpeaker: NSObject, ObservableObject {
     static let enabledKey = "speakCards"
 
     @Published private(set) var speaking = false
-    private let synth = AVSpeechSynthesizer()
+    // Replaced on every speak(): AVSpeechSynthesizer silently drops an utterance queued
+    // right after stopSpeaking() on the same instance (flip back mid-answer → no question).
+    private var synth = AVSpeechSynthesizer()
 
     private override init() {
         super.init()
@@ -35,6 +37,8 @@ final class CardSpeaker: NSObject, ObservableObject {
         #endif
         let utterance = AVSpeechUtterance(string: Self.spoken(text))
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        synth = AVSpeechSynthesizer()
+        synth.delegate = self
         speaking = true
         synth.speak(utterance)
     }
@@ -69,11 +73,15 @@ final class CardSpeaker: NSObject, ObservableObject {
 }
 
 extension CardSpeaker: AVSpeechSynthesizerDelegate {
+    // Only the current synthesizer counts: the one replaced by speak() reports its
+    // cancel after the new sentence has already started.
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        Task { @MainActor in self.speaking = false }
+        let id = ObjectIdentifier(synthesizer)
+        Task { @MainActor in if id == ObjectIdentifier(self.synth) { self.speaking = false } }
     }
 
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        Task { @MainActor in self.speaking = false }
+        let id = ObjectIdentifier(synthesizer)
+        Task { @MainActor in if id == ObjectIdentifier(self.synth) { self.speaking = false } }
     }
 }

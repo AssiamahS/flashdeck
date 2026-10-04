@@ -105,7 +105,8 @@ function say(text) {
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   const t = String(text || '').replace(/\s+/g, ' ').replace(/\.$/, '').trim();
-  if (t) speechSynthesis.speak(new SpeechSynthesisUtterance(t));
+  // Chrome/Safari drop an utterance queued in the same tick as cancel()
+  if (t) setTimeout(() => speechSynthesis.speak(new SpeechSynthesisUtterance(t)), 60);
 }
 
 async function load() {
@@ -240,7 +241,7 @@ function bindSwipe(el) {
 
 function flip() {
   s.flipped = !s.flipped;
-  render(s.flipped);
+  render(true); // read the side that's now showing — question again when flipping back
 }
 
 function grade(got, dir) {
