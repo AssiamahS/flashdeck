@@ -1,0 +1,14 @@
+name = "flashdeck-relay"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[[durable_objects.bindings]]
+name = "HUB"
+class_name = "Hub"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Hub"]
+
+# secret: AGENT_KEY (wrangler secret put AGENT_KEY) — same value as the
+# keychain item flashdeck-relay-key the Mac agent reads

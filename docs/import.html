@@ -70,8 +70,15 @@
   </div>
 
   <section class="panel" id="linkView">
-    <h2>Quizlet (or any flashcard page)</h2>
-    <p class="muted" style="margin:0">Quizlet blocks servers with a captcha, so the cards are read inside your own browser — the same way the iPhone and Mac apps do it.</p>
+    <h2>Paste a Quizlet link</h2>
+    <form class="row" id="fetchForm" style="margin-top:0">
+      <input id="qlink" type="url" placeholder="https://quizlet.com/220018802/…" autocomplete="off" required>
+      <button class="primary" id="fetchBtn">Get cards</button>
+    </form>
+    <div class="status" id="fetchStatus"></div>
+    <details id="otherWays" style="margin-top:14px">
+    <summary class="muted" style="cursor:pointer">Mac offline? Other ways to import</summary>
+    <p class="muted" style="margin:8px 0 0">Links are fetched by your Mac (Quizlet blocks servers). When it’s off, use <b>Paste text</b> or this bookmark, which reads the cards inside your own browser:</p>
     <ol>
       <li><b>One time:</b> drag this button to your bookmarks bar →
         <a class="bookmarklet" id="bm" href="#">⬇ Send to Flash Deck</a>
@@ -87,6 +94,7 @@
       </li>
       <li>On the Quizlet page (finish any “press &amp; hold” check first), click <b>Send to Flash Deck</b>. The cards land back here, ready to save.</li>
     </ol>
+    </details>
   </section>
 
   <section class="panel hidden" id="pasteView">
@@ -183,6 +191,34 @@ $('openLink').onclick = () => {
   if (!u) return;
   if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
   window.open(u, '_blank', 'noopener');
+};
+
+// ---- link → relay Worker → home Mac (tools/quizlet_agent.py) → cards ----
+const RELAY = 'https://flashdeck-relay.sylvesterassiamahpm.workers.dev';
+function fetchStatus(msg, kind) { $('fetchStatus').textContent = msg; $('fetchStatus').className = 'status ' + (kind || ''); }
+$('fetchForm').onsubmit = async e => {
+  e.preventDefault();
+  const url = $('qlink').value.trim();
+  $('fetchBtn').disabled = true;
+  fetchStatus('Getting cards…');
+  try {
+    const res = await fetch(RELAY + '/import', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url }) });
+    const d = await res.json().catch(() => ({ error: 'Bad reply from the relay.' }));
+    if (d.error === 'mac-offline') {
+      $('otherWays').open = true;
+      return fetchStatus('Your Mac is offline, so links can’t be fetched right now — use Paste text or the bookmark below.', 'err');
+    }
+    if (d.error) return fetchStatus(d.error, 'err');
+    if (!d.cards?.length) return fetchStatus('That set has no cards.', 'err');
+    fetchStatus(`Got ${d.cards.length} cards.`, 'ok');
+    source = 'quizlet.com';
+    $('deckName').value = '';
+    preview(d.cards, d.title);
+  } catch {
+    fetchStatus('Couldn’t reach the relay — check your connection.', 'err');
+  } finally {
+    $('fetchBtn').disabled = false;
+  }
 };
 
 function parseText(text) {
