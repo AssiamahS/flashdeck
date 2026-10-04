@@ -53,7 +53,19 @@ export default {
       const body = await req.json().catch(() => ({}));
       const id = setId(body.url);
       if (!id) return json(req, { error: 'That doesn’t look like a Quizlet set link (quizlet.com/<number>/…).' }, 400);
-      const r = await hub.fetch('https://hub/import', { method: 'POST', body: JSON.stringify({ setId: id }) });
+      const r = await hub.fetch('https://hub/ask', { method: 'POST', body: JSON.stringify({ op: 'fetch', setId: id }) });
+      return json(req, await r.json(), r.status);
+    }
+    if (pathname === '/save' && req.method === 'POST') {
+      // no token on the web: the Mac re-fetches the set itself and commits with its own
+      // GitHub login, so this can only ever write real Quizlet content, never posted text
+      const body = await req.json().catch(() => ({}));
+      const id = setId(body.url);
+      const name = String(body.name || '').trim().slice(0, 80);
+      const drop = Array.isArray(body.drop) ? body.drop.filter(Number.isInteger).slice(0, 5000) : [];
+      if (!id) return json(req, { error: 'That doesn’t look like a Quizlet set link.' }, 400);
+      if (!name) return json(req, { error: 'Give the deck a name.' }, 400);
+      const r = await hub.fetch('https://hub/ask', { method: 'POST', body: JSON.stringify({ op: 'save', setId: id, name, drop }) });
       return json(req, await r.json(), r.status);
     }
     return json(req, { error: 'not found' }, 404);
@@ -82,15 +94,15 @@ export class Hub {
       return new Response(null, { status: 101, webSocket: client });
     }
     if (pathname === '/health') return Response.json({ mac: !!this.agent() });
-    if (pathname === '/import') {
+    if (pathname === '/ask') {
       const ws = this.agent();
       if (!ws) return Response.json({ error: 'mac-offline' }, { status: 503 });
-      const { setId } = await req.json();
+      const ask = await req.json();
       const rid = crypto.randomUUID();
       const result = await new Promise(resolve => {
         const timer = setTimeout(() => { this.pending.delete(rid); resolve({ error: 'The Mac didn’t answer in time — try again.' }); }, TIMEOUT_MS);
         this.pending.set(rid, r => { clearTimeout(timer); resolve(r); });
-        ws.send(JSON.stringify({ rid, setId }));
+        ws.send(JSON.stringify({ rid, ...ask }));
       });
       return Response.json(result, { status: result.error ? 502 : 200 });
     }

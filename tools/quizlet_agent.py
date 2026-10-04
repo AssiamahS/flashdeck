@@ -6,13 +6,18 @@
 
 Quizlet captchas datacenter IPs and non-browser TLS, so the fetch has to come
 from a home connection with a browser fingerprint (curl_cffi impersonate).
-Keeps a websocket to the relay Worker; each message is {rid, setId}, each
-reply is {rid, title, cards:[{front, back, image?, backImage?}]} or {rid, error}.
+Keeps a websocket to the relay Worker. Messages:
+  {rid, op: "fetch", setId}             -> {rid, title, cards:[{front, back, image?, backImage?}]}
+  {rid, op: "save", setId, name, drop}  -> {rid, saved}   (re-fetches the set and commits
+                                           decks.json with this Mac's gh login, so the web
+                                           page needs no token and can't inject content)
+Any failure -> {rid, error}.
 
 Run:  uv run tools/quizlet_agent.py            (launchd: com.sly.flashdeck-quizlet)
 Test: uv run tools/quizlet_agent.py --set 220018802
 """
 import asyncio
+import base64
 import json
 import os
 import subprocess
@@ -23,6 +28,7 @@ from curl_cffi import requests
 
 RELAY = os.environ.get("FD_RELAY", "wss://flashdeck-relay.sylvesterassiamahpm.workers.dev/agent")
 API = "https://quizlet.com/webapi/3.4"
+REPO = "AssiamahS/flashdeck"
 PER_PAGE = 500  # Quizlet's cap
 
 
@@ -91,6 +97,58 @@ def fetch_set(set_id: str) -> dict:
     return {"title": meta.get("title", ""), "cards": cards}
 
 
+def slug(name: str) -> str:
+    """Same rule as Deck.slug in the apps and the web editor."""
+    return "".join(c for c in name.lower().replace(" ", "-") if c.isalnum() or c == "-")
+
+
+def gh(*args: str, body: dict | None = None) -> dict:
+    r = subprocess.run(["gh", "api", *args] + (["--input", "-"] if body is not None else []),
+                       input=json.dumps(body) if body is not None else None,
+                       capture_output=True, text=True)
+    if r.returncode:
+        raise RuntimeError(f"GitHub: {(r.stdout or r.stderr).strip()[:200]}")
+    return json.loads(r.stdout)
+
+
+def save_set(set_id: str, name: str, drop: list[int]) -> dict:
+    dropped = set(drop)
+    cards = [c for i, c in enumerate(fetch_set(set_id)["cards"]) if i not in dropped]
+    if not cards:
+        raise RuntimeError("No cards left to save.")
+    deck_id = slug(name)
+    for attempt in range(3):
+        f = gh(f"repos/{REPO}/contents/decks.json?ref=main")
+        data = json.loads(base64.b64decode(f["content"]))
+        deck = next((d for d in data["decks"] if d["id"] == deck_id), None)
+        if deck:
+            have = {c["front"] for c in deck["cards"]}
+            fresh = [c for c in cards if c["front"] not in have]
+            deck["cards"] += fresh
+            message = f"feat: import {len(fresh)} cards into {deck_id} from quizlet.com"
+            skipped = len(cards) - len(fresh)
+            saved = f"Added {len(fresh)} new cards to {deck['name']}" + (f" ({skipped} already there)" if skipped else "")
+        else:
+            data["decks"].append({"id": deck_id, "name": name, "cards": cards})
+            message = f"feat: import deck {deck_id} ({len(cards)} cards) from quizlet.com"
+            saved = f"Saved {len(cards)} cards as {name}"
+        content = base64.b64encode((json.dumps(data, indent=2, ensure_ascii=False) + "\n").encode()).decode()
+        try:
+            gh("-X", "PUT", f"repos/{REPO}/contents/decks.json",
+               body={"message": message, "branch": "main", "sha": f["sha"], "content": content})
+            return {"saved": saved}
+        except RuntimeError as e:
+            if "409" not in str(e) and "does not match" not in str(e) or attempt == 2:
+                raise  # anything but "edited elsewhere" is final
+    raise RuntimeError("decks.json kept changing — try again.")
+
+
+def handle(msg: dict) -> dict:
+    if msg.get("op") == "save":
+        return save_set(str(msg["setId"]), str(msg["name"]).strip()[:80], [int(i) for i in msg.get("drop", [])])
+    return fetch_set(str(msg["setId"]))
+
+
 async def serve() -> None:
     url = f"{RELAY}?key={agent_key()}"
     delay = 2
@@ -112,8 +170,8 @@ async def serve() -> None:
                             continue
                         msg = json.loads(raw)
                         try:
-                            result = await asyncio.to_thread(fetch_set, str(msg["setId"]))
-                            print(f"set {msg['setId']}: {len(result['cards'])} cards", flush=True)
+                            result = await asyncio.to_thread(handle, msg)
+                            print(f"{msg.get('op', 'fetch')} {msg['setId']}: {result.get('saved') or len(result['cards'])}", flush=True)
                         except Exception as e:  # report every failure back to the page
                             result = {"error": str(e)}
                             print(f"set {msg.get('setId')}: {e}", flush=True)

@@ -133,6 +133,8 @@ const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '
 const slug = name => name.toLowerCase().replace(/ /g, '-').replace(/[^\p{L}\p{N}-]/gu, '');
 
 let cards = [], source = 'the web';
+// set when the cards came from a link via the Mac: saving then goes through the Mac too (no token)
+let viaMac = null;
 
 // ---- bookmarklet: runs on the Quizlet page; same extractor as CardExtractor.swift ----
 function bookmarklet(target) {
@@ -175,6 +177,7 @@ window.addEventListener('message', e => {
   try { e.source.postMessage('flashdeck-ack', '*'); } catch {}
   if (cards.length && source === d.source) return; // repeat delivery
   source = d.source || 'the web';
+  viaMac = null;
   preview(d.cards.filter(c => c && c.front && c.back).map(c => ({ front: String(c.front), back: String(c.back) })), d.title);
 });
 if (location.hash === '#incoming') $('status').textContent = '';
@@ -213,7 +216,8 @@ $('fetchForm').onsubmit = async e => {
     fetchStatus(`Got ${d.cards.length} cards.`, 'ok');
     source = 'quizlet.com';
     $('deckName').value = '';
-    preview(d.cards, d.title);
+    viaMac = { url, total: d.cards.length };
+    preview(d.cards.map((c, i) => ({ ...c, _i: i })), d.title);
   } catch {
     fetchStatus('Couldn’t reach the relay — check your connection.', 'err');
   } finally {
@@ -239,6 +243,7 @@ $('parseBtn').onclick = () => {
   const found = parseText($('pasteBox').value);
   source = 'pasted text';
   if (!found.length) return alert('No cards found — use one card per line with a tab, " - " or a comma between front and back.');
+  viaMac = null;
   preview(found, '');
 };
 
@@ -259,8 +264,8 @@ function renderList() {
 }
 function syncToken() {
   const has = !!ls.get('fd_token');
-  $('tokenBox').classList.toggle('hidden', has);
-  $('changeToken').classList.toggle('hidden', !has);
+  $('tokenBox').classList.toggle('hidden', has || !!viaMac);
+  $('changeToken').classList.toggle('hidden', !has || !!viaMac);
 }
 $('changeToken').onclick = e => { e.preventDefault(); ls.set('fd_token', ''); syncToken(); };
 function status(msg, kind) { $('status').textContent = msg; $('status').className = 'status ' + (kind || ''); }
@@ -282,7 +287,32 @@ async function gh(url, token, opts = {}) {
   return res.json();
 }
 
+async function saveViaMac(name) {
+  const kept = new Set(cards.map(c => c._i));
+  const drop = [...Array(viaMac.total).keys()].filter(i => !kept.has(i));
+  $('saveBtn').disabled = true;
+  status('Saving…');
+  try {
+    const res = await fetch(RELAY + '/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: viaMac.url, name, drop }) });
+    const d = await res.json().catch(() => ({ error: 'Bad reply from the relay.' }));
+    if (d.error === 'mac-offline') return status('Your Mac went offline — try again when it’s back.', 'err');
+    if (d.error) return status(d.error, 'err');
+    $('status').innerHTML = `${esc(d.saved)} — live on the Echo Show, phone, watch and Mac in about a minute. <a href="study.html">Study it now</a>`;
+    $('status').className = 'status ok';
+  } catch {
+    status('Couldn’t reach the relay — check your connection.', 'err');
+  } finally {
+    $('saveBtn').disabled = false;
+  }
+}
+
 $('saveBtn').onclick = async () => {
+  if (viaMac) {
+    const name = $('deckName').value.trim();
+    if (!cards.length) return status('No cards to save.', 'err');
+    if (!name) return status('Give the deck a name.', 'err');
+    return saveViaMac(name);
+  }
   const typed = $('token').value.trim();
   if (typed) { ls.set('fd_token', typed); $('token').value = ''; }
   const token = ls.get('fd_token') || typed;
