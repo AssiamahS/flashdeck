@@ -3677,6 +3677,332 @@
           "back": "sick"
         }
       ]
+    },
+    {
+      "id": "ai-engineering-hub--roadmap-qa-math-llms-rag-agents-mcp-fine-tuning",
+      "name": "AI Engineering Hub — Roadmap Q&A (math, LLMs, RAG, agents, MCP, fine-tuning)",
+      "cards": [
+        {
+          "front": "What is AI engineering, and how is it different from classical ML engineering?",
+          "back": "Building applications on top of pre-trained foundation models (prompting, RAG, agents, fine-tuning, eval, serving) instead of training models from scratch on your own data."
+        },
+        {
+          "front": "What is a vector?",
+          "back": "An ordered list of numbers; in ML it represents a data point or an embedding in n-dimensional space."
+        },
+        {
+          "front": "What is a dot product and why does it matter in ML?",
+          "back": "Sum of element-wise products of two vectors; it measures alignment and is the core of similarity search and attention scores."
+        },
+        {
+          "front": "What is cosine similarity?",
+          "back": "Dot product of two vectors divided by the product of their lengths; measures the angle between them, ignoring magnitude. Used to compare embeddings."
+        },
+        {
+          "front": "What is a matrix multiplication doing in a neural network?",
+          "back": "Applying a linear transformation: every layer multiplies its input vector by a weight matrix, then adds a bias."
+        },
+        {
+          "front": "What is a gradient?",
+          "back": "The vector of partial derivatives of the loss with respect to each parameter; it points in the direction of steepest increase of the loss."
+        },
+        {
+          "front": "What is gradient descent?",
+          "back": "Repeatedly nudging parameters in the opposite direction of the gradient to reduce the loss."
+        },
+        {
+          "front": "What is a learning rate?",
+          "back": "The step size multiplied against the gradient on every update; too high diverges, too low crawls."
+        },
+        {
+          "front": "What is backpropagation?",
+          "back": "The chain rule applied layer by layer, from the loss backward to every weight, to compute all gradients in one pass."
+        },
+        {
+          "front": "What is a loss function?",
+          "back": "A number measuring how wrong the model's output is; training minimizes it. Cross-entropy is the standard loss for language models."
+        },
+        {
+          "front": "What is probability versus likelihood?",
+          "back": "Probability: how likely an outcome is given fixed parameters. Likelihood: how plausible parameters are given observed data."
+        },
+        {
+          "front": "What is a softmax?",
+          "back": "Turns a vector of raw scores (logits) into a probability distribution that sums to 1 by exponentiating and normalizing."
+        },
+        {
+          "front": "What is the normal (Gaussian) distribution and why is it everywhere?",
+          "back": "A bell curve defined by mean and variance; sums of many small random effects tend toward it (central limit theorem)."
+        },
+        {
+          "front": "What is overfitting?",
+          "back": "The model memorizes the training set and performs worse on new data; fix with more data, regularization, dropout, or early stopping."
+        },
+        {
+          "front": "What is a train/validation/test split?",
+          "back": "Train on one slice, tune hyperparameters on validation, report final numbers once on the untouched test slice."
+        },
+        {
+          "front": "What is a neural network?",
+          "back": "Stacked layers of weighted sums followed by nonlinear activations, trained by gradient descent to approximate a function."
+        },
+        {
+          "front": "What is an activation function and name three?",
+          "back": "A nonlinearity applied after each linear layer so the network can model curves; ReLU, GELU, sigmoid."
+        },
+        {
+          "front": "What is a token?",
+          "back": "The unit an LLM reads and writes: a word piece, character chunk, or symbol produced by a tokenizer (roughly 4 characters of English)."
+        },
+        {
+          "front": "What is a tokenizer such as BPE?",
+          "back": "Byte Pair Encoding merges the most frequent byte pairs into a vocabulary of sub-word tokens so any text can be encoded."
+        },
+        {
+          "front": "What is an embedding?",
+          "back": "A learned dense vector representing a token, sentence, or document so that similar meanings sit close together."
+        },
+        {
+          "front": "What does an LLM actually predict?",
+          "back": "A probability distribution over the next token given all previous tokens; text is generated one token at a time."
+        },
+        {
+          "front": "What is a transformer?",
+          "back": "The neural architecture behind modern LLMs: stacked blocks of self-attention plus feed-forward layers, trained to predict the next token."
+        },
+        {
+          "front": "What is self-attention?",
+          "back": "Each token builds a query, key, and value; it scores its query against every other token's key and takes a weighted sum of their values to pull in context."
+        },
+        {
+          "front": "What are Q, K, and V in attention?",
+          "back": "Query (what I am looking for), Key (what I contain), Value (what I pass along). Attention weight = softmax(QK^T / sqrt(d))."
+        },
+        {
+          "front": "What is multi-head attention?",
+          "back": "Running several attention heads in parallel so each can learn a different kind of relationship, then concatenating the results."
+        },
+        {
+          "front": "What is a positional encoding?",
+          "back": "Extra signal added to token embeddings so the transformer knows word order, since attention itself is order-blind. RoPE is the modern version."
+        },
+        {
+          "front": "What is a context window?",
+          "back": "The maximum number of tokens the model can attend to at once; everything outside it is invisible to the model."
+        },
+        {
+          "front": "What is a KV cache?",
+          "back": "Storing each token's key and value during generation so earlier tokens are not recomputed; it is why long outputs cost memory."
+        },
+        {
+          "front": "What is temperature in sampling?",
+          "back": "A divisor on the logits before softmax; low values make output deterministic, high values make it more random."
+        },
+        {
+          "front": "What is top-p (nucleus) sampling?",
+          "back": "Sampling only from the smallest set of tokens whose cumulative probability exceeds p, cutting off the long tail."
+        },
+        {
+          "front": "What is pretraining?",
+          "back": "Next-token prediction on trillions of tokens of raw internet text; it gives the model its knowledge and language ability."
+        },
+        {
+          "front": "What is supervised fine-tuning (SFT)?",
+          "back": "Further training on curated prompt/response pairs so the model follows instructions in a chat format."
+        },
+        {
+          "front": "What is RLHF?",
+          "back": "Reinforcement Learning from Human Feedback: a reward model trained on human preferences steers the policy toward helpful, safe answers."
+        },
+        {
+          "front": "What is DPO?",
+          "back": "Direct Preference Optimization: trains on preferred vs rejected answer pairs directly, without a separate reward model."
+        },
+        {
+          "front": "What is GRPO?",
+          "back": "Group Relative Policy Optimization: samples a group of answers per prompt and rewards those above the group average; used to train reasoning models like DeepSeek-R1."
+        },
+        {
+          "front": "What is a reasoning model?",
+          "back": "A model trained to emit a long chain of thought before the final answer, trading inference tokens for accuracy on hard problems."
+        },
+        {
+          "front": "What is LoRA?",
+          "back": "Low-Rank Adaptation: freezes the base weights and trains small rank-r matrices added to them, cutting fine-tuning memory by 10x or more."
+        },
+        {
+          "front": "What is QLoRA?",
+          "back": "LoRA on top of a 4-bit quantized base model so fine-tuning fits on a single consumer GPU."
+        },
+        {
+          "front": "What is quantization?",
+          "back": "Storing weights in fewer bits (8, 4) to shrink memory and speed up inference at a small accuracy cost; GGUF is the common local format."
+        },
+        {
+          "front": "What is Unsloth?",
+          "back": "A library that makes LoRA/QLoRA fine-tuning of open models roughly 2x faster and lighter; the hub uses it to fine-tune DeepSeek and Qwen."
+        },
+        {
+          "front": "What is Ollama?",
+          "back": "A local runtime that downloads and serves open models (Llama, Gemma, Qwen, DeepSeek) behind a simple HTTP API on your own machine."
+        },
+        {
+          "front": "What is knowledge distillation?",
+          "back": "Training a small student model to imitate a large teacher model's outputs so it keeps most of the quality at a fraction of the cost."
+        },
+        {
+          "front": "What is RAG?",
+          "back": "Retrieval-Augmented Generation: fetch relevant documents at query time and put them in the prompt so the model answers from your data instead of memory."
+        },
+        {
+          "front": "What are the stages of a RAG pipeline?",
+          "back": "Load documents, chunk them, embed each chunk, store in a vector DB, embed the query, retrieve top-k chunks, feed them plus the question to the LLM."
+        },
+        {
+          "front": "What is chunking and why does chunk size matter?",
+          "back": "Splitting documents into pieces before embedding; too big dilutes the embedding, too small loses context. Overlap keeps sentences intact."
+        },
+        {
+          "front": "What is a vector database and name three?",
+          "back": "A store optimized for nearest-neighbor search over embeddings; Qdrant, Milvus, Chroma (also pgvector in Postgres)."
+        },
+        {
+          "front": "What is hybrid search?",
+          "back": "Combining dense vector similarity with keyword (BM25) search so exact terms and semantic matches both score."
+        },
+        {
+          "front": "What is a reranker?",
+          "back": "A cross-encoder that re-scores the retrieved chunks against the query to put the best ones first before they reach the LLM."
+        },
+        {
+          "front": "What is ColBERT (late interaction)?",
+          "back": "Embeds every token instead of the whole passage and scores by per-token max similarity; more precise retrieval than single-vector embeddings."
+        },
+        {
+          "front": "What is agentic RAG?",
+          "back": "The model decides when and what to retrieve, can retry with a rewritten query, and can fall back to web search instead of a single fixed retrieve step."
+        },
+        {
+          "front": "What is corrective RAG (CRAG)?",
+          "back": "Grading retrieved documents for relevance and falling back to web search or query rewriting when they are weak."
+        },
+        {
+          "front": "What is a hallucination?",
+          "back": "A fluent but false output; mitigated with grounding (RAG), citations, lower temperature, and evaluation."
+        },
+        {
+          "front": "What is an AI agent?",
+          "back": "An LLM running in a loop that chooses tools, observes results, and keeps going until a goal is met."
+        },
+        {
+          "front": "What is the difference between a workflow and an agent (Anthropic's definition)?",
+          "back": "Workflow: LLM calls orchestrated by predefined code paths. Agent: the LLM itself directs its own steps and tool use dynamically."
+        },
+        {
+          "front": "What is the ReAct pattern?",
+          "back": "Reason + Act: the model alternates between a thought, a tool call, and reading the observation until it can answer."
+        },
+        {
+          "front": "What is tool calling (function calling)?",
+          "back": "The model emits a structured JSON call matching a declared schema; your code runs it and returns the result as the next message."
+        },
+        {
+          "front": "Name five agent workflow patterns from Anthropic's Building Effective Agents.",
+          "back": "Prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer."
+        },
+        {
+          "front": "What is a multi-agent system?",
+          "back": "Several specialized agents (researcher, writer, reviewer) coordinated by an orchestrator or handoffs; CrewAI, AutoGen, and LangGraph are frameworks for it."
+        },
+        {
+          "front": "What is CrewAI?",
+          "back": "A Python framework where agents have a role, goal, and backstory, work on tasks, and run as a Crew (autonomous) or a Flow (event-driven, deterministic)."
+        },
+        {
+          "front": "What is agent memory and what are its types?",
+          "back": "State an agent keeps across turns or sessions: short-term (conversation), long-term (vector or graph store), episodic (past runs). Zep and Graphiti build temporal knowledge graphs for it."
+        },
+        {
+          "front": "What is MCP?",
+          "back": "Model Context Protocol: an open standard where a client (Claude, Cursor) connects to servers that expose tools, resources, and prompts over JSON-RPC via stdio or HTTP."
+        },
+        {
+          "front": "What are the three primitives an MCP server can expose?",
+          "back": "Tools (functions the model can call), resources (data it can read), prompts (reusable templates)."
+        },
+        {
+          "front": "What is A2A (agent-to-agent protocol)?",
+          "back": "Google's protocol for agents to discover each other through an agent card and exchange tasks, complementary to MCP's tool connections."
+        },
+        {
+          "front": "What is context engineering?",
+          "back": "Deliberately deciding what goes into the context window each step: instructions, retrieved facts, memory, tool results, and compaction of history."
+        },
+        {
+          "front": "What is prompt caching?",
+          "back": "Reusing the processed prefix of a prompt (system prompt, documents) across calls so you pay a fraction of the input cost and get faster responses."
+        },
+        {
+          "front": "What is structured output?",
+          "back": "Forcing the model to return JSON matching a schema (Pydantic model) so downstream code can parse it reliably."
+        },
+        {
+          "front": "What is LLM-as-a-judge?",
+          "back": "Using a strong model with a rubric to score another model's outputs at scale when human grading is too slow."
+        },
+        {
+          "front": "What are the main RAG evaluation metrics?",
+          "back": "Faithfulness (answer grounded in context), answer relevance, context precision, context recall (RAGAS metrics)."
+        },
+        {
+          "front": "What is observability for LLM apps?",
+          "back": "Tracing every call with prompts, tool calls, latency, tokens, and cost (Opik, LangSmith, Langfuse) so failures can be replayed and measured."
+        },
+        {
+          "front": "What is a guardrail?",
+          "back": "A check before or after the model (input filter, output validator, policy rule) that blocks unsafe or off-policy behavior."
+        },
+        {
+          "front": "What is latency vs throughput in LLM serving?",
+          "back": "Latency: time to first token and per-token speed for one request. Throughput: tokens served per second across all requests. Batching trades one for the other."
+        },
+        {
+          "front": "What is time to first token (TTFT)?",
+          "back": "Delay before the first output token appears; dominated by prompt processing (prefill) and the main driver of perceived speed."
+        },
+        {
+          "front": "What is LitServe?",
+          "back": "A FastAPI-based serving framework from Lightning AI for deploying model and RAG endpoints with batching and autoscaling."
+        },
+        {
+          "front": "What is a multimodal model?",
+          "back": "A model that accepts more than text (images, audio, video) in its input; Llama 3.2 Vision, Gemma 3, and Qwen 2.5 VL are open examples."
+        },
+        {
+          "front": "What is OCR with a vision LLM?",
+          "back": "Sending an image to a multimodal model and asking for the text (or structured fields) instead of using a classical OCR engine."
+        },
+        {
+          "front": "What is a knowledge graph in AI apps?",
+          "back": "Entities and relationships stored as a graph; GraphRAG and Graphiti use it to answer multi-hop questions that vector search misses."
+        },
+        {
+          "front": "What is fine-tuning versus RAG, and when do you pick each?",
+          "back": "Fine-tune to change style, format, or skill; RAG to inject fresh or private facts. Start with prompting, then RAG, fine-tune last."
+        },
+        {
+          "front": "What is the Zero to Hero series by Karpathy and why do it?",
+          "back": "Ten videos building micrograd, makemore, and GPT from scratch in Python; it is the fastest way to understand what a transformer really computes."
+        },
+        {
+          "front": "What are the four 3Blue1Brown topics on LLMs?",
+          "back": "How neural networks learn, how transformers work, attention explained visually, how LLMs store facts in MLP layers."
+        },
+        {
+          "front": "What single book does the hub recommend for AI engineering?",
+          "back": "AI Engineering by Chip Huyen."
+        }
+      ]
     }
   ]
 }
