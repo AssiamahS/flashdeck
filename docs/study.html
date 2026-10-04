@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flash Deck — study</title>
+<meta name="description" content="Study your Flash Deck decks in the browser — same decks as the Echo Show, iPhone, watch and Mac.">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161d29; --panel2: #1d2635; --line: #2a3548;
+    --text: #e8edf5; --dim: #8b98ab; --accent: #4f8ef7;
+    --front-bg: #141A26; --back-bg: #0E2A1F;
+    --got: #2ea043; --miss: #e5534b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button { font: inherit; color: inherit; border: 0; cursor: pointer; background: none; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 16px 16px 32px; min-height: 100%; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  header img { width: 32px; height: 32px; border-radius: 8px; }
+  header h1 { font-size: 20px; margin: 0; flex: 1; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); display: grid; place-items: center; font-size: 18px; }
+  .icon-btn.off { opacity: .45; }
+  .muted { color: var(--dim); font-size: 14px; }
+
+  /* deck list */
+  .decks { display: grid; gap: 10px; }
+  .deck { text-align: left; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .deck:hover { border-color: var(--accent); }
+  .deck .row { display: flex; justify-content: space-between; gap: 12px; }
+  .deck .name { font-weight: 650; }
+  .bar { height: 6px; border-radius: 3px; background: var(--panel2); margin-top: 10px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+
+  /* study */
+  .top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .top .title { flex: 1; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .stage { position: relative; flex: 1; min-height: 360px; display: flex; }
+  .card {
+    position: relative; flex: 1; border-radius: 20px; border: 1px solid var(--line);
+    background: var(--front-bg); padding: 24px; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center; gap: 14px;
+    touch-action: pan-y; user-select: none; cursor: grab; overflow-y: auto;
+    transition: transform .25s ease, opacity .25s ease, background .2s;
+  }
+  .card.back { background: var(--back-bg); }
+  .card.dragging { transition: none; cursor: grabbing; }
+  .card .side { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .card .text { font-size: clamp(20px, 4.5vw, 28px); font-weight: 600; white-space: pre-wrap; }
+  .card .text.long { font-size: 17px; font-weight: 500; text-align: left; }
+  .card img, .card video { max-width: 100%; max-height: 50vh; border-radius: 12px; }
+  .stamp { position: absolute; top: 18px; padding: 4px 12px; border: 3px solid; border-radius: 8px; font-weight: 800; font-size: 20px; opacity: 0; pointer-events: none; }
+  .stamp.got { left: 18px; color: var(--got); transform: rotate(-12deg); }
+  .stamp.miss { right: 18px; color: var(--miss); transform: rotate(12deg); }
+  .say { position: absolute; right: 12px; bottom: 12px; }
+  .progress { height: 4px; background: var(--panel2); border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
+  .progress > i { display: block; height: 100%; background: var(--accent); transition: width .2s; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .controls button { padding: 14px 8px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); font-weight: 600; }
+  .controls .miss { color: var(--miss); }
+  .controls .got { color: var(--got); }
+  .keys { text-align: center; margin-top: 10px; }
+  .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; }
+  .done .big { font-size: 44px; font-weight: 800; }
+  .primary { background: var(--accent) !important; color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 650; }
+  .error { background: #3a1d1d; border: 1px solid var(--miss); padding: 12px; border-radius: 12px; }
+  @media (max-width: 480px) { .keys { display: none; } .controls button { padding: 14px 4px; font-size: 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const SOURCES = [
+  'https://raw.githubusercontent.com/AssiamahS/flashdeck/main/decks.json',
+  'https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/decks.json',
+];
+const app = document.getElementById('app');
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+// Leitner boxes 1-5 keyed by deck id + card front, same grading as the apps
+let boxes = store.get('fd.boxes', {});
+let speak = store.get('fd.speak', true);
+let decks = [];
+let s = null; // study session
+
+const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const key = (deck, card) => deck.id + '|' + card.front;
+const box = (deck, card) => boxes[key(deck, card)] || 1;
+const mastered = deck => deck.cards.filter(c => box(deck, c) >= 5).length;
+const climb = deck => deck.cards.length ? deck.cards.reduce((n, c) => n + box(deck, c) - 1, 0) / (deck.cards.length * 4) : 0;
+
+function say(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const t = String(text || '').replace(/\s+/g, ' ').replace(/\.$/, '').trim();
+  if (t) speechSynthesis.speak(new SpeechSynthesisUtterance(t));
+}
+
+async function load() {
+  app.innerHTML = '<p class="muted">Loading decks…</p>';
+  for (const url of SOURCES) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) continue;
+      decks = (await res.json()).decks.filter(d => d.cards?.length);
+      return home();
+    } catch {}
+  }
+  app.innerHTML = '<div class="error">Couldn\'t load decks.json from GitHub. Check your connection and reload.</div>';
+}
+
+function speakerButton() {
+  return `<button class="icon-btn ${speak ? '' : 'off'}" id="speak" title="Read cards aloud" aria-label="Read cards aloud">${speak ? '🔊' : '🔇'}</button>`;
+}
+function bindSpeaker(after) {
+  document.getElementById('speak').onclick = () => {
+    speak = !speak; store.set('fd.speak', speak);
+    if (!speak && 'speechSynthesis' in window) speechSynthesis.cancel();
+    after();
+  };
+}
+
+function home() {
+  s = null;
+  document.onkeydown = null;
+  app.innerHTML = `
+    <header>
+      <img src="https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/icons/icon108.png" alt="">
+      <h1>Flash Deck</h1>
+      ${speakerButton()}
+    </header>
+    <p class="muted" style="margin:0 0 14px">Same decks as the Echo Show, iPhone, watch and Mac. Progress on the web is saved in this browser.</p>
+    <div class="decks">${decks.map((d, i) => `
+      <button class="deck" data-i="${i}">
+        <div class="row"><span class="name">${esc(d.name)}</span><span class="muted">${d.cards.length} cards</span></div>
+        <div class="row muted" style="margin-top:2px"><span>${mastered(d)} mastered</span><span>${Math.round(climb(d) * 100)}%</span></div>
+        <div class="bar"><i style="width:${climb(d) * 100}%"></i></div>
+      </button>`).join('')}
+    </div>
+    <p class="muted" style="margin-top:20px"><a href="install.html" style="color:var(--accent)">Get the iPhone / Mac app</a> · <a href="editor.html" style="color:var(--accent)">Edit decks</a></p>`;
+  bindSpeaker(home);
+  app.querySelectorAll('.deck').forEach(b => b.onclick = () => study(decks[+b.dataset.i]));
+}
+
+function study(deck) {
+  // lowest boxes (least known) first, ties shuffled
+  const queue = deck.cards.map(c => [c, box(deck, c), Math.random()])
+    .sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(x => x[0]);
+  s = { deck, queue, i: 0, flipped: false, got: 0, missed: 0, history: [] };
+  document.onkeydown = onKey;
+  render(true);
+}
+
+function media(card) {
+  const img = s.flipped && card.backImage ? card.backImage : card.image;
+  let html = '';
+  if (img) html += `<img src="${esc(img)}" alt="" draggable="false">`;
+  if (card.video && !s.flipped) html += `<video src="${esc(card.video)}" autoplay loop muted playsinline></video>`;
+  return html;
+}
+
+function render(announce) {
+  if (s.i >= s.queue.length) return finished();
+  const card = s.queue[s.i];
+  const text = s.flipped ? card.back : card.front;
+  app.innerHTML = `
+    <div class="top">
+      <button class="icon-btn" id="back" aria-label="Back to decks">‹</button>
+      <span class="title">${esc(s.deck.name)}</span>
+      <span class="muted">${s.i + 1} / ${s.queue.length}</span>
+      ${speakerButton()}
+    </div>
+    <div class="progress"><i style="width:${s.i / s.queue.length * 100}%"></i></div>
+    <div class="stage">
+      <div class="card ${s.flipped ? 'back' : ''}" id="card">
+        <span class="stamp got">GOT IT</span><span class="stamp miss">MISSED</span>
+        <span class="side">${s.flipped ? 'Answer' : 'Question'} · box ${box(s.deck, card)}</span>
+        ${media(card)}
+        <div class="text ${String(text).length > 160 ? 'long' : ''}">${esc(text)}</div>
+        <span class="muted">${s.flipped ? 'Swipe right if you got it, left if you missed' : 'Tap to flip'}</span>
+        <button class="icon-btn say" id="say" aria-label="Read this card">🗣</button>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="miss" id="miss">✗ Missed</button>
+      <button id="undo" ${s.history.length ? '' : 'disabled style="opacity:.4"'}>↶ Undo</button>
+      <button id="skip">Skip</button>
+      <button class="got" id="got">✓ Got it</button>
+    </div>
+    <p class="muted keys">Space/↑ flip · ↓ skip · ← missed · → got it · Z undo</p>`;
+  document.getElementById('back').onclick = home;
+  bindSpeaker(() => render(false));
+  document.getElementById('say').onclick = e => { e.stopPropagation(); say(text); };
+  document.getElementById('miss').onclick = () => grade(false);
+  document.getElementById('got').onclick = () => grade(true);
+  document.getElementById('skip').onclick = skip;
+  document.getElementById('undo').onclick = undo;
+  bindSwipe(document.getElementById('card'));
+  if (announce && speak) say(text);
+}
+
+function bindSwipe(el) {
+  let x0 = null, y0 = 0, dx = 0, moved = false;
+  el.onpointerdown = e => {
+    if (e.target.closest('button')) return;
+    x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false;
+    el.setPointerCapture(e.pointerId); el.classList.add('dragging');
+  };
+  el.onpointermove = e => {
+    if (x0 == null) return;
+    dx = e.clientX - x0;
+    if (Math.abs(dx) > 8 || Math.abs(e.clientY - y0) > 8) moved = true;
+    el.style.transform = `translateX(${dx}px) rotate(${dx / 20}deg)`;
+    el.querySelector('.stamp.got').style.opacity = Math.max(0, Math.min(1, dx / 100));
+    el.querySelector('.stamp.miss').style.opacity = Math.max(0, Math.min(1, -dx / 100));
+  };
+  const end = () => {
+    if (x0 == null) return;
+    x0 = null; el.classList.remove('dragging');
+    if (Math.abs(dx) > 110) return grade(dx > 0, dx > 0 ? 1 : -1);
+    el.style.transform = '';
+    el.querySelectorAll('.stamp').forEach(st => st.style.opacity = 0);
+    if (!moved) flip();
+  };
+  el.onpointerup = end;
+  el.onpointercancel = end;
+}
+
+function flip() {
+  s.flipped = !s.flipped;
+  render(s.flipped);
+}
+
+function grade(got, dir) {
+  const card = s.queue[s.i], k = key(s.deck, card);
+  s.history.push({ i: s.i, k, prev: boxes[k], got });
+  boxes[k] = got ? Math.min(box(s.deck, card) + 1, 5) : 1;
+  store.set('fd.boxes', boxes);
+  got ? s.got++ : s.missed++;
+  advance(dir ?? (got ? 1 : -1));
+}
+
+function skip() {
+  s.history.push({ i: s.i, skip: true });
+  advance(0);
+}
+
+function advance(dir) {
+  const el = document.getElementById('card');
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  const next = () => { s.i++; s.flipped = false; render(true); };
+  if (!el || !dir) return next();
+  el.style.transform = `translateX(${dir * 120}%) rotate(${dir * 18}deg)`;
+  el.style.opacity = 0;
+  setTimeout(next, 220);
+}
+
+function undo() {
+  const h = s.history.pop();
+  if (!h) return;
+  if (!h.skip) {
+    if (h.prev == null) delete boxes[h.k]; else boxes[h.k] = h.prev;
+    store.set('fd.boxes', boxes);
+    h.got ? s.got-- : s.missed--;
+  }
+  s.i = h.i; s.flipped = false;
+  render(true);
+}
+
+function finished() {
+  const total = s.got + s.missed;
+  app.innerHTML = `
+    <div class="top"><button class="icon-btn" id="back" aria-label="Back to decks">‹</button><span class="title">${esc(s.deck.name)}</span></div>
+    <div class="done">
+      <div class="big">${total ? Math.round(s.got / total * 100) : 0}%</div>
+      <div>${s.got} got it · ${s.missed} missed</div>
+      <div class="muted">${mastered(s.deck)} of ${s.deck.cards.length} cards mastered</div>
+      <button class="primary" id="again">Study again</button>
+    </div>`;
+  document.getElementById('back').onclick = home;
+  document.getElementById('again').onclick = () => study(s.deck);
+  if (speak) say(`${s.got} got it, ${s.missed} missed`);
+}
+
+function onKey(e) {
+  if (!s || s.i >= s.queue.length || e.metaKey || e.ctrlKey || e.altKey) return;
+  const act = { ' ': flip, ArrowUp: flip, ArrowDown: skip, ArrowLeft: () => grade(false), ArrowRight: () => grade(true), z: undo, Escape: home }[e.key];
+  if (act) { e.preventDefault(); act(); }
+}
+
+load();
+</script>
+</body>
+</html>
