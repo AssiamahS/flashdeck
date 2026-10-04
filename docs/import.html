@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flash Deck — import</title>
+<meta name="description" content="Import a Quizlet set (or any pasted list) into Flash Deck from the browser.">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161d29; --panel2: #1d2635; --line: #2a3548;
+    --text: #e8edf5; --dim: #8b98ab; --accent: #4f8ef7; --got: #2ea043; --miss: #e5534b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 16px 16px 48px; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  header img { width: 32px; height: 32px; border-radius: 8px; }
+  header h1 { font-size: 20px; margin: 0; flex: 1; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  .panel h2 { font-size: 16px; margin: 0 0 8px; }
+  .muted { color: var(--dim); font-size: 14px; }
+  ol { margin: 8px 0 0; padding-left: 20px; }
+  ol li { margin: 6px 0; }
+  input, textarea {
+    width: 100%; font: inherit; color: var(--text); background: var(--panel2);
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  }
+  textarea { min-height: 140px; resize: vertical; font-size: 14px; }
+  button, .btn {
+    font: inherit; font-weight: 600; border: 0; border-radius: 10px; cursor: pointer;
+    padding: 11px 16px; background: var(--panel2); color: var(--text); text-decoration: none; display: inline-block;
+  }
+  .primary { background: var(--accent); color: #fff; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+  .row > input { flex: 1; min-width: 200px; }
+  .bookmarklet {
+    display: inline-block; padding: 10px 16px; border-radius: 10px; background: var(--got); color: #fff;
+    font-weight: 700; text-decoration: none; cursor: grab;
+  }
+  .tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .tabs button.on { background: var(--accent); color: #fff; }
+  .cards { list-style: none; margin: 12px 0 0; padding: 0; max-height: 50vh; overflow-y: auto; border-top: 1px solid var(--line); }
+  .cards li { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .cards li .x { background: none; padding: 0 6px; color: var(--dim); }
+  .status { margin-top: 10px; font-weight: 600; }
+  .status.ok { color: var(--got); }
+  .status.err { color: var(--miss); }
+  .hidden { display: none !important; }
+  code { background: var(--panel2); padding: 1px 5px; border-radius: 5px; font-size: 13px; }
+  @media (max-width: 480px) { .cards li { grid-template-columns: 1fr auto; } .cards li .b { grid-column: 1; color: var(--dim); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/media/icons/icon108.png" alt="">
+    <h1>Import cards</h1>
+    <a href="study.html">Study</a>
+  </header>
+
+  <div class="tabs">
+    <button id="tabLink" class="on">From a Quizlet link</button>
+    <button id="tabPaste">Paste text</button>
+  </div>
+
+  <section class="panel" id="linkView">
+    <h2>Quizlet (or any flashcard page)</h2>
+    <p class="muted" style="margin:0">Quizlet blocks servers with a captcha, so the cards are read inside your own browser — the same way the iPhone and Mac apps do it.</p>
+    <ol>
+      <li><b>One time:</b> drag this button to your bookmarks bar →
+        <a class="bookmarklet" id="bm" href="#">⬇ Send to Flash Deck</a>
+        <div class="muted" id="bmHelpToggle" style="margin-top:6px"><a href="#" id="bmHelp">No bookmarks bar / on a phone?</a></div>
+        <div class="muted hidden" id="bmHelpText" style="margin-top:6px">
+          Bookmark any page, edit the bookmark, and replace its address with this code:
+          <textarea id="bmCode" readonly style="min-height:70px;margin-top:6px"></textarea>
+          <button id="copyBm" style="margin-top:6px">Copy code</button>
+        </div>
+      </li>
+      <li>Open the set:
+        <div class="row"><input id="link" type="url" placeholder="https://quizlet.com/123456789/…" autocomplete="off"><button class="primary" id="openLink">Open</button></div>
+      </li>
+      <li>On the Quizlet page (finish any “press &amp; hold” check first), click <b>Send to Flash Deck</b>. The cards land back here, ready to save.</li>
+    </ol>
+  </section>
+
+  <section class="panel hidden" id="pasteView">
+    <h2>Paste cards</h2>
+    <p class="muted" style="margin:0 0 8px">One card per line: <code>front⇥back</code> (Quizlet’s Export default), or <code>front - back</code>, or <code>front,back</code>.</p>
+    <textarea id="pasteBox" placeholder="CIA triad	Confidentiality, Integrity, Availability"></textarea>
+    <div class="row"><button class="primary" id="parseBtn">Preview cards</button></div>
+  </section>
+
+  <section class="panel hidden" id="previewView">
+    <h2 id="previewTitle">Preview</h2>
+    <label class="muted" for="deckName">Deck name — an existing name adds the new cards to that deck</label>
+    <input id="deckName" style="margin-top:6px">
+    <ul class="cards" id="cardList"></ul>
+    <div id="tokenBox" class="hidden" style="margin-top:12px">
+      <p class="muted" style="margin:0 0 6px">One-time: saving needs a GitHub token (it stays in this browser, shared with the deck editor).
+        <a target="_blank" rel="noopener" href="https://github.com/settings/personal-access-tokens/new?name=Flash+Deck+web&target_name=AssiamahS&expires_in=365&contents=write">Create one</a> — pick only the <b>flashdeck</b> repo.</p>
+      <input id="token" type="password" placeholder="github_pat_…" autocomplete="off">
+    </div>
+    <div class="row"><button class="primary" id="saveBtn">Save to Flash Deck</button><a href="#" id="changeToken" class="muted hidden">Change token</a></div>
+    <div class="status" id="status"></div>
+  </section>
+</div>
+
+<script>
+const OWNER = 'AssiamahS', REPO = 'flashdeck', PATH = 'decks.json', BRANCH = 'main';
+const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
+const HERE = location.origin + location.pathname;
+const $ = id => document.getElementById(id);
+const ls = {
+  get(k) { try { return localStorage.getItem(k) || ''; } catch { return ''; } },
+  set(k, v) { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch {} },
+};
+const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// same rule as Deck.slug in the apps and the editor
+const slug = name => name.toLowerCase().replace(/ /g, '-').replace(/[^\p{L}\p{N}-]/gu, '');
+
+let cards = [], source = 'the web';
+
+// ---- bookmarklet: runs on the Quizlet page; same extractor as CardExtractor.swift ----
+function bookmarklet(target) {
+  const clean = s => (s || '').replace(/\s+/g, ' ').trim();
+  const pairs = [];
+  const push = (f, b) => { f = clean(f); b = clean(b); if (f && b && f !== b) pairs.push({ front: f, back: b }); };
+  const tt = Array.from(document.querySelectorAll('.TermText, [class*="TermText"]')).map(e => e.innerText);
+  if (tt.length >= 2) for (let i = 0; i + 1 < tt.length; i += 2) push(tt[i], tt[i + 1]);
+  if (!pairs.length) document.querySelectorAll('.card, .flashcard, [class*="flashcard"]').forEach(c => {
+    const q = c.querySelector('[class*="question"], [class*="front"], [class*="term"]');
+    const a = c.querySelector('[class*="answer"], [class*="back"], [class*="definition"]');
+    if (q && a) push(q.innerText, a.innerText);
+  });
+  if (!pairs.length) document.querySelectorAll('dl').forEach(dl => {
+    dl.querySelectorAll('dt').forEach(dt => { const dd = dt.nextElementSibling; if (dd && dd.tagName === 'DD') push(dt.innerText, dd.innerText); });
+  });
+  if (!pairs.length) document.querySelectorAll('table').forEach(t => {
+    t.querySelectorAll('tr').forEach(tr => { const c = tr.querySelectorAll('td'); if (c.length === 2) push(c[0].innerText, c[1].innerText); });
+  });
+  if (!pairs.length) { alert('Flash Deck: no cards found on this page. If Quizlet shows a check, finish it, scroll the whole set, then try again.'); return; }
+  const title = clean(document.title).replace(/\s*(Flashcards\s*\|\s*Quizlet|\|\s*Quizlet|- Brainscape|\|\s*Cram\.com)\s*$/i, '');
+  const msg = { flashdeck: 1, title, source: location.hostname.replace(/^www\./, ''), cards: pairs };
+  const w = window.open(target + '#incoming', '_blank');
+  if (!w) { alert('Flash Deck: allow pop-ups for this site, then click the bookmark again.'); return; }
+  let tries = 0;
+  const timer = setInterval(() => { if (++tries > 60) clearInterval(timer); try { w.postMessage(msg, '*'); } catch (e) {} }, 250);
+  window.addEventListener('message', e => { if (e.data === 'flashdeck-ack') clearInterval(timer); });
+}
+const bmCode = 'javascript:' + encodeURIComponent('(' + bookmarklet.toString() + ')(' + JSON.stringify(HERE) + ')');
+$('bm').href = bmCode;
+$('bmCode').value = bmCode;
+$('bm').onclick = e => { e.preventDefault(); alert('Drag this button to your bookmarks bar, then click it on a Quizlet set.'); };
+$('bmHelp').onclick = e => { e.preventDefault(); $('bmHelpText').classList.toggle('hidden'); };
+$('copyBm').onclick = async () => { try { await navigator.clipboard.writeText(bmCode); $('copyBm').textContent = 'Copied'; } catch { $('bmCode').select(); } };
+
+// cards arriving from the bookmarklet
+window.addEventListener('message', e => {
+  const d = e.data;
+  if (!d || d.flashdeck !== 1 || !Array.isArray(d.cards)) return;
+  try { e.source.postMessage('flashdeck-ack', '*'); } catch {}
+  if (cards.length && source === d.source) return; // repeat delivery
+  source = d.source || 'the web';
+  preview(d.cards.filter(c => c && c.front && c.back).map(c => ({ front: String(c.front), back: String(c.back) })), d.title);
+});
+if (location.hash === '#incoming') $('status').textContent = '';
+
+// ---- tabs / link / paste ----
+function tab(link) {
+  $('tabLink').classList.toggle('on', link); $('tabPaste').classList.toggle('on', !link);
+  $('linkView').classList.toggle('hidden', !link); $('pasteView').classList.toggle('hidden', link);
+}
+$('tabLink').onclick = () => tab(true);
+$('tabPaste').onclick = () => tab(false);
+$('openLink').onclick = () => {
+  let u = $('link').value.trim();
+  if (!u) return;
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  window.open(u, '_blank', 'noopener');
+};
+
+function parseText(text) {
+  const out = [];
+  for (const line of text.split(/\r?\n/)) {
+    if (!line.trim()) continue;
+    let parts;
+    if (line.includes('\t')) parts = line.split('\t');
+    else if (/\s[-–—]\s/.test(line)) parts = line.split(/\s[-–—]\s/);
+    else if (line.includes(',')) parts = line.split(',');
+    else continue;
+    const front = parts.shift().trim(), back = parts.join(', ').trim();
+    if (front && back) out.push({ front, back });
+  }
+  return out;
+}
+$('parseBtn').onclick = () => {
+  const found = parseText($('pasteBox').value);
+  source = 'pasted text';
+  if (!found.length) return alert('No cards found — use one card per line with a tab, " - " or a comma between front and back.');
+  preview(found, '');
+};
+
+// ---- preview + save ----
+function preview(list, title) {
+  cards = list;
+  $('previewView').classList.remove('hidden');
+  if (title && !$('deckName').value) $('deckName').value = title;
+  renderList();
+  syncToken();
+  status('');
+  $('previewView').scrollIntoView({ behavior: 'smooth' });
+}
+function renderList() {
+  $('previewTitle').textContent = `Preview — ${cards.length} card${cards.length === 1 ? '' : 's'} from ${source}`;
+  $('cardList').innerHTML = cards.map((c, i) => `<li><span>${esc(c.front)}</span><span class="b">${esc(c.back)}</span><button class="x" data-i="${i}" aria-label="Remove">✕</button></li>`).join('');
+  $('cardList').querySelectorAll('.x').forEach(b => b.onclick = () => { cards.splice(+b.dataset.i, 1); renderList(); });
+}
+function syncToken() {
+  const has = !!ls.get('fd_token');
+  $('tokenBox').classList.toggle('hidden', has);
+  $('changeToken').classList.toggle('hidden', !has);
+}
+$('changeToken').onclick = e => { e.preventDefault(); ls.set('fd_token', ''); syncToken(); };
+function status(msg, kind) { $('status').textContent = msg; $('status').className = 'status ' + (kind || ''); }
+
+const b64ToUtf8 = b64 => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\n/g, '')), c => c.charCodeAt(0)));
+function utf8ToB64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function gh(url, token, opts = {}) {
+  opts.headers = { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + token };
+  const res = await fetch(url, opts);
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(`${res.status}: ${body.message || 'request failed'}`);
+  }
+  return res.json();
+}
+
+$('saveBtn').onclick = async () => {
+  const typed = $('token').value.trim();
+  if (typed) { ls.set('fd_token', typed); $('token').value = ''; }
+  const token = ls.get('fd_token') || typed;
+  const name = $('deckName').value.trim();
+  if (!cards.length) return status('No cards to save.', 'err');
+  if (!name) return status('Give the deck a name.', 'err');
+  if (!token) return status('Paste a GitHub token first.', 'err');
+  const id = slug(name);
+  $('saveBtn').disabled = true;
+  status('Saving…');
+  try {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const f = await gh(`${API}?ref=${BRANCH}&t=${Date.now()}`, token);
+      const data = JSON.parse(b64ToUtf8(f.content));
+      const deck = data.decks.find(d => d.id === id);
+      let message, done;
+      if (deck) {
+        const have = new Set(deck.cards.map(c => c.front));
+        const fresh = cards.filter(c => !have.has(c.front));
+        deck.cards.push(...fresh);
+        message = `feat: import ${fresh.length} cards into ${id} from ${source}`;
+        const skipped = cards.length - fresh.length;
+        done = `Added ${fresh.length} new cards to ${deck.name}` + (skipped ? ` (${skipped} already there)` : '');
+      } else {
+        data.decks.push({ id, name, cards });
+        message = `feat: import deck ${id} (${cards.length} cards) from ${source}`;
+        done = `Saved ${cards.length} cards as ${name}`;
+      }
+      try {
+        await gh(API, token, { method: 'PUT', body: JSON.stringify({ message, branch: BRANCH, sha: f.sha, content: utf8ToB64(JSON.stringify(data, null, 2) + '\n') }) });
+      } catch (e) {
+        if (e.message.startsWith('409') && attempt === 0) continue; // edited elsewhere: reload and retry once
+        throw e;
+      }
+      syncToken();
+      $('status').innerHTML = `${esc(done)} — live on the Echo Show, phone, watch and Mac in about a minute. <a href="study.html">Study it now</a>`;
+      $('status').className = 'status ok';
+      return;
+    }
+  } catch (e) {
+    if (/^40[13]/.test(e.message)) { ls.set('fd_token', ''); syncToken(); status('GitHub rejected the token — paste a new one (Contents: read and write on flashdeck).', 'err'); }
+    else status('Save failed — ' + e.message, 'err');
+  } finally {
+    $('saveBtn').disabled = false;
+  }
+};
+</script>
+</body>
+</html>

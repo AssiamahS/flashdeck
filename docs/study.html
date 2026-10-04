@@ -78,9 +78,11 @@
 <body>
 <div class="wrap" id="app"></div>
 <script>
+// contents API first: always fresh, so a deck imported a moment ago shows up (raw is CDN-cached ~5 min)
 const SOURCES = [
-  'https://raw.githubusercontent.com/AssiamahS/flashdeck/main/decks.json',
-  'https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/decks.json',
+  ['https://api.github.com/repos/AssiamahS/flashdeck/contents/decks.json?ref=main', { headers: { Accept: 'application/vnd.github.raw+json' } }],
+  ['https://raw.githubusercontent.com/AssiamahS/flashdeck/main/decks.json', { cache: 'no-store' }],
+  ['https://cdn.jsdelivr.net/gh/AssiamahS/flashdeck@main/decks.json', {}],
 ];
 const app = document.getElementById('app');
 const store = {
@@ -108,9 +110,9 @@ function say(text) {
 
 async function load() {
   app.innerHTML = '<p class="muted">Loading decks…</p>';
-  for (const url of SOURCES) {
+  for (const [url, opts] of SOURCES) {
     try {
-      const res = await fetch(url, { cache: 'no-store' });
+      const res = await fetch(url, opts);
       if (!res.ok) continue;
       decks = (await res.json()).decks.filter(d => d.cards?.length);
       return home();
@@ -147,7 +149,7 @@ function home() {
         <div class="bar"><i style="width:${climb(d) * 100}%"></i></div>
       </button>`).join('')}
     </div>
-    <p class="muted" style="margin-top:20px"><a href="install.html" style="color:var(--accent)">Get the iPhone / Mac app</a> · <a href="editor.html" style="color:var(--accent)">Edit decks</a></p>`;
+    <p class="muted" style="margin-top:20px"><a href="install.html" style="color:var(--accent)">Get the iPhone / Mac app</a> · <a href="import.html" style="color:var(--accent)">Import from Quizlet</a> · <a href="editor.html" style="color:var(--accent)">Edit decks</a></p>`;
   bindSpeaker(home);
   app.querySelectorAll('.deck').forEach(b => b.onclick = () => study(decks[+b.dataset.i]));
 }
