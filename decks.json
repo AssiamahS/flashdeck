@@ -131,46 +131,6 @@
       "id": "security-plus",
       "cards": [
         {
-          "front": "CIA triad",
-          "back": "Confidentiality, Integrity, Availability — the three pillars of information security"
-        },
-        {
-          "front": "Phishing",
-          "back": "Social engineering attack using fraudulent messages to steal credentials or data"
-        },
-        {
-          "front": "MFA",
-          "back": "Multi-Factor Authentication — something you know, have, and are"
-        },
-        {
-          "front": "Zero Trust",
-          "back": "Security model: never trust, always verify — no implicit trust by network location"
-        },
-        {
-          "front": "Symmetric vs asymmetric encryption",
-          "back": "Symmetric = one shared key (AES). Asymmetric = public/private key pair (RSA)"
-        },
-        {
-          "front": "DDoS",
-          "back": "Distributed Denial of Service — flooding a target from many sources to make it unavailable"
-        },
-        {
-          "front": "Least privilege",
-          "back": "Users get only the minimum access needed to do their job"
-        },
-        {
-          "front": "SIEM",
-          "back": "Security Information and Event Management — aggregates and analyzes security logs in real time"
-        },
-        {
-          "front": "Ransomware",
-          "back": "Malware that encrypts data and demands payment for the decryption key"
-        },
-        {
-          "front": "Social engineering",
-          "back": "Manipulating people, not systems, to gain access or information"
-        },
-        {
           "front": "A security administrator wants to implement a logon script that will prevent MITM attacks on the local LAN. Which of the following commands should the security administrator implement within the script to accomplish this task?\nA. arp - s 192.168.1.1 00-3a-d1-fa-b1-06\nB. dig - x@192.168.1.1 mypc.comptia.com\nC. nmap - A - T4 192.168.1.1\nD. tcpdump - lnv host 192.168.1.1 or either 00:3a:d1:fa:b1:06",
           "back": "A. arp - s 192.168.1.1 00-3a-d1-fa-b1-06"
         },
