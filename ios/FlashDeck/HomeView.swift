@@ -5,6 +5,7 @@ struct HomeView: View {
     @State private var showSettings = false
     @State private var showEditor = false
     @State private var showImport = false
+    @State private var quizDeck: Deck?
 
     var body: some View {
         NavigationStack {
@@ -15,6 +16,13 @@ struct HomeView: View {
                             DeckTile(deck: deck)
                         }
                         .buttonStyle(.plain)
+                        .contextMenu {
+                            if QuizBuilder.canQuiz(deck) {
+                                Button("Practice Test", systemImage: "list.bullet.clipboard") {
+                                    quizDeck = deck
+                                }
+                            }
+                        }
                     }
                 }
                 .padding()
@@ -28,6 +36,9 @@ struct HomeView: View {
             .navigationTitle("Flash Deck")
             .navigationDestination(for: Deck.self) { deck in
                 StudyView(deck: deck)
+            }
+            .navigationDestination(item: $quizDeck) { deck in
+                QuizView(deck: deck)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

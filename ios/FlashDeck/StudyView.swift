@@ -67,6 +67,17 @@ struct StudyView: View {
         .navigationTitle(deck.name)
         .inlineTitleBar()
         .toolbar {
+            if QuizBuilder.canQuiz(deck) {
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink {
+                        QuizView(deck: deck)
+                    } label: {
+                        Image(systemName: "list.bullet.clipboard")
+                    }
+                    .accessibilityLabel("Practice test")
+                    .accessibilityIdentifier("quizButton")
+                }
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     speaker.enabled.toggle()

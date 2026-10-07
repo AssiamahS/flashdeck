@@ -3,6 +3,25 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.12.0 — 2026-10-07
+
+Practice Test mode (iPhone + Mac 1.8.0).
+
+- New quiz screen in the style of the CompTIA practice-question apps:
+  "Points: x/y", progress bar, the question, and one colored tile per
+  answer. Tap an answer → the right one gets a check, a wrong pick gets
+  an ✗, then the arrow moves on.
+- Security+ cards are parsed as real multiple choice (the "A. … D." lines
+  in the front, the answer line(s) in the back). "Select TWO/THREE"
+  questions ask for that many picks before checking.
+- Term/definition decks get four options too: the right back plus three
+  backs from the same deck. Image/video cards are left out.
+- Order is weakest Leitner box first; every answer grades the card's box,
+  so quizzing and swiping share progress. End screen shows the score,
+  the 85% exam bar, and "Retry the N missed".
+- Open it from the clipboard button in a deck's toolbar, or long-press a
+  deck on the home screen → Practice Test.
+
 ## v0.11.0 — 2026-09-30
 
 Keyboard study controls (iPhone/iPad with a keyboard + Mac 1.7).
