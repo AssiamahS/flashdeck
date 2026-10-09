@@ -14,7 +14,9 @@ struct FlashDeckWatchApp: App {
 
 enum WatchTheme {
     static let accent = Color(red: 0.98, green: 0.72, blue: 0.24)
-    static let card = Color.white.opacity(0.10)
+    /// Study card faces: question side is blue, answer side is green.
+    static let question = Color(red: 0.36, green: 0.62, blue: 1.0)
+    static let answer = Color(red: 0.30, green: 0.85, blue: 0.45)
 }
 
 /// Percent ring used on the deck list and the session summary.

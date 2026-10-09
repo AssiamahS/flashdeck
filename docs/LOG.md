@@ -3,6 +3,13 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-10-09 · v0.12.1 — watch Q/A colors
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Watch card face: one grey card for both sides + 9pt "answer" caption | easy to lose track of which side is showing mid-session | ❌ |
+| Blue Q / green A badge + tinted card + border per side (`WatchTheme.question` / `.answer`) | no watch SDK on the Mac (CLT only) → verified by the CI compile; TestFlight carries the watch app, ad hoc IPA never did | ✅ |
+
 ## 2026-09-28 · v0.10.1 — Mac save
 
 | Tried | Result | Verdict |

@@ -3,6 +3,16 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.12.1 — 2026-10-09
+
+Watch: color-coded question / answer (iOS + watch 1.8.1).
+
+- The study card on the watch now says which side you're on: a blue "Q ·
+  Question" header with a blue tinted card for the front, a green "A ·
+  Answer" header with a green tinted card once you flip. Same blue/green
+  as the ✗/✓ grading.
+- Nothing else on the phone, Mac or Echo Show changes.
+
 ## v0.12.0 — 2026-10-07
 
 Practice Test mode (iPhone + Mac 1.8.0).

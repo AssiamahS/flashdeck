@@ -113,6 +113,7 @@ struct WatchCardFace: View {
     let flipped: Bool
 
     private var text: String { flipped ? card.back : card.front }
+    private var tint: Color { flipped ? WatchTheme.answer : WatchTheme.question }
     private var imageURL: URL? {
         let raw = flipped ? (card.backImage ?? card.image) : card.image
         return raw.flatMap(ImageURL.normalize).flatMap(URL.init(string:))
@@ -121,6 +122,21 @@ struct WatchCardFace: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 6) {
+                // Color-coded header: blue Q for the question side, green A for the answer side
+                HStack(spacing: 4) {
+                    Text(flipped ? "A" : "Q")
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
+                        .foregroundStyle(.black)
+                        .frame(width: 18, height: 18)
+                        .background(tint, in: Circle())
+                    Text(flipped ? "Answer" : "Question")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(tint)
+                    Spacer(minLength: 0)
+                    Text(flipped ? "" : "tap to flip")
+                        .font(.system(size: 9))
+                        .foregroundStyle(.tertiary)
+                }
                 if let imageURL {
                     AsyncImage(url: imageURL) { img in
                         img.resizable().scaledToFit()
@@ -134,14 +150,13 @@ struct WatchCardFace: View {
                     .font(text.count > 200 ? .caption2 : text.count > 60 ? .footnote : .body.weight(.semibold))
                     .multilineTextAlignment(text.contains("\n") || text.count > 60 ? .leading : .center)
                     .frame(maxWidth: .infinity, alignment: text.contains("\n") || text.count > 60 ? .leading : .center)
-                Text(flipped ? "answer" : "tap to flip")
-                    .font(.system(size: 9))
-                    .foregroundStyle(.tertiary)
             }
             .padding(8)
             .frame(maxWidth: .infinity, minHeight: 84)
         }
-        .background(WatchTheme.card, in: RoundedRectangle(cornerRadius: 14))
+        .background(tint.opacity(0.18), in: RoundedRectangle(cornerRadius: 14))
+        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(tint.opacity(0.6), lineWidth: 1.5))
         .frame(maxHeight: .infinity)
+        .animation(.easeInOut(duration: 0.2), value: flipped)
     }
 }
