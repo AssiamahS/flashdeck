@@ -3,6 +3,20 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.13.0 — 2026-10-09
+
+Practice Test on the Apple Watch (iOS + watch 1.9.0).
+
+- Tapping a deck on the watch opens a deck screen: Flashcards or
+  Practice test. Home also has a Practice test button for the last deck.
+- Same questions as the phone (Security+ lettered multiple choice, other
+  decks get three distractors from the same deck), weakest Leitner box first.
+- One colored tile per answer. Tap to answer; "Select TWO" questions take
+  the picks and a Check button. Right answer gets a check, a wrong pick an
+  ✗, haptic on each, then Next. Crown scrolls long questions.
+- Every answer grades the card's box and syncs to the phone like a swipe.
+- End screen: score, percent against the 85% exam bar, Retry missed.
+
 ## v0.12.1 — 2026-10-09
 
 Watch: color-coded question / answer (iOS + watch 1.8.1).

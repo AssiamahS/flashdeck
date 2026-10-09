@@ -10,7 +10,7 @@ settings:
   base:
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: QGMAWHX827
-    MARKETING_VERSION: 1.8.1
+    MARKETING_VERSION: 1.9.0
     CURRENT_PROJECT_VERSION: 1
 targets:
   FlashDeck:
@@ -51,6 +51,7 @@ targets:
       - path: FlashDeck/Models.swift
       - path: FlashDeck/LeitnerSync.swift
       - path: FlashDeck/ImageURL.swift
+      - path: FlashDeck/Quiz.swift
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.djsly.flashdeck.watchkitapp
       CODE_SIGN_STYLE: Automatic

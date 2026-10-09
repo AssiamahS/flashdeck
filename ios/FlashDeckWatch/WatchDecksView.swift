@@ -33,7 +33,7 @@ struct DeckRow: View {
     let deck: Deck
 
     var body: some View {
-        NavigationLink(value: deck) {
+        NavigationLink(value: WatchHomeView.Route.deck(deck)) {
             HStack(spacing: 10) {
                 ProgressRing(value: store.progress(deck), size: 36, lineWidth: 3.5)
                 VStack(alignment: .leading, spacing: 2) {

@@ -3,6 +3,13 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-10-09 · v0.13.0 — watch practice test
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Share `FlashDeck/Quiz.swift` into the watch target by path (pure Foundation) | one QuizBuilder for phone, Mac and watch — no duplicated parser | ✅ |
+| Deck row → Flashcards / Practice test chooser instead of straight into flashcards | one extra tap, but the test is discoverable; Home "Continue learning" still goes straight in | ✅ |
+
 ## 2026-10-09 · v0.12.1 — watch Q/A colors
 
 | Tried | Result | Verdict |

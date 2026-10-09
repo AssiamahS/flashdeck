@@ -35,6 +35,16 @@ struct WatchHomeView: View {
                         .foregroundStyle(.black)
                     }
 
+                    if let deck = store.lastDeck, QuizBuilder.canQuiz(deck) {
+                        NavigationLink(value: Route.quiz(deck)) {
+                            Text("Practice test")
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.teal)
+                    }
+
                     NavigationLink(value: Route.decks) {
                         Text("Decks")
                             .frame(maxWidth: .infinity)
@@ -53,6 +63,8 @@ struct WatchHomeView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .decks: WatchDecksView()
+                case .deck(let deck): WatchDeckView(deck: deck)
+                case .quiz(let deck): WatchQuizView(deck: deck)
                 }
             }
             .task { await store.load() }
@@ -62,5 +74,7 @@ struct WatchHomeView: View {
 
     enum Route: Hashable {
         case decks
+        case deck(Deck)
+        case quiz(Deck)
     }
 }
