@@ -74,7 +74,8 @@ jobs:
 
   adhoc:
     # USB sideload lane: signed IPA for registered devices, no App Store / TestFlight involved.
-    # Watch app is left out here (ad-hoc profiles need a registered watch UDID); TestFlight carries it.
+    # Watch app rides along only when repo variable ADHOC_WATCH=1 (set once the watch UDID is
+    # registered in the portal; ad-hoc profiles must list it). Otherwise it is stripped.
     name: Ad-hoc IPA (sideload)
     runs-on: macos-26
     timeout-minutes: 45
@@ -94,10 +95,14 @@ jobs:
           cp "$RUNNER_TEMP/asc/AuthKey.p8" "$HOME/private_keys/AuthKey_${ASC_KEY_ID}.p8"
       - name: Install XcodeGen
         run: brew install xcodegen
-      - name: Generate Xcode project (iPhone only)
+      - name: Generate Xcode project
+        env:
+          ADHOC_WATCH: ${{ vars.ADHOC_WATCH }}
         run: |
           sed -i '' "s/^    CURRENT_PROJECT_VERSION: .*/    CURRENT_PROJECT_VERSION: $GITHUB_RUN_NUMBER/" project.yml
-          sed -i '' '/^    dependencies:$/{N;/FlashDeckWatch/d;}' project.yml
+          if [ "$ADHOC_WATCH" != "1" ]; then
+            sed -i '' '/^    dependencies:$/{N;/FlashDeckWatch/d;}' project.yml
+          fi
           xcodegen generate
       - name: Archive (unsigned — export does the cloud signing)
         env:
@@ -135,6 +140,7 @@ jobs:
       - name: Publish install page (docs/ → GitHub Pages)
         env:
           GH_TOKEN: ${{ github.token }}
+          ADHOC_WATCH: ${{ vars.ADHOC_WATCH }}
         run: |
           cd "$GITHUB_WORKSPACE"
           VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' ios/build/FlashDeck.xcarchive/Products/Applications/FlashDeck.app/Info.plist)
@@ -142,6 +148,9 @@ jobs:
           cp ios/build/adhoc/*.ipa docs/ipa/FlashDeck.ipa
           sed -i '' -E "s#<key>bundle-version</key><string>[^<]*</string>#<key>bundle-version</key><string>${VERSION}</string>#" docs/ipa/manifest.plist
           sed -i '' -E "s/Build [0-9]+ \(v[^)]*\) · [0-9-]+ ·/Build $GITHUB_RUN_NUMBER (v$VERSION) · $(date -u +%Y-%m-%d) ·/" docs/install.html
+          if [ "$ADHOC_WATCH" = "1" ]; then
+            sed -i '' 's/Watch app not included in this build\./Includes the Apple Watch app (installs to the watch from the Watch app on the iPhone)./' docs/install.html
+          fi
           git checkout -- ios/project.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
