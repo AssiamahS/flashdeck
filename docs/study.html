@@ -14,6 +14,7 @@
     --text: #e8edf5; --dim: #8b98ab; --accent: #4f8ef7;
     --front-bg: #141A26; --back-bg: #0E2A1F;
     --got: #2ea043; --miss: #e5534b;
+    --quiz-teal: #40c8e0; --quiz-pink: #ff375f;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
@@ -33,8 +34,10 @@
 
   /* deck list */
   .decks { display: grid; gap: 10px; }
-  .deck { text-align: left; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .deck { text-align: left; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; cursor: pointer; }
   .deck:hover { border-color: var(--accent); }
+  .deck .test { font-size: 13px; font-weight: 650; color: #fff; background: var(--quiz-teal); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+  .deck .test:hover { filter: brightness(1.15); }
   .deck .row { display: flex; justify-content: space-between; gap: 12px; }
   .deck .name { font-weight: 650; }
   .bar { height: 6px; border-radius: 3px; background: var(--panel2); margin-top: 10px; overflow: hidden; }
@@ -71,6 +74,32 @@
   .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; }
   .done .big { font-size: 44px; font-weight: 800; }
   .primary { background: var(--accent) !important; color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 650; }
+  /* practice test (same tiles as the iPhone / Mac / watch) */
+  .quiz { flex: 1; display: flex; flex-direction: column; }
+  .points { display: flex; justify-content: space-between; font-weight: 650; font-size: 15px; margin-bottom: 8px; }
+  .progress.pink > i { background: var(--quiz-pink); }
+  .prompt { font-size: 18px; font-weight: 500; text-align: center; white-space: pre-wrap; padding: 12px 4px 16px; }
+  .pick { text-align: center; font-size: 13px; font-weight: 650; color: var(--dim); margin-bottom: 8px; }
+  .tiles { display: grid; gap: 10px; }
+  .tile {
+    display: flex; align-items: center; gap: 10px; text-align: left; width: 100%;
+    color: #fff; padding: 14px; border-radius: 8px; font-size: 16px; line-height: 1.35;
+    box-shadow: inset 0 0 0 0 #fff; transition: opacity .2s, box-shadow .15s;
+  }
+  .tile span { flex: 1; white-space: pre-wrap; }
+  .tile .mark { flex: 0; font-size: 20px; }
+  .tile.picked { box-shadow: inset 0 0 0 3px #fff; }
+  .tile.dim { opacity: .3; }
+  .tile:not(.locked):hover { filter: brightness(1.08); }
+  .tile.locked { cursor: default; }
+  .next-row { display: flex; justify-content: flex-end; margin-top: 16px; }
+  .next { width: 52px; height: 52px; border-radius: 50%; background: var(--quiz-teal); color: #fff; font-size: 22px; font-weight: 800; display: grid; place-items: center; }
+  .next:disabled { opacity: .35; cursor: default; }
+  .done .pct { font-size: 20px; }
+  .done .pct.pass { color: var(--got); }
+  .done .pct.fail { color: #ff9f0a; }
+  .secondary { background: var(--panel) !important; border: 1px solid var(--line) !important; padding: 12px 20px; border-radius: 12px; font-weight: 650; }
+  .secondary.red { color: var(--miss); }
   .error { background: #3a1d1d; border: 1px solid var(--miss); padding: 12px; border-radius: 12px; }
   @media (max-width: 480px) { .keys { display: none; } .controls button { padding: 14px 4px; font-size: 15px; } }
 </style>
@@ -94,6 +123,7 @@ let boxes = store.get('fd.boxes', {});
 let speak = store.get('fd.speak', true);
 let decks = [];
 let s = null; // study session
+let q = null; // practice test session
 
 const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const key = (deck, card) => deck.id + '|' + card.front;
@@ -134,7 +164,7 @@ function bindSpeaker(after) {
 }
 
 function home() {
-  s = null;
+  s = null; q = null;
   document.onkeydown = null;
   app.innerHTML = `
     <header>
@@ -144,21 +174,27 @@ function home() {
     </header>
     <p class="muted" style="margin:0 0 14px">Same decks as the Echo Show, iPhone, watch and Mac. Progress on the web is saved in this browser.</p>
     <div class="decks">${decks.map((d, i) => `
-      <button class="deck" data-i="${i}">
+      <div class="deck" data-i="${i}" role="button" tabindex="0">
         <div class="row"><span class="name">${esc(d.name)}</span><span class="muted">${d.cards.length} cards</span></div>
         <div class="row muted" style="margin-top:2px"><span>${mastered(d)} mastered</span><span>${Math.round(climb(d) * 100)}%</span></div>
         <div class="bar"><i style="width:${climb(d) * 100}%"></i></div>
-      </button>`).join('')}
+        ${canQuiz(d) ? `<div class="row" style="margin-top:10px;justify-content:flex-end"><button class="test" data-i="${i}">Practice test</button></div>` : ''}
+      </div>`).join('')}
     </div>
     <p class="muted" style="margin-top:20px"><a href="install.html" style="color:var(--accent)">Get the iPhone / Mac app</a> · <a href="import.html" style="color:var(--accent)">Import from Quizlet</a> · <a href="editor.html" style="color:var(--accent)">Edit decks</a></p>`;
   bindSpeaker(home);
-  app.querySelectorAll('.deck').forEach(b => b.onclick = () => study(decks[+b.dataset.i]));
+  app.querySelectorAll('.deck').forEach(b => {
+    b.onclick = () => study(decks[+b.dataset.i]);
+    b.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); study(decks[+b.dataset.i]); } };
+  });
+  app.querySelectorAll('.test').forEach(b => b.onclick = e => { e.stopPropagation(); quiz(decks[+b.dataset.i]); });
 }
 
 function study(deck) {
   // lowest boxes (least known) first, ties shuffled
   const queue = deck.cards.map(c => [c, box(deck, c), Math.random()])
     .sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(x => x[0]);
+  q = null;
   s = { deck, queue, i: 0, flipped: false, got: 0, missed: 0, history: [] };
   document.onkeydown = onKey;
   render(true);
@@ -244,11 +280,16 @@ function flip() {
   render(true); // read the side that's now showing — question again when flipping back
 }
 
+function gradeBox(deck, card, got) {
+  const k = key(deck, card);
+  boxes[k] = got ? Math.min(box(deck, card) + 1, 5) : 1;
+  store.set('fd.boxes', boxes);
+}
+
 function grade(got, dir) {
   const card = s.queue[s.i], k = key(s.deck, card);
   s.history.push({ i: s.i, k, prev: boxes[k], got });
-  boxes[k] = got ? Math.min(box(s.deck, card) + 1, 5) : 1;
-  store.set('fd.boxes', boxes);
+  gradeBox(s.deck, card, got);
   got ? s.got++ : s.missed++;
   advance(dir ?? (got ? 1 : -1));
 }
@@ -296,9 +337,167 @@ function finished() {
 }
 
 function onKey(e) {
+  if (q) return onQuizKey(e);
   if (!s || s.i >= s.queue.length || e.metaKey || e.ctrlKey || e.altKey) return;
   const act = { ' ': flip, ArrowUp: flip, ArrowDown: skip, ArrowLeft: () => grade(false), ArrowRight: () => grade(true), z: undo, Escape: home }[e.key];
   if (act) { e.preventDefault(); act(); }
+}
+
+// ---------- practice test (port of ios/FlashDeck/Quiz.swift + QuizView.swift) ----------
+const PALETTE = ['#40c8e0', '#30d158', '#ff9f0a', '#ff453a', '#bf5af2', '#0a84ff', '#ff375f', '#5e5ce6'];
+const OPTION_LINE = /^([A-H])\.\s*(.+)$/;
+const textOnly = c => !c.image && !c.backImage && !c.video;
+const canQuiz = deck => deck.cards.length >= 3 && deck.cards.some(textOnly);
+
+// "A. …" lines in the front are the options, "A. …" lines in the back are the answer key.
+function lettered(card) {
+  const prompt = [], options = [];
+  for (const raw of String(card.front).split('\n')) {
+    const line = raw.trim(), m = line.match(OPTION_LINE);
+    if (m) options.push({ letter: m[1], text: m[2] });
+    else if (!options.length) prompt.push(line);
+    else if (line) options[options.length - 1].text += ' ' + line; // wrapped option text
+  }
+  if (options.length < 2) return null;
+  const answers = String(card.back).split('\n').map(l => (l.trim().match(OPTION_LINE) || [])[1]).filter(Boolean);
+  const correct = new Set(options.map((o, i) => answers.includes(o.letter) ? i : -1).filter(i => i >= 0));
+  if (!correct.size) return null;
+  return { card, prompt: prompt.join('\n').trim(), options: options.map(o => o.text), correct };
+}
+
+// term → pick the right back out of four, distractors from the rest of the deck
+function borrowed(card, pool) {
+  const answer = String(card.back).trim();
+  if (!answer || !card.front) return null;
+  const others = shuffle([...new Set(pool.filter(b => b && b !== answer))]).slice(0, 3);
+  if (others.length < 2) return null;
+  const options = shuffle([...others, answer]);
+  return { card, prompt: card.front, options, correct: new Set([options.indexOf(answer)]) };
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function buildQuestions(deck) {
+  const pool = deck.cards.map(c => String(c.back).trim());
+  return deck.cards.flatMap(card => {
+    if (!textOnly(card)) return [];
+    const l = lettered(card);
+    if (l) return [l];
+    // lettered front whose answer key didn't parse: skip rather than guess
+    const letteredLines = String(card.front).split('\n').filter(x => OPTION_LINE.test(x.trim())).length;
+    const b = letteredLines >= 2 ? null : borrowed(card, pool);
+    return b ? [b] : [];
+  });
+}
+
+// weakest Leitner box first, shuffled within each box so tests don't repeat
+const orderedQuestions = deck => buildQuestions(deck).map(x => [x, box(deck, x.card), Math.random()])
+  .sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(x => x[0]);
+
+function quiz(deck) {
+  s = null;
+  q = { deck };
+  startQuiz(orderedQuestions(deck));
+  document.onkeydown = onKey;
+}
+
+function startQuiz(list) {
+  Object.assign(q, { questions: list, i: 0, picked: new Set(), checked: false, points: 0, missed: [] });
+  renderQuiz();
+}
+
+function renderQuiz() {
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  if (!q.questions.length) {
+    app.innerHTML = `
+      <div class="top"><button class="icon-btn" id="back" aria-label="Back to decks">‹</button><span class="title">${esc(q.deck.name)}</span></div>
+      <div class="done"><div class="big">No questions</div><div class="muted">This deck has no text cards to quiz on.</div></div>`;
+    document.getElementById('back').onclick = home;
+    return;
+  }
+  if (q.i >= q.questions.length) return quizSummary();
+  const qu = q.questions[q.i], done = q.i + (q.checked ? 1 : 0), need = qu.correct.size;
+  const ready = q.checked || q.picked.size === need;
+  app.innerHTML = `
+    <div class="top">
+      <button class="icon-btn" id="back" aria-label="Back to decks">‹</button>
+      <span class="title">${esc(q.deck.name)}</span>
+      <span class="muted">${q.i + 1} / ${q.questions.length}</span>
+    </div>
+    <div class="points"><span id="quizPoints">Points: ${q.points}/${done}</span></div>
+    <div class="progress pink"><i style="width:${done / q.questions.length * 100}%"></i></div>
+    <div class="quiz">
+      <div class="prompt">${esc(qu.prompt)}</div>
+      ${need > 1 && !q.checked ? `<div class="pick">Pick ${need}</div>` : ''}
+      <div class="tiles">${qu.options.map((opt, i) => {
+        const right = qu.correct.has(i), picked = q.picked.has(i);
+        const dim = q.checked && !right && !picked;
+        const mark = q.checked && right ? '✓' : q.checked && picked ? '✗' : picked ? '●' : '';
+        return `<button class="tile ${picked ? 'picked' : ''} ${dim ? 'dim' : ''} ${q.checked ? 'locked' : ''}"
+          style="background:${PALETTE[i % PALETTE.length]}" data-i="${i}" aria-pressed="${picked}">
+          <span>${esc(opt)}</span>${mark ? `<b class="mark">${mark}</b>` : ''}</button>`;
+      }).join('')}</div>
+      <div class="next-row"><button class="next" id="next" ${ready ? '' : 'disabled'} aria-label="${q.checked ? 'Next' : 'Check'}">${q.checked ? '→' : '✓'}</button></div>
+      <p class="muted keys">1-${qu.options.length} pick · Enter ${q.checked ? 'next' : 'check'} · Esc decks</p>
+    </div>`;
+  document.getElementById('back').onclick = home;
+  document.getElementById('next').onclick = () => q.checked ? quizAdvance() : quizCheck();
+  app.querySelectorAll('.tile').forEach(t => t.onclick = () => pickOption(+t.dataset.i));
+}
+
+function pickOption(i) {
+  if (q.checked) return;
+  const qu = q.questions[q.i], need = qu.correct.size;
+  if (q.picked.has(i)) q.picked.delete(i);
+  else if (need === 1) { q.picked = new Set([i]); return quizCheck(); }
+  else if (q.picked.size < need) q.picked.add(i);
+  renderQuiz();
+}
+
+function quizCheck() {
+  const qu = q.questions[q.i];
+  if (q.checked || q.picked.size !== qu.correct.size) return;
+  q.checked = true;
+  const right = [...q.picked].every(i => qu.correct.has(i));
+  if (right) q.points++; else q.missed.push(qu);
+  gradeBox(q.deck, qu.card, right);
+  renderQuiz();
+}
+
+function quizAdvance() {
+  q.i++; q.picked = new Set(); q.checked = false;
+  renderQuiz();
+}
+
+function quizSummary() {
+  const n = q.questions.length, pct = Math.round(q.points / n * 100), pass = q.points * 100 >= n * 85;
+  app.innerHTML = `
+    <div class="top"><button class="icon-btn" id="back" aria-label="Back to decks">‹</button><span class="title">${esc(q.deck.name)}</span></div>
+    <div class="done">
+      <div class="big">${q.points}/${n}</div>
+      <div class="pct ${pass ? 'pass' : 'fail'}">${pct}% correct</div>
+      <div class="muted">Aim for 85% before booking the exam.</div>
+      <div style="height:12px"></div>
+      ${q.missed.length ? `<button class="secondary red" id="retry">Retry the ${q.missed.length} missed</button>` : ''}
+      <button class="primary" id="again">New test</button>
+    </div>`;
+  document.getElementById('back').onclick = home;
+  document.getElementById('again').onclick = () => startQuiz(orderedQuestions(q.deck));
+  const r = document.getElementById('retry');
+  if (r) r.onclick = () => startQuiz(shuffle([...q.missed]));
+  if (speak) say(`${q.points} out of ${n}, ${pct} percent`);
+}
+
+function onQuizKey(e) {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'Escape') { e.preventDefault(); return home(); }
+  if (!q.questions || q.i >= q.questions.length) return;
+  if (e.key === 'Enter') { e.preventDefault(); return q.checked ? quizAdvance() : quizCheck(); }
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= q.questions[q.i].options.length) { e.preventDefault(); pickOption(n - 1); }
 }
 
 load();

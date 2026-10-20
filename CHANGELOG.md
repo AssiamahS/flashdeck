@@ -3,6 +3,25 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.14.0 — 2026-10-20
+
+Practice Test on the web (docs/study.html).
+
+- Every deck with text cards gets a "Practice test" pill on the home list,
+  next to the normal tap-to-study.
+- Same questions as the phone: Security+ style "A. …" lettered cards use
+  their own options and answer key (Select TWO = pick both, then Check);
+  plain term/definition decks get three distractors from the same deck.
+  Weakest Leitner box first, shuffled within a box.
+- One colored tile per answer (teal, green, orange, red, purple, blue,
+  pink, indigo, same order as iPhone / Mac / watch). Picked tile gets a
+  white ring; after grading the right answer shows ✓, a wrong pick ✗, the
+  rest dim. Points and a pink progress bar on top.
+- Every answer grades the card's box in this browser's localStorage, same
+  as a swipe in study mode (web progress is still not synced with the apps).
+- End screen: score, percent against the 85% exam bar, Retry the missed,
+  New test. Keyboard: 1-8 pick, Enter check / next, Esc back.
+
 ## v0.13.0 — 2026-10-09
 
 Practice Test on the Apple Watch (iOS + watch 1.9.0).
