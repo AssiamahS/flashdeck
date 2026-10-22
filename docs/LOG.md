@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-10-22 · v0.15.0 — practice test explanations
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| `claude -p --bare` for batch explanations | "Not logged in" — --bare skips the keychain login | ❌ → drop --bare, keep `--strict-mcp-config --tools ""` |
+| Prompt asked for keyDoubt "if the key is likely wrong" | model filled it in for loosely worded but correct keys ("C - the key matches") | ❌ → prompt demands a DIFFERENT letter + merge drops doubts naming a keyed letter |
+| Web explanation card + verdict read-aloud + auto-next on `utterance.onend` | headless Chromium: wrong pick shows why, right shows why, auto-next advanced after 1.5 s muted | ✅ |
+
 ## 2026-10-09 · v0.13.0 — watch practice test
 
 | Tried | Result | Verdict |

@@ -1,0 +1,765 @@
+{
+ "0": {
+  "why": "Active/passive clustering keeps a standby node ready to take over if the active node fails, which improves availability through redundancy and failover.",
+  "whyNot": {
+   "A": "Failover redundancy does not control who can read data, so confidentiality is not affected.",
+   "B": "Integrity concerns preventing unauthorized modification, which clustering does not address.",
+   "D": "Non-repudiation relies on digital signatures and logging, not on node redundancy."
+  }
+ },
+ "1": {
+  "why": "Biometrics (fingerprint, iris) are an inherence factor tied to the person, so they cannot be lost or misplaced and can gate physical entry.",
+  "whyNot": {
+   "A": "Key management is an administrative process for cryptographic or physical keys, not an authentication factor.",
+   "C": "A hardware token is a possession factor and can be lost, stolen, or misplaced.",
+   "D": "A password is a knowledge factor, can be forgotten or shared, and is not a physical control."
+  }
+ },
+ "2": {
+  "why": "Symmetric encryption uses one shared secret key, so both parties must exchange that key securely before any encrypted message can be sent.",
+  "whyNot": {
+   "B": "Digital signatures provide integrity and non-repudiation and are not a prerequisite for symmetric encryption.",
+   "C": "Agreeing on an algorithm matters, but it is usually negotiated alongside or before the key exchange as part of the same handshake.",
+   "D": "Digital certificates support asymmetric key distribution and authentication, and are not required to start symmetric encryption."
+  }
+ },
+ "3": {
+  "why": "The recovery process runs under a domain administrator account, which the key classifies as a service account used by the system for restoration tasks.",
+  "whyNot": {
+   "A": "A shared account is used by multiple people, which is not described here.",
+   "B": "A guest account has minimal privileges and could not restore a domain controller.",
+   "D": "A standard user account lacks the privileges needed to recover a domain controller."
+  }
+ },
+ "4": {
+  "why": "Vendor diversity avoids dependence on one supplier's products, so a single vendor flaw or outage does not take down everything, which improves resiliency.",
+  "whyNot": {
+   "A": "Sustainability concerns long-term environmental or operational viability, not vendor diversity.",
+   "B": "Homogeneity is the opposite of diversity and increases shared-vulnerability risk.",
+   "D": "Configurability is about adjustable settings and is not the main benefit of using multiple vendors."
+  }
+ },
+ "5": {
+  "why": "A cloud-based recovery site is always available, scales on demand, and needs the least staff effort, which suits a trading firm that must stay operational.",
+  "whyNot": {
+   "A": "A hot site is a duplicate facility that needs ongoing staffing and maintenance, so it costs more man hours.",
+   "B": "A warm site needs configuration and data restoration before use, which delays recovery and takes manual work.",
+   "C": "A cold site has only space and power and requires the most setup time and labor."
+  }
+ },
+ "6": {
+  "why": "After evidence is collected and secured, the incident response plan is formally initiated to coordinate containment and limit business impact.",
+  "whyNot": {
+   "A": "Identifying the attacking host is investigative work that comes after the response is coordinated and does not reduce impact first.",
+   "C": "Lessons learned is the final phase of incident response, after recovery.",
+   "D": "Eradication and recovery come after the response plan is initiated and the incident is contained."
+  }
+ },
+ "7": {
+  "why": "Auditing file system permissions needs authenticated access to the host, which only a credentialed scan provides.",
+  "whyNot": {
+   "A": "OS enumeration can usually be done by fingerprinting without credentials.",
+   "B": "Network footprinting is done externally and needs no credentials.",
+   "C": "Open port and listening service checks work in an unauthenticated scan."
+  }
+ },
+ "8": {
+  "why": "strcpy copies user input into a 12-byte buffer without bounds checking, so longer input overflows the buffer and corrupts adjacent memory, a classic buffer overflow.",
+  "whyNot": {
+   "A": "No pointer is dereferenced improperly or left uninitialized in this code.",
+   "C": "No arithmetic on integer values is performed that could wrap around.",
+   "D": "Nothing in the code gives hidden or unauthorized access, so it is not a backdoor."
+  }
+ },
+ "9": {
+  "why": "The Admins group has rw access, so the permission bits should allow the change; the trailing plus sign means an extended ACL is overriding them.",
+  "whyNot": {
+   "A": "SELinux enforcing could block access, but nothing in the output indicates it, and the plus sign points to an ACL.",
+   "B": "Permissive mode only logs violations and does not block access.",
+   "D": "The group has read and write permission, so group permissions are adequate on their own."
+  },
+  "keyDoubt": "C: The plus sign after the permission bits indicates an extended ACL entry that can deny the user despite the standard group rw permissions."
+ },
+ "10": {
+  "why": "Physical shredding destroys the media itself, so the drive cannot be reused and the data cannot be recovered.",
+  "whyNot": {
+   "B": "Wiping clears data but leaves the drive usable.",
+   "C": "Low-level formatting erases data but the drive remains reusable.",
+   "D": "Repartitioning only changes the partition table and leaves data recoverable.",
+   "E": "Overwriting sanitizes data but the drive can still be reused."
+  }
+ },
+ "11": {
+  "why": "Adware shows unwanted ads and installs toolbars, causing browser slowness, crashes, and high memory use.",
+  "whyNot": {
+   "A": "Man-in-the-browser malware intercepts transactions stealthily and does not typically add a visible search toolbar.",
+   "B": "Spoofing is impersonating another identity, not a type of malware infection.",
+   "C": "Spyware collects data covertly and usually does not install visible toolbars."
+  }
+ },
+ "12": {
+  "why": "Pivoting means using a compromised host as a stepping stone to attack other systems deeper inside the network.",
+  "whyNot": {
+   "A": "Privilege escalation raises access rights on a system, not movement to other hosts.",
+   "B": "Persistence keeps access across reboots or logouts and does not describe attacking onward.",
+   "C": "Fingerprinting identifies systems and services and is not launching attacks from a compromised host."
+  }
+ },
+ "13": {
+  "why": "A competitor is motivated by market advantage and steals proprietary information to cut its own development time.",
+  "whyNot": {
+   "B": "Hacktivists are driven by ideology or political causes, not market advantage.",
+   "C": "Insiders may steal data, but the market-edge motive points to a competing business.",
+   "D": "Organized crime seeks direct financial gain, such as ransom or resale, rather than speeding its own product development."
+  }
+ },
+ "14": {
+  "why": "A wildcard certificate covers any host under a domain, so one certificate can be installed on several servers and still match each host name.",
+  "whyNot": {
+   "B": "Extended validation certificates show stronger identity vetting and do not cover multiple host names.",
+   "C": "Certificate chaining describes the trust path to a root CA, not host name coverage."
+  }
+ },
+ "15": {
+  "why": "Making a forensic copy (bit-for-bit image) first lets all analysis happen on the copy, preserving the original evidence and its integrity for chain of custody.",
+  "whyNot": {
+   "B": "Hashing is important but is done on the original and the copy to verify integrity after the image is made, not as the first protective step.",
+   "C": "Recovering data directly from the original risks altering evidence and should only be done on a forensic copy.",
+   "D": "Updating the evidence log is documentation that happens throughout, but it does not itself protect the original drive from alteration."
+  }
+ },
+ "16": {
+  "why": "Steganography hides data inside another file such as a .jpg image, which matches the exfiltration method described.",
+  "whyNot": {
+   "A": "MITM intercepts communications between two parties and does not describe hiding data inside image files.",
+   "B": "A covert channel is a broader concept for hidden communication paths; embedding data in images is specifically steganography.",
+   "C": "Hashing creates a fixed-length digest for integrity and does not hide data inside files."
+  }
+ },
+ "17": {
+  "why": "Recovery Time Objective (RTO) is the target time within which a system must be restored to operational state after an outage.",
+  "whyNot": {
+   "A": "MTBF measures the average time between failures, not restoration of service.",
+   "B": "MTTR is the average time to repair, a measured metric, whereas RTO is the business-defined restoration target.",
+   "D": "RPO defines the maximum tolerable data loss measured in time, not how fast a system is restored."
+  },
+  "keyDoubt": "B MTTR is the more common answer for the average time to restore a system to operational state, though RTO is a defensible alternative."
+ },
+ "18": {
+  "why": "A remote exploit targets a vulnerability in a host over the network and can give the attacker full control of the vulnerable system.",
+  "whyNot": {
+   "B": "Amplification is a DDoS technique that magnifies traffic volume and does not give control of a host.",
+   "C": "Sniffing passively captures network traffic and does not by itself provide control of a host.",
+   "D": "Man-in-the-middle intercepts or alters communications but does not inherently take over a vulnerable host."
+  },
+  "keyDoubt": "A Remote exploit is the one that lets an attacker take full control of a vulnerable host over the network; sniffing is only passive capture."
+ },
+ "19": {
+  "why": "The payload attempts to reach /etc/passwd using obfuscated, padded characters, which indicates an attempt to disguise a path traversal-style request and slip past WAF filtering.",
+  "whyNot": {
+   "A": "CSRF tricks an authenticated user's browser into sending unwanted requests and has no such payload structure.",
+   "B": "A buffer overflow would involve oversized input or shellcode patterns, not an obfuscated file path.",
+   "C": "SQL injection would contain SQL syntax such as quotes, UNION, or OR 1=1, which is absent here.",
+   "D": "JavaScript data insertion would include script content or DOM manipulation, not an attempt to reference /etc/passwd."
+  }
+ },
+ "20": {
+  "why": "In incident response, after detection and initial analysis, the team should identify the scope and source of the active connection before choosing containment actions.",
+  "whyNot": {
+   "B": "Eradication and recovery come after containment and cannot be done before the incident is understood and contained.",
+   "C": "Containment is a likely next phase, but disconnecting before identifying the source may lose volatile evidence and miss other affected systems.",
+   "D": "Formatting the server destroys evidence and skips analysis, containment, and proper eradication steps."
+  },
+  "keyDoubt": "C Active exfiltration is ongoing, so the next phase after initial analysis is containment to stop data loss immediately."
+ },
+ "21": {
+  "why": "Symmetric algorithms such as AES are fast and efficient for encrypting large amounts of data between parties sharing a key.",
+  "whyNot": {
+   "B": "A hash function is one-way and cannot be decrypted, so it cannot protect data for transmission and recovery.",
+   "C": "A digital signature provides authentication and non-repudiation, not bulk data confidentiality.",
+   "D": "Obfuscation hides meaning without real cryptographic strength and is not a proper encryption method."
+  }
+ },
+ "22": {
+  "why": "An IP address outside the assigned subnet sending to the wrong gateway indicates the router interface has the wrong subnet configured, so the correct subnet must be placed on it.",
+  "whyNot": {
+   "A": "A firewall ACL filters traffic but does not fix a gateway or subnet addressing mismatch.",
+   "C": "Changing an access port to a trunk port deals with VLAN tagging and would not correct IP gateway addressing.",
+   "D": "A proxy's transparent interface handles application traffic interception and is unrelated to subnet and gateway assignment."
+  },
+  "keyDoubt": "B Router, place the correct subnet on the interface, because the problem is a subnet and gateway misconfiguration."
+ },
+ "23": {
+  "why": "Accounting, the third A in AAA, tracks and records user actions such as logins and resource usage for auditing.",
+  "whyNot": {
+   "B": "Authorization determines what an authenticated user is permitted to access, not what they did.",
+   "C": "Authentication verifies a user's identity and does not record ongoing actions.",
+   "D": "Identification is claiming an identity, such as a username, and does not log activity."
+  }
+ },
+ "24": {
+  "why": "Modifying a victim's ARP cache with false MAC-to-IP mappings is ARP spoofing (poisoning), a type of spoofing attack.",
+  "whyNot": {
+   "A": "A replay attack resends captured valid transmissions and does not alter ARP caches.",
+   "C": "DNS poisoning corrupts DNS name resolution records, not the ARP cache.",
+   "D": "A client-side attack exploits software on the client such as a browser, which is not what ARP cache modification does."
+  }
+ },
+ "25": {
+  "why": "ALE equals SLE times ARO; protection costing $2500 per year is not justified when ALE is lower, and with ARO of 5 an SLE of $500 gives ALE of $2500, which equals the cost.",
+  "whyNot": {
+   "B": "An SLE of $1000 gives ALE of $5000, which exceeds the $2500 cost and would justify buying the protection.",
+   "C": "An SLE of $2000 gives ALE of $10000, far above the $2500 cost, so purchase is warranted.",
+   "D": "An SLE of $2500 gives ALE of $12500, far above the cost, so purchase is warranted."
+  },
+  "keyDoubt": "A is the lowest SLE and gives ALE equal to the cost, so it is the only value where cost is not exceeded by the loss; the key is acceptable but break-even rather than clearly against."
+ },
+ "26": {
+  "why": "A rainbow table attack looks up precomputed hashes to find the matching plaintext, whereas a collision attack finds two different inputs that produce the same hash.",
+  "whyNot": {
+   "B": "Rainbow tables recover the original input from a hash; they do not use the hash itself as the password.",
+   "C": "In a collision attack the hash and input are not equivalent; two different inputs simply yield the same hash.",
+   "D": "Collisions mean different inputs produce the same hash; the same input always produces the same hash."
+  }
+ },
+ "27": {
+  "why": "Pass-the-hash abuses NTLM authentication by reusing captured password hashes, so disabling NTLM minimizes that risk.",
+  "whyNot": {
+   "A": "CHAP is a challenge-response protocol used for PPP and is not the Windows mechanism exploited by pass-the-hash.",
+   "C": "Enabling Kerberos helps, but NTLM remains as a fallback and stays exploitable unless it is disabled.",
+   "D": "PAP sends credentials in cleartext and is unrelated to Windows NTLM hash reuse."
+  }
+ },
+ "28": {
+  "why": "Joe ignored the company's expected practice of using a VPN on public Wi-Fi, which is a policy violation that exposed his emails to interception.",
+  "whyNot": {
+   "B": "Social engineering manipulates people into acting, and nothing here shows an attacker deceiving Joe.",
+   "C": "An insider threat implies deliberate malicious intent by an employee, while Joe acted carelessly.",
+   "D": "A zero-day exploits an unknown software flaw, and the breach here came from unprotected transmission on open Wi-Fi."
+  }
+ },
+ "29": {
+  "why": "Increased traffic through load balancers combined with full disks points to misconfigured devices, such as excessive logging or improper settings, filling storage.",
+  "whyNot": {
+   "B": "Log and event anomalies are symptoms to investigate, not the underlying cause of the disk consumption.",
+   "C": "Authentication issues would show failed logins or access problems, not disk exhaustion with increased traffic.",
+   "D": "Unauthorized software is not indicated, since the scan shows no unknown programs and the pattern fits traffic-driven logging."
+  },
+  "keyDoubt": "B Logs and events anomalies fits better because rising traffic filling disks suggests log growth, though the key is loosely defensible."
+ },
+ "30": {
+  "why": "An SSL VPN uses SSL/TLS certificates for mutual authentication, and the full-tunnel bridged mode can carry Layer 2 frames, which keeps client MAC addresses visible across the tunnel.",
+  "whyNot": {
+   "A": "IPSec tunnel mode encapsulates IP packets at Layer 3, so client MAC addresses are not preserved across the tunnel.",
+   "B": "IPSec transport mode protects only the payload at Layer 3 and is for host-to-host, not MAC-visible site-to-site tunnels.",
+   "C": "L2TP alone provides no encryption or certificate-based mutual authentication, and it is normally paired with IPSec."
+  },
+  "keyDoubt": "A different answer is arguable: L2TP carries Layer 2 frames, but with SSL certificates required, D fits the stated key best, so the key is loosely justified rather than wrong."
+ },
+ "31": {
+  "why": "Input validation checks and sanitizes data from web forms before the application processes it, which stops malformed input from being exploited.",
+  "whyNot": {
+   "B": "A proxy server filters or caches traffic but does not fix how the application handles malformed form input.",
+   "C": "Stress testing checks performance under load and does not block malformed data.",
+   "D": "Encoding transforms output or data representation and is not the primary control for rejecting malformed input."
+  }
+ },
+ "32": {
+  "why": "The suspicious freeware component that makes the system communicate with an external controller and consume resources is characteristic of a bot, a compromised host under remote command-and-control.",
+  "whyNot": {
+   "A": "A RAT gives an attacker interactive remote control, but the output indicates automated bot-style activity rather than interactive access.",
+   "B": "A keylogger records keystrokes and would not typically cause the slow performance and network behavior described.",
+   "C": "Spyware gathers user information covertly and does not match the command-and-control behavior in the output.",
+   "D": "A worm self-replicates across the network, which the scenario does not show."
+  },
+  "keyDoubt": "The output referenced in the question was not included, so E cannot be confirmed from the text given; if it shows remote interactive control, A would be the better pick."
+ },
+ "33": {
+  "why": "The nc (netcat) command with the listen option on port 9856 opens a socket, which matches the non-standard port connection seen in the packet capture.",
+  "whyNot": {
+   "A": "Traceroute maps network hops using ICMP or UDP probes and does not establish a persistent socket.",
+   "B": "Ping sends ICMP echo requests, which do not use TCP or UDP ports.",
+   "D": "Pskill terminates a process and does not open any network socket."
+  }
+ },
+ "34": {
+  "why": "SSL/TLS is keyed here, but the scenario of a hijacked root CA certificate across many browsers is really about certificate revocation, which is the CRL function.",
+  "whyNot": {
+   "A": "SSL is an encryption protocol and does not revoke or distrust a compromised CA certificate.",
+   "C": "PKI is the overall trust framework and is too broad to be the specific mechanism for revoking a certificate.",
+   "D": "An ACL filters traffic by network rules and has no role in certificate trust."
+  },
+  "keyDoubt": "B, because a certificate revocation list is the mechanism for invalidating a compromised certificate, whereas SSL is a transport protocol."
+ },
+ "35": {
+  "why": "SCP transfers files over SSH with encryption, and certificate-based authentication lets the unattended scheduled script authenticate securely without a typed password.",
+  "whyNot": {
+   "A": "TOTP requires a changing one-time code from a person, which does not work for an unattended scheduled task.",
+   "C": "FTP on a non-standard port is still cleartext and does not protect sensitive configuration data.",
+   "D": "SRTP secures real-time voice and video media and is not a file transfer method.",
+   "F": "SNMPv3 is for device management and monitoring, not for uploading configuration files."
+  },
+  "keyDoubt": "E, because FTP over a non-standard port is still unencrypted, so the secure pair is SCP plus certificate-based authentication (B and E)."
+ },
+ "36": {
+  "why": "XOR with 0xff is a simple reversible bitwise transformation that hides the data, which is obfuscation rather than true cryptographic encryption because there is no secret key.",
+  "whyNot": {
+   "A": "Hashing is one-way and cannot be reversed, while XOR 0xff is trivially reversed.",
+   "B": "Key exchange establishes shared secrets between parties, and this operation exchanges no keys.",
+   "C": "Encryption relies on a secret key, and a fixed XOR constant provides no real confidentiality."
+  },
+  "keyDoubt": "D, because XOR with a fixed constant is simple obfuscation with no secret key, not encryption."
+ },
+ "37": {
+  "why": "Fuzzing sends malformed or random input to an application to uncover unknown vulnerabilities before attackers do, which reduces the risk from flaws not yet identified.",
+  "whyNot": {
+   "A": "Sandboxing contains the impact of an exploit but does not find the unknown vulnerability itself.",
+   "B": "Encryption protects data confidentiality and does not address software vulnerabilities.",
+   "C": "Code signing verifies the publisher and integrity of software but not whether it contains flaws."
+  },
+  "keyDoubt": "A, because sandboxing mitigates the risk of an unknown vulnerability by containing it, while fuzzing is a testing technique run by the developer."
+ },
+ "38": {
+  "why": "Cross-site scripting injects JavaScript that runs in the victim's browser, including manipulating elements such as iframes, making it a client-side attack.",
+  "whyNot": {
+   "A": "A buffer overflow exploits memory handling in an application, not HTML iframes in a browser.",
+   "B": "MITM intercepts traffic between parties and is not primarily JavaScript manipulation of the page.",
+   "D": "SQL injection targets back-end databases through queries, not client-side browser content."
+  }
+ },
+ "39": {
+  "why": "Of the options, only MD5 is a hashing algorithm that can validate data integrity, since it produces a digest that changes if the data changes.",
+  "whyNot": {
+   "A": "CBC is a block cipher mode of operation that provides confidentiality, not integrity validation.",
+   "B": "Blowfish is a symmetric encryption cipher and does not validate data.",
+   "D": "RSA is an asymmetric algorithm used for encryption and signatures, not a plain integrity hash."
+  },
+  "keyDoubt": "C, because MD5 is a hash used for integrity validation, whereas Blowfish is an encryption cipher."
+ },
+ "40": {
+  "why": "RADIUS and TACACS+ are centralized AAA protocols widely used to authenticate administrators to network devices, but LDAP is also keyed as a central directory authentication source.",
+  "whyNot": {
+   "A": "TACACS+ is a strong centralized AAA option for network devices and fits the requirement, so it is wrongly excluded by the key.",
+   "B": "CHAP is an authentication method between peers and is not a centralized management service.",
+   "E": "MSCHAPv2 is a challenge-response method and not a centralized authentication system."
+  },
+  "keyDoubt": "A, because TACACS+ and RADIUS are the standard centralized AAA solutions for network device administration, while LDAP is a directory protocol."
+ },
+ "41": {
+  "why": "Rogue system detection identifies unauthorized or new hosts appearing on the network, which matches a scanner that discovers new host systems.",
+  "whyNot": {
+   "A": "A vulnerability scanner looks for weaknesses on known hosts rather than detecting new unauthorized systems.",
+   "B": "A network-based IDS inspects traffic for malicious patterns and does not inventory new hosts.",
+   "D": "A configuration compliance scanner checks hosts against a baseline and does not discover new devices."
+  }
+ },
+ "42": {
+  "why": "A sponsored guest account ties each visitor's wireless access to an employee sponsor, giving accountability while keeping non-employees separate from internal users.",
+  "whyNot": {
+   "A": "Shared accounts hide individual identity and eliminate accountability.",
+   "B": "A preshared password is the same for everyone, so individual activity cannot be tracked.",
+   "C": "Least privilege limits permissions but does not by itself create per-user accountability."
+  }
+ },
+ "43": {
+  "why": "System sprawl is the uncontrolled growth of virtual machines that consumes cluster resources, which matches the cluster running out of compute capacity.",
+  "whyNot": {
+   "A": "A buffer overflow is a memory-handling software flaw and is unrelated to resource exhaustion from too many VMs.",
+   "B": "End-of-life systems lack vendor support and patches, which is not the issue of cluster capacity.",
+   "D": "Weak configuration refers to insecure settings and does not describe excess VMs consuming resources."
+  }
+ },
+ "44": {
+  "why": "Kerberos issues time-stamped tickets through a key distribution center, which validates requests and defeats replay attacks.",
+  "whyNot": {
+   "A": "TACACS+ separates AAA functions but does not use tickets and time stamps for replay protection.",
+   "C": "RADIUS uses shared secrets and challenge-response rather than tickets and time stamps.",
+   "D": "MSCHAP is a challenge-response protocol and does not use tickets."
+  }
+ },
+ "45": {
+  "why": "A fingerprint is a something-you-are factor. A signature is a something-you-do behavioral factor, so adding it creates true multifactor authentication.",
+  "whyNot": {
+   "A": "Facial recognition is another something-you-are biometric, so it is the same factor type as fingerprints.",
+   "C": "Palm geometry is a physical biometric, the same something-you-are factor as fingerprints.",
+   "D": "Iris recognition is a physical biometric, so it adds no new factor category."
+  }
+ },
+ "46": {
+  "why": "Rekeying badges and locks is a physical control because it governs tangible access mechanisms such as keys, badges, and doors.",
+  "whyNot": {
+   "B": "Corrective controls fix damage after an incident, and an annual rekey is routine rather than a response.",
+   "C": "Technical controls are implemented in software or hardware logic, not through physical key or badge management.",
+   "D": "Administrative controls are policies, but the policy here governs a physical access mechanism."
+  },
+  "keyDoubt": "D because the scenario is a written policy, which CompTIA classifies as an administrative (managerial) control, though A is defensible since it concerns physical badges."
+ },
+ "47": {
+  "why": "Application management (mobile application management) controls which apps can be installed or run on managed mobile devices, often through allow/deny lists.",
+  "whyNot": {
+   "A": "A download manager handles file transfer, not control over which apps may be installed.",
+   "B": "Content management controls data and documents on the device, not app installation.",
+   "C": "Segmentation manager separates networks or data areas and does not restrict installed apps."
+  }
+ },
+ "48": {
+  "why": "Adding a more granular data type refines the classification scheme so data can be handled according to its sensitivity, which is better data classification.",
+  "whyNot": {
+   "A": "Adding a category does not reduce cost and may increase handling overhead.",
+   "B": "Classification labels do not make data more searchable.",
+   "D": "A new data type does not expand the privacy officer's authority."
+  },
+  "keyDoubt": "C because adding a Proprietary tier makes the classification scheme more precise, while searchability is not a purpose of data classification."
+ },
+ "49": {
+  "why": "Credentialed vulnerability scans log in to hosts and detect missing OS and third-party patches, expired certificates, outdated antivirus, and insecure SSH settings.",
+  "whyNot": {
+   "B": "Non-credentialed scans see only externally visible services and miss patch levels and local configuration.",
+   "C": "Automatic file integrity checking detects file changes, not missing patches or configuration weaknesses.",
+   "D": "Manual file integrity checking is not proactive and does not identify missing patches or settings.",
+   "E": "Log collection and correlation detects events after the fact and does not identify patch or configuration gaps."
+  }
+ },
+ "50": {
+  "why": "A smart card is something you have, so adding a PIN (something you know) creates two-factor authentication.",
+  "whyNot": {
+   "A": "A token is also something you have, the same factor type as the smart card.",
+   "B": "A proximity badge is something you have, so it adds no new factor.",
+   "C": "A physical key is something you have, the same factor type as the smart card."
+  }
+ },
+ "51": {
+  "why": "Allowing software digitally signed by the trusted vendor permits the renamed copy in c:\\temp to run while still blocking untested or unsigned software.",
+  "whyNot": {
+   "A": "The filename includes a timestamp that changes each run, so a fixed path rule would not match later executions.",
+   "B": "A hash rule on processdata.exe would work only if the copied file's hash matched the approved one and would need updating each release.",
+   "C": "A wildcard path rule for c:\\temp would let any executable run from a user-writable folder, including untested software.",
+   "E": "Waiting on a vendor patch is not an immediate resolution and does not fix the control conflict now."
+  },
+  "keyDoubt": "B because the copy is byte-identical so a hash rule permits only that approved binary, while D trusts everything the vendor signs and so could allow unapproved code."
+ },
+ "52": {
+  "why": "A router ACL can explicitly deny traffic to and from the R&D network, enforcing isolation from the internet at the routing layer.",
+  "whyNot": {
+   "A": "Setting the default TTL to 1 only limits hops and does not reliably block internet access.",
+   "B": "NAT hides internal addresses but is not an access control and can be bypassed through misconfiguration.",
+   "D": "Protected ports isolate hosts at layer 2 on a switch and do not control internet access."
+  },
+  "keyDoubt": "D because the requirement says to stay isolated regardless of firewall or internal misconfiguration, but the router ACL depends on the same routing and filtering that could be misconfigured, so the stronger answer is arguably a physically or logically isolated network, and none fits perfectly."
+ },
+ "53": {
+  "why": "The script deletes the filesystem only if the user joeuser is missing from /etc/passwd, so it is a logic bomb triggered by a condition, scheduled through cron.",
+  "whyNot": {
+   "B": "A Trojan masquerades as legitimate software to gain access and does not wait on a trigger condition.",
+   "C": "A backdoor provides unauthorized remote access, and this script does not do that.",
+   "D": "Ransomware encrypts data for payment and does not simply delete the filesystem.",
+   "E": "A rootkit hides its presence at a privileged level, and this script does not conceal anything."
+  },
+  "keyDoubt": "A because the destructive action depends on a condition (joeuser absent from /etc/passwd), which defines a logic bomb rather than a backdoor."
+ },
+ "54": {
+  "why": "WPA2 with RADIUS and 802.1x gives strong authentication, and WPA with a preshared key still works on older hardware that lacks WPA2 support.",
+  "whyNot": {
+   "A": "An open wireless network provides no link-layer encryption, and the SSL VPN does not protect the wireless link.",
+   "C": "WPA2 with 802.1x is strong but may not be supported by older legacy devices, which is the stated concern.",
+   "D": "WEP with a 40-bit key is easily cracked and offers weak security."
+  },
+  "keyDoubt": "C because WPA2 with 802.1x RADIUS provides the strongest security, though legacy compatibility is the concern the question raises."
+ },
+ "55": {
+  "why": "The file hash matched malware yet the patch system appears to have vetted it, indicating the malware was planted to evade detection until triggered, as a logic bomb would be.",
+  "whyNot": {
+   "A": "Corruption after leaving the patch system would show a hash mismatch against the report, which the output does not indicate.",
+   "B": "If infected at download, the patch system's record would reflect the malicious hash, which would be noticed.",
+   "C": "Whitelist approval is unrelated to how the malicious file reached the pre-update area."
+  },
+  "keyDoubt": "B because the report output is missing, but the malware most plausibly was infected when the patch manager downloaded it from a compromised source."
+ },
+ "56": {
+  "why": "A fuzzer sends malformed and unexpected input to an application, which helps reveal injection flaws such as SQL injection.",
+  "whyNot": {
+   "A": "Tracert maps the network path to a host and tests nothing about application input handling.",
+   "C": "Nslookup queries DNS records and cannot test an application for injection.",
+   "D": "Nmap discovers hosts and open ports but does not test application input validation.",
+   "E": "Netcat opens raw connections and is not an automated tool for finding SQL injection."
+  }
+ },
+ "57": {
+  "why": "Hardware made before 802.11i cannot support CCMP/AES, so a TKIP-based option is required, and WPA2 with TKIP is the keyed choice.",
+  "whyNot": {
+   "A": "CCMP/AES is unsupported on pre-802.11i legacy hardware.",
+   "B": "WPA2 with CCMP requires AES hardware support that pre-802.11i equipment lacks.",
+   "C": "WPA with TKIP is the option that actually matches pre-802.11i devices, since WPA was designed for them."
+  },
+  "keyDoubt": "C because WPA with TKIP was designed for pre-802.11i hardware, whereas WPA2 is the 802.11i standard itself, which legacy equipment would not support."
+ },
+ "58": {
+  "why": "Certificate stapling lets the server supply a signed OCSP revocation response, which helps clients validate certificates without separate connections to the CA.",
+  "whyNot": {
+   "A": "A trust model, such as cross-certification, is what actually lets separate PKIs trust one another and avoid errors.",
+   "C": "An intermediate CA extends a chain within one PKI and does not bridge two separate PKIs.",
+   "D": "Key escrow stores keys for recovery and has no role in cross-PKI trust."
+  },
+  "keyDoubt": "A because separate PKIs interoperate by establishing a trust model such as cross-certification or a bridge CA, and stapling only speeds revocation checks."
+ },
+ "59": {
+  "why": "Separation of duties splits critical tasks such as creating, modifying, and approving payroll among different people so no one can commit fraud alone.",
+  "whyNot": {
+   "A": "Least privilege limits users to what their job needs but does not by itself split one process across roles.",
+   "B": "Job rotation moves staff between roles periodically and does not prevent one role from holding conflicting access.",
+   "C": "Background checks screen people at hiring and do not restrict access to payroll functions."
+  }
+ },
+ "60": {
+  "why": "Templates (such as infrastructure-as-code or golden images) let an organization deploy servers and applications consistently and rapidly while allowing flexible configuration changes, and they can be reused at every location.",
+  "whyNot": {
+   "A": "Redundancy provides fault tolerance and availability, not repeatable or consistent deployment.",
+   "C": "Snapshots capture a point-in-time state of one system for rollback; they are not a repeatable, configurable deployment method.",
+   "D": "Elasticity scales resources up or down with demand; it does not standardize deployments.",
+   "E": "Configuration validation checks that settings are correct after deployment; it does not make deployment repeatable."
+  },
+  "keyDoubt": "B is the only single best answer; the key lists C as well, but snapshots are a backup and rollback tool, not a repeatable deployment mechanism."
+ },
+ "61": {
+  "why": "Regular permission auditing and reviews catch stale or excessive access after role changes and terminations, which is exactly what the audit found, so it prevents recurrence.",
+  "whyNot": {
+   "A": "Separation of duties splits critical tasks among people; it does not remove leftover access after role changes or terminations.",
+   "B": "DLP monitors and blocks data exfiltration; it does not fix accumulated, outdated permissions.",
+   "C": "Rule-based access control applies rules to resources, but it does not by itself catch users whose roles changed."
+  },
+  "keyDoubt": "D, because the findings are privilege creep and an unremoved terminated account, which periodic permission reviews address, not separation of duties."
+ },
+ "62": {
+  "why": "Banner grabbing retrieves service banners that reveal software names and versions, which an intruder can then match to known exploits.",
+  "whyNot": {
+   "B": "Port scanning finds open ports and services but does not reliably reveal software versions on its own.",
+   "C": "Packet sniffing captures traffic passively and requires network access; it is not the standard way to inventory versions.",
+   "D": "Virus scanning looks for malware on a host and does not enumerate software versions on a network."
+  }
+ },
+ "63": {
+  "why": "A hardened host can still show many failed checks if the scan policy includes plugins that do not apply to it, and if the scan uses credentials that expose settings differently than expected.",
+  "whyNot": {
+   "C": "Using the output audit file does not by itself cause non-compliant findings on a hardened host.",
+   "D": "False positives are a possible cause, but this option describes the report output rather than a scan configuration cause, and it is not keyed.",
+   "E": "A compromised host is possible, but the scenario states a known hardened host, and misconfigured scanning is the likelier explanation."
+  },
+  "keyDoubt": "B and D are the likelier pair: wrongly selected plugins and false positives explain non-compliance on a known hardened host, while privileged credentials normally make results more accurate."
+ },
+ "64": {
+  "why": "Many IoT devices such as baby monitors ship with default credentials and settings that owners never change, so an intruder can access them with well-known defaults.",
+  "whyNot": {
+   "A": "Baby monitors do not typically run antivirus, so outdated antivirus is not the cause.",
+   "B": "Signal strength affects connectivity range, not unauthorized access.",
+   "C": "Social engineering manipulates people, and nothing in the scenario indicates the parents were tricked."
+  }
+ },
+ "65": {
+  "why": "The log shows the .hta file was blocked by a restriction policy, which is application whitelisting, while the antivirus scan found no detections, so a policy control stopped the payload from running.",
+  "whyNot": {
+   "B": "The antivirus log says no detections were found, and the files still exist on disk, so nothing was quarantined.",
+   "C": "The log message cites a restriction policy blocking an .hta file, not an update approval failure.",
+   "D": "The log entry reflects a real policy block of a suspicious file, not a SIEM tuning false positive."
+  }
+ },
+ "66": {
+  "why": "After containment and eradication, the incident response process moves to recovery, which includes restoring affected data and systems from backup.",
+  "whyNot": {
+   "B": "Wiping the system is part of eradication or rebuild and would be premature or unnecessary at this step.",
+   "C": "Lessons learned is the final phase, after recovery is complete.",
+   "D": "Determining scope of impact belongs to the identification and analysis stage, which comes before containment."
+  },
+  "keyDoubt": "D, because the system was isolated and the process killed but the scope of impact has not yet been established, and scoping precedes recovery."
+ },
+ "67": {
+  "why": "Privilege escalation exploits a flaw in a running process or interactive session to gain access to areas of the operating system that are normally restricted.",
+  "whyNot": {
+   "B": "Pivoting uses a compromised host to attack other systems on the network, not to reach restricted OS areas.",
+   "C": "Process affinity binds a process to specific CPU cores and is not an attack.",
+   "D": "A buffer overflow is a specific vulnerability that can enable escalation, but it does not describe the access to restricted areas itself."
+  }
+ },
+ "68": {
+  "why": "Eliminating shared accounts ties access to one person, usage auditing and review records and reports anomalous PHI access, and a WORM drive with real-time log copies prevents logs from being modified.",
+  "whyNot": {
+   "B": "A naming convention helps organization but does not tie activity to one individual or record access.",
+   "D": "Account lockout thresholds limit password guessing and do not satisfy any of the listed requirements.",
+   "F": "Time-of-day restrictions limit when access occurs but do not record access or protect logs.",
+   "G": "Permission audits review who has rights but do not record access or protect log integrity."
+  },
+  "keyDoubt": "E, because the key omits the only control that meets the requirement that logs cannot be deleted or modified, so A, C, E is the better set."
+ },
+ "69": {
+  "why": "Sustained 100% CPU from the antivirus is resource exhaustion, which can leave the server unable to serve legitimate requests and effectively cause a denial of service.",
+  "whyNot": {
+   "A": "A man-in-the-middle attack involves interception of traffic and is not caused by high CPU use.",
+   "C": "DLL injection is an attacker technique and is not a result of high CPU utilization.",
+   "D": "A buffer overflow is a memory flaw and is not caused by sustained CPU load."
+  }
+ },
+ "70": {
+  "why": "Job rotation would have had another administrator take over Joe's duties periodically, exposing the theft sooner, whereas the other listed procedures do not provide this cross-checking.",
+  "whyNot": {
+   "A": "A background check is done before hiring and does not detect later misconduct.",
+   "B": "Separation of duties limits what one person can do but does not rotate who reviews the work.",
+   "D": "Rules of behavior state expectations but do not detect violations.",
+   "E": "An NDA is a legal deterrent and does not detect a breach."
+  },
+  "keyDoubt": "C, because job rotation is the procedure that exposes misconduct when someone else takes over the role, while rules of behavior only set expectations."
+ },
+ "71": {
+  "why": "The script deletes the C:\\Database folder if a specific user is not in Domain Admins, so it is a condition-triggered destructive payload, which is a logic bomb.",
+  "whyNot": {
+   "A": "Ransomware encrypts files and demands payment; this script only deletes data.",
+   "B": "A backdoor provides covert access, and this script does not grant any.",
+   "D": "A trojan disguises itself as legitimate software; the key feature here is the conditional trigger."
+  },
+  "keyDoubt": "C, because the script fires only when JohnDoe is removed from Domain Admins, which is the defining behavior of a logic bomb."
+ },
+ "72": {
+  "why": "A vulnerability scanner reports software versions, running services, supported encryption algorithms, and permission settings by probing hosts and checking configuration.",
+  "whyNot": {
+   "B": "A protocol analyzer captures and decodes traffic and does not report host permission settings.",
+   "C": "A network mapper discovers hosts and open ports but does not assess permission settings or supported ciphers in depth.",
+   "D": "A web inspector examines web page content and does not inventory host services or permissions."
+  },
+  "keyDoubt": "A, because permission settings and supported encryption algorithms are findings a vulnerability scanner produces, which a network mapper does not."
+ },
+ "73": {
+  "why": "TACACS+ separates authentication, authorization, and accounting and can authorize each individual command on a network device, which suits centralized device administration.",
+  "whyNot": {
+   "A": "RADIUS combines authentication and authorization and does not support per-command authorization as TACACS+ does.",
+   "B": "Kerberos is a ticket-based authentication protocol and does not authorize device commands.",
+   "C": "SAML exchanges authentication assertions for web single sign-on and is not used for device administration."
+  },
+  "keyDoubt": "D, because only TACACS+ provides per-command authorization for routers and switches."
+ },
+ "74": {
+  "why": "Bollards stop vehicles but not people, so they are a weak fit; a mantrap is the control that stops tailgating and unauthorized people entering at a main entrance.",
+  "whyNot": {
+   "A": "A Faraday cage blocks electromagnetic signals and does nothing for physical entry.",
+   "B": "An air gap isolates a network from others and does not control entrance access.",
+   "D": "Bollards prevent vehicle ramming and do not stop unauthorized people from walking in."
+  },
+  "keyDoubt": "C, because a mantrap controls pedestrian access at an entrance, while bollards only stop vehicles."
+ },
+ "75": {
+  "why": "An expired certificate causes the browser to flag the VPN gateway as an untrusted host, because the certificate chain can no longer be validated. This is certificate lifecycle management.",
+  "whyNot": {
+   "B": "A browser without SSL support would fail to negotiate a session, not report an untrusted host.",
+   "C": "A locked account produces an authentication failure after the secure connection is established, not a host trust error.",
+   "D": "Seat license limits produce a denial or capacity message, not a certificate trust warning."
+  }
+ },
+ "76": {
+  "why": "Infrastructure as a Service gives the customer control of the OS, storage, and deployed applications, so it provides the most control of the common cloud service models.",
+  "whyNot": {
+   "B": "PaaS leaves the OS and underlying infrastructure to the provider, so the customer has less control.",
+   "C": "SaaS gives the customer the least control, since the provider manages everything except user data and settings.",
+   "D": "Virtualization is an enabling technology, not a cloud service model."
+  },
+  "keyDoubt": "A, because IaaS gives the most control, while SaaS gives the least control of the three service models."
+ },
+ "77": {
+  "why": "RADIUS federation lets organizations trust each other's RADIUS servers, so users authenticate with their home credentials through native 802.1x clients, as eduroam does.",
+  "whyNot": {
+   "A": "Shibboleth is a web SSO federation system and does not work with native 802.1x network access clients.",
+   "C": "SAML is a web-based federated identity standard and is not used by native 802.1x supplicants.",
+   "D": "OAuth is an authorization framework for delegated API access, not network authentication.",
+   "E": "OpenID Connect is a web authentication layer over OAuth and is not used for 802.1x."
+  }
+ },
+ "78": {
+  "why": "SCP transfers files over SSH, so the data and credentials are encrypted in transit instead of being sent in the clear like FTP or TFTP.",
+  "whyNot": {
+   "A": "HTTPS is encrypted but is a web protocol, not the usual secure file transfer method for network devices.",
+   "B": "LDAPS secures directory queries, not file transfers.",
+   "D": "SNMPv3 secures device management and monitoring traffic, not file transfers."
+  }
+ },
+ "79": {
+  "why": "Virtualization lets the company test the patch in an isolated virtual machine that can be snapshotted and reverted, without affecting production systems.",
+  "whyNot": {
+   "A": "Cloud computing is a delivery model and does not by itself provide an isolated, revertible test environment.",
+   "C": "Redundancy provides availability and failover, not patch testing.",
+   "D": "Application control restricts which software can run and does not test patches."
+  }
+ },
+ "80": {
+  "why": "A community cloud is shared by several organizations with common interests or requirements, who pool storage and resources.",
+  "whyNot": {
+   "A": "A private cloud serves a single organization.",
+   "B": "A hybrid cloud combines private and public clouds and is not defined by shared similar-interest tenants.",
+   "C": "A public cloud is open to the general public rather than a specific group of similar organizations."
+  }
+ },
+ "81": {
+  "why": "An ATM card (something you have) plus a PIN (something you know) are two different authentication factors, which makes it true two-factor authentication.",
+  "whyNot": {
+   "A": "A PIN alone is a single factor, something you know.",
+   "C": "Username and password are both something you know, so this is one factor.",
+   "D": "Fingerprint and iris scan are both biometrics (something you are), so this is one factor used twice."
+  }
+ },
+ "82": {
+  "why": "The answer key says an NDA protects confidential information after the employee leaves, which is a legal disengagement step.",
+  "whyNot": {
+   "A": "Users do not hold a list of their passwords, and accounts should be disabled by IT rather than relying on the employee.",
+   "B": "A project report helps transition work but does not reduce security risk.",
+   "C": "Surrendering identification removes physical access, but the key ranks the NDA higher."
+  },
+  "keyDoubt": "C, because collecting company identification and badges immediately cuts off physical access from a terminated employee, which is the most urgent step."
+ },
+ "83": {
+  "why": "Motion detectors can alert when equipment or people move in the datacenter, which detects theft as it happens.",
+  "whyNot": {
+   "A": "Biometrics authenticate users and do not detect theft.",
+   "C": "Mantraps are preventive access controls that control entry, not detection of equipment removal.",
+   "D": "Cameras record events and deter, but they need someone to review them and are less direct for detection than motion sensing."
+  }
+ },
+ "84": {
+  "why": "Shadow copies preserve earlier versions of the same file, so the same hash could appear in multiple locations on the same system.",
+  "whyNot": {
+   "A": "Encryption would change file contents and produce different hashes, not the same hash across files.",
+   "C": "MD5 collisions are possible but unlikely by chance, so they would not normally explain the match.",
+   "D": "A name alone does not show intent, and identical hashes do not prove insider activity."
+  },
+  "keyDoubt": "C, because three files of different types (xls, pdf, doc) with one identical MD5 hash cannot be shadow copies of one file and indicate an MD5 collision."
+ },
+ "85": {
+  "why": "WPA2 is the key, but it is a wireless security standard and does not itself tunnel authentication over TLS.",
+  "whyNot": {
+   "B": "PEAP is the option that wraps EAP authentication in a TLS tunnel, which is what the question describes.",
+   "C": "EAP is a framework and does not itself provide a TLS-encrypted tunnel.",
+   "D": "RADIUS is an authentication server protocol and does not itself encrypt wireless client authentication over TLS."
+  },
+  "keyDoubt": "B, because PEAP encapsulates EAP in a TLS tunnel for encrypted authentication, while WPA2 is an encryption standard."
+ },
+ "86": {
+  "why": "The key says the alert was triggered by a spike in traffic, which matches signature rules for known traffic patterns.",
+  "whyNot": {
+   "A": "Stateful describes tracking connection state, which is a firewall concept rather than an IDS type.",
+   "B": "Host-based IDS monitors a single host, whereas the alert is about network traffic.",
+   "D": "Anomaly-based detection compares activity against a baseline."
+  },
+  "keyDoubt": "D, because a traffic spike is a deviation from the normal baseline, which is how anomaly-based detection alerts."
+ },
+ "87": {
+  "why": "A Faraday cage blocks radio frequency signals, so an RF device cannot reach or communicate with the air-gapped, locked server rack.",
+  "whyNot": {
+   "B": "Infrared detection senses heat or motion and does not block RF attacks.",
+   "C": "Smart cards control authentication and do not stop RF signals.",
+   "D": "Alarms only alert after the fact and do not prevent RF access."
+  }
+ },
+ "88": {
+  "why": "The key is Wi-Fi Protected Setup, but WPS simplifies device pairing with a shared PIN and offers no per-user accountability.",
+  "whyNot": {
+   "A": "Enterprise (802.1x) provides accountability but is more than the basic public-area access needed.",
+   "C": "A pre-shared key is shared by all users, so it provides no individual accountability.",
+   "D": "A captive portal makes users authenticate or accept terms before access, giving basic accountability."
+  },
+  "keyDoubt": "D, because a captive portal requires users to register or log in, which provides basic accountability, while WPS is only a pairing convenience feature."
+ }
+}

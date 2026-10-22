@@ -95,6 +95,15 @@
   .next-row { display: flex; justify-content: flex-end; margin-top: 16px; }
   .next { width: 52px; height: 52px; border-radius: 50%; background: var(--quiz-teal); color: #fff; font-size: 22px; font-weight: 800; display: grid; place-items: center; }
   .next:disabled { opacity: .35; cursor: default; }
+  .explain { margin-top: 14px; padding: 14px; border-radius: 10px; font-size: 15px; line-height: 1.4; display: grid; gap: 8px; }
+  .explain.right { background: rgba(48, 209, 88, .14); }
+  .explain.wrong { background: rgba(255, 69, 58, .14); }
+  .explain h3 { margin: 0; font-size: 17px; }
+  .explain.right h3 { color: var(--got); }
+  .explain.wrong h3 { color: var(--miss); }
+  .explain b { display: block; white-space: pre-wrap; }
+  .explain .doubt { color: #ff9f0a; font-size: 13px; }
+  .icon-btn.auto { font-size: 15px; font-weight: 800; }
   .done .pct { font-size: 20px; }
   .done .pct.pass { color: var(--got); }
   .done .pct.fail { color: #ff9f0a; }
@@ -121,6 +130,7 @@ const store = {
 // Leitner boxes 1-5 keyed by deck id + card front, same grading as the apps
 let boxes = store.get('fd.boxes', {});
 let speak = store.get('fd.speak', true);
+let autoNext = store.get('fd.autoNext', true); // practice test: move on by itself after a right answer
 let decks = [];
 let s = null; // study session
 let q = null; // practice test session
@@ -131,12 +141,16 @@ const box = (deck, card) => boxes[key(deck, card)] || 1;
 const mastered = deck => deck.cards.filter(c => box(deck, c) >= 5).length;
 const climb = deck => deck.cards.length ? deck.cards.reduce((n, c) => n + box(deck, c) - 1, 0) / (deck.cards.length * 4) : 0;
 
-function say(text) {
+function say(text, onend) {
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
-  const t = String(text || '').replace(/\s+/g, ' ').replace(/\.$/, '').trim();
+  // each line ("A. …") becomes a short pause, like the apps
+  const t = String(text || '').split('\n').map(l => l.trim()).filter(Boolean).join(', ').replace(/\s+/g, ' ').replace(/\.$/, '').trim();
+  if (!t) return;
+  const u = new SpeechSynthesisUtterance(t);
+  if (onend) u.onend = onend;
   // Chrome/Safari drop an utterance queued in the same tick as cancel()
-  if (t) setTimeout(() => speechSynthesis.speak(new SpeechSynthesisUtterance(t)), 60);
+  setTimeout(() => speechSynthesis.speak(u), 60);
 }
 
 async function load() {
@@ -165,6 +179,7 @@ function bindSpeaker(after) {
 
 function home() {
   s = null; q = null;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
   document.onkeydown = null;
   app.innerHTML = `
     <header>
@@ -362,7 +377,7 @@ function lettered(card) {
   const answers = String(card.back).split('\n').map(l => (l.trim().match(OPTION_LINE) || [])[1]).filter(Boolean);
   const correct = new Set(options.map((o, i) => answers.includes(o.letter) ? i : -1).filter(i => i >= 0));
   if (!correct.size) return null;
-  return { card, prompt: prompt.join('\n').trim(), options: options.map(o => o.text), correct };
+  return { card, prompt: prompt.join('\n').trim(), options: options.map(o => o.text), letters: options.map(o => o.letter), correct };
 }
 
 // term → pick the right back out of four, distractors from the rest of the deck
@@ -372,7 +387,7 @@ function borrowed(card, pool) {
   const others = shuffle([...new Set(pool.filter(b => b && b !== answer))]).slice(0, 3);
   if (others.length < 2) return null;
   const options = shuffle([...others, answer]);
-  return { card, prompt: card.front, options, correct: new Set([options.indexOf(answer)]) };
+  return { card, prompt: card.front, options, letters: [], correct: new Set([options.indexOf(answer)]) };
 }
 
 function shuffle(a) {
@@ -407,10 +422,43 @@ function quiz(deck) {
 function startQuiz(list) {
   Object.assign(q, { questions: list, i: 0, picked: new Set(), checked: false, points: 0, missed: [] });
   renderQuiz();
+  readQuestion();
+}
+
+const optLabel = (qu, i) => qu.letters[i] ? `${qu.letters[i]}. ${qu.options[i]}` : qu.options[i];
+const answerLabel = (qu, sep) => [...qu.correct].sort((a, b) => a - b).map(i => optLabel(qu, i)).join(sep);
+const wrongPicks = qu => [...q.picked].filter(i => !qu.correct.has(i)).sort((a, b) => a - b);
+const whyNot = (qu, i) => qu.card.whyNot?.[qu.letters[i]];
+
+function readQuestion() {
+  if (!speak) return;
+  const qu = q.questions?.[q.i];
+  if (qu) say([qu.prompt, ...qu.options.map((_, i) => optLabel(qu, i))].join('\n'));
+}
+
+// green "what you got right" or red "why that was wrong", plus the key's reason
+function explanation(qu) {
+  const right = q.picked.size === qu.correct.size && [...q.picked].every(i => qu.correct.has(i));
+  const answer = answerLabel(qu, '\n');
+  return `<div class="explain ${right ? 'right' : 'wrong'}" id="quizExplanation">
+    <h3>${right ? '✓ Correct' : '✗ Not quite'}</h3>
+    ${right ? '' : wrongPicks(qu).map(i => `<div><b>You picked ${esc(optLabel(qu, i))}</b>${whyNot(qu, i) ? esc(whyNot(qu, i)) : ''}</div>`).join('')}
+    <div><b>${right ? '' : 'Answer: '}${esc(answer)}</b>${qu.card.why ? esc(qu.card.why) : ''}</div>
+    ${qu.card.keyDoubt ? `<div class="doubt">⚠ ${esc(qu.card.keyDoubt)}</div>` : ''}
+  </div>`;
+}
+
+function verdict(qu, right) {
+  const lines = [right ? `Correct. ${answerLabel(qu, ', and ')}` : 'Wrong.'];
+  if (!right) {
+    for (const i of wrongPicks(qu)) lines.push(`You picked ${optLabel(qu, i)}`, whyNot(qu, i) || '');
+    lines.push(`The answer is ${answerLabel(qu, ', and ')}`);
+  }
+  if (qu.card.why) lines.push(qu.card.why);
+  return lines.join('\n');
 }
 
 function renderQuiz() {
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (!q.questions.length) {
     app.innerHTML = `
       <div class="top"><button class="icon-btn" id="back" aria-label="Back to decks">‹</button><span class="title">${esc(q.deck.name)}</span></div>
@@ -426,6 +474,8 @@ function renderQuiz() {
       <button class="icon-btn" id="back" aria-label="Back to decks">‹</button>
       <span class="title">${esc(q.deck.name)}</span>
       <span class="muted">${q.i + 1} / ${q.questions.length}</span>
+      <button class="icon-btn auto ${autoNext ? '' : 'off'}" id="auto" title="Auto-next after a right answer" aria-label="Auto-next after a right answer" aria-pressed="${autoNext}">${autoNext ? '⏩' : '⏸'}</button>
+      ${speakerButton()}
     </div>
     <div class="points"><span id="quizPoints">Points: ${q.points}/${done}</span></div>
     <div class="progress pink"><i style="width:${done / q.questions.length * 100}%"></i></div>
@@ -438,12 +488,15 @@ function renderQuiz() {
         const mark = q.checked && right ? '✓' : q.checked && picked ? '✗' : picked ? '●' : '';
         return `<button class="tile ${picked ? 'picked' : ''} ${dim ? 'dim' : ''} ${q.checked ? 'locked' : ''}"
           style="background:${PALETTE[i % PALETTE.length]}" data-i="${i}" aria-pressed="${picked}">
-          <span>${esc(opt)}</span>${mark ? `<b class="mark">${mark}</b>` : ''}</button>`;
+          <span>${esc(optLabel(qu, i))}</span>${mark ? `<b class="mark">${mark}</b>` : ''}</button>`;
       }).join('')}</div>
+      ${q.checked ? explanation(qu) : ''}
       <div class="next-row"><button class="next" id="next" ${ready ? '' : 'disabled'} aria-label="${q.checked ? 'Next' : 'Check'}">${q.checked ? '→' : '✓'}</button></div>
-      <p class="muted keys">1-${qu.options.length} pick · Enter ${q.checked ? 'next' : 'check'} · Esc decks</p>
+      <p class="muted keys">${qu.letters.length ? 'A-' + qu.letters.at(-1) : '1-' + qu.options.length} pick · Enter ${q.checked ? 'next' : 'check'} · Esc decks</p>
     </div>`;
   document.getElementById('back').onclick = home;
+  bindSpeaker(() => { renderQuiz(); readQuestion(); });
+  document.getElementById('auto').onclick = () => { autoNext = !autoNext; store.set('fd.autoNext', autoNext); renderQuiz(); };
   document.getElementById('next').onclick = () => q.checked ? quizAdvance() : quizCheck();
   app.querySelectorAll('.tile').forEach(t => t.onclick = () => pickOption(+t.dataset.i));
 }
@@ -465,11 +518,16 @@ function quizCheck() {
   if (right) q.points++; else q.missed.push(qu);
   gradeBox(q.deck, qu.card, right);
   renderQuiz();
+  // auto-next waits for the verdict to be read out, or 1.5 s when muted
+  const at = q.i, next = () => { if (right && autoNext && q && q.i === at && q.checked) quizAdvance(); };
+  if (speak && 'speechSynthesis' in window) say(verdict(qu, right), next);
+  else setTimeout(next, 1500);
 }
 
 function quizAdvance() {
   q.i++; q.picked = new Set(); q.checked = false;
   renderQuiz();
+  if (q.i < q.questions.length) readQuestion();
 }
 
 function quizSummary() {
@@ -496,8 +554,9 @@ function onQuizKey(e) {
   if (e.key === 'Escape') { e.preventDefault(); return home(); }
   if (!q.questions || q.i >= q.questions.length) return;
   if (e.key === 'Enter') { e.preventDefault(); return q.checked ? quizAdvance() : quizCheck(); }
-  const n = parseInt(e.key, 10);
-  if (n >= 1 && n <= q.questions[q.i].options.length) { e.preventDefault(); pickOption(n - 1); }
+  const qu = q.questions[q.i], n = parseInt(e.key, 10), l = qu.letters.indexOf(e.key.toUpperCase());
+  if (n >= 1 && n <= qu.options.length) { e.preventDefault(); pickOption(n - 1); }
+  else if (l >= 0) { e.preventDefault(); pickOption(l); }
 }
 
 load();

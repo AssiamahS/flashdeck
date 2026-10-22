@@ -9,6 +9,8 @@ struct QuizQuestion: Hashable {
     var prompt: String
     var options: [String]
     var correct: Set<Int>
+    /// Option letters as printed on the card ("A"...), empty for borrowed questions.
+    var letters: [String] = []
 
     /// "Select TWO" questions need every correct option picked before checking.
     var picksNeeded: Int { correct.count }
@@ -45,7 +47,8 @@ enum QuizBuilder {
             card: card,
             prompt: prompt.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines),
             options: options.map(\.text),
-            correct: correct
+            correct: correct,
+            letters: options.map { String($0.letter) }
         )
     }
 
@@ -74,6 +77,17 @@ enum QuizBuilder {
             let optionLines = card.front.split(separator: "\n").filter { $0.contains(optionLine) }
             return optionLines.count >= 2 ? nil : borrowed(card, pool: pool)
         }
+    }
+
+    /// Why the picked option is wrong, when the card carries an explanation for it.
+    static func whyNot(_ q: QuizQuestion, picked i: Int) -> String? {
+        guard q.letters.indices.contains(i) else { return nil }
+        return q.card.whyNot?[q.letters[i]]
+    }
+
+    /// Option label for display and speech: "B. PEM" on lettered cards, plain text otherwise.
+    static func label(_ q: QuizQuestion, _ i: Int) -> String {
+        q.letters.indices.contains(i) ? "\(q.letters[i]). \(q.options[i])" : q.options[i]
     }
 
     static func canQuiz(_ deck: Deck) -> Bool {

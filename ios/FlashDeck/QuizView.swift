@@ -2,8 +2,12 @@ import SwiftUI
 
 /// Multiple-choice practice test: points, progress bar, colored answer tiles.
 /// Every answer also grades the card's Leitner box, same as a swipe in StudyView.
+/// After each answer an explanation card says why the key is right (and why the
+/// picked option was wrong); read-aloud speaks question, options and verdict.
 struct QuizView: View {
     @EnvironmentObject var store: DeckStore
+    @ObservedObject private var speaker = CardSpeaker.shared
+    @AppStorage("quizAutoNext") private var autoNext = true
     let deck: Deck
 
     @State private var questions: [QuizQuestion] = []
@@ -28,7 +32,33 @@ struct QuizView: View {
         }
         .navigationTitle(deck.name)
         .inlineTitleBar()
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    autoNext.toggle()
+                } label: {
+                    Image(systemName: autoNext ? "forward.fill" : "forward")
+                }
+                .accessibilityLabel(autoNext ? "Auto-next on correct: on" : "Auto-next on correct: off")
+                .accessibilityIdentifier("quizAutoNext")
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    speaker.enabled.toggle()
+                    if speaker.enabled { readCurrent() }
+                } label: {
+                    Image(systemName: speaker.enabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                }
+                .accessibilityLabel(speaker.enabled ? "Mute read-aloud" : "Unmute read-aloud")
+                .accessibilityIdentifier("quizSpeaker")
+            }
+        }
         .onAppear { if questions.isEmpty { start(with: ordered()) } }
+        .onDisappear { speaker.release() }
+        // Auto-next waits for the verdict to finish being read out.
+        .onChange(of: speaker.speaking) { _, now in
+            if !now, speaker.enabled { autoAdvanceIfRight() }
+        }
     }
 
     // MARK: question screen
@@ -62,6 +92,7 @@ struct QuizView: View {
                     ForEach(q.options.indices, id: \.self) { i in
                         optionTile(q, i)
                     }
+                    if checked { explanation(q) }
                 }
             }
 
@@ -102,7 +133,7 @@ struct QuizView: View {
             }
         } label: {
             HStack(alignment: .center, spacing: 10) {
-                Text(q.options[i])
+                Text(QuizBuilder.label(q, i))
                     .font(.callout)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -125,7 +156,46 @@ struct QuizView: View {
             )
         }
         .buttonStyle(.plain)
+        .keyboardShortcut(KeyEquivalent(Character(q.letters.indices.contains(i) ? q.letters[i].lowercased() : "\(i + 1)")), modifiers: [])
         .accessibilityIdentifier("quizOption\(i)")
+    }
+
+    /// Green "what you got right" or red "why that was wrong", plus the key's reason.
+    private func explanation(_ q: QuizQuestion) -> some View {
+        let right = picked == q.correct
+        let wrongPicks = picked.subtracting(q.correct).sorted()
+        let answer = q.correct.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: "\n")
+        return VStack(alignment: .leading, spacing: 10) {
+            Label(right ? "Correct" : "Not quite", systemImage: right ? "checkmark.seal.fill" : "xmark.octagon.fill")
+                .font(.headline)
+                .foregroundStyle(right ? .green : .red)
+            if !right {
+                ForEach(wrongPicks, id: \.self) { i in
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("You picked \(QuizBuilder.label(q, i))").font(.subheadline.weight(.semibold))
+                        if let why = QuizBuilder.whyNot(q, picked: i) {
+                            Text(why).font(.subheadline)
+                        }
+                    }
+                }
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(right ? answer : "Answer: \(answer)").font(.subheadline.weight(.semibold))
+                if let why = q.card.why {
+                    Text(why).font(.subheadline)
+                }
+            }
+            if let doubt = q.card.keyDoubt {
+                Label(doubt, systemImage: "exclamationmark.triangle")
+                    .font(.footnote)
+                    .foregroundStyle(.orange)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(14)
+        .background((right ? Color.green : Color.red).opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("quizExplanation")
     }
 
     // MARK: end screen
@@ -170,6 +240,7 @@ struct QuizView: View {
         checked = false
         points = 0
         missed = []
+        readCurrent()
     }
 
     private func check(_ q: QuizQuestion) {
@@ -179,11 +250,52 @@ struct QuizView: View {
         if right { points += 1 } else { missed.append(q) }
         store.grade(deck: deck, card: q.card, got: right)
         Haptics.verdict(success: right)
+        if speaker.enabled {
+            speaker.speak(verdict(q, right: right))
+        } else if right && autoNext {
+            let at = index
+            Task {
+                try? await Task.sleep(for: .seconds(1.5))
+                if index == at { autoAdvanceIfRight() }
+            }
+        }
     }
 
     private func advance() {
         index += 1
         picked = []
         checked = false
+        readCurrent()
+    }
+
+    private func autoAdvanceIfRight() {
+        guard autoNext, checked, index < questions.count, picked == questions[index].correct else { return }
+        advance()
+    }
+
+    // MARK: read-aloud
+
+    private func readCurrent() {
+        guard speaker.enabled, index < questions.count else {
+            speaker.stop()
+            return
+        }
+        let q = questions[index]
+        let options = q.options.indices.map { QuizBuilder.label(q, $0) }
+        speaker.speak(([q.prompt] + options).joined(separator: "\n"))
+    }
+
+    private func verdict(_ q: QuizQuestion, right: Bool) -> String {
+        let answer = q.correct.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", and ")
+        var lines = [right ? "Correct. \(answer)" : "Wrong."]
+        if !right {
+            for i in picked.subtracting(q.correct).sorted() {
+                lines.append("You picked \(QuizBuilder.label(q, i))")
+                if let why = QuizBuilder.whyNot(q, picked: i) { lines.append(why) }
+            }
+            lines.append("The answer is \(answer)")
+        }
+        if let why = q.card.why { lines.append(why) }
+        return lines.joined(separator: "\n")
     }
 }

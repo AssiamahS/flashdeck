@@ -9,6 +9,11 @@ struct Card: Codable, Hashable {
     var image: String?
     var video: String?
     var backImage: String?
+    /// Practice-test explanations (tools/explain_cards.py): why the keyed answer is
+    /// right, why each other letter is wrong, and a note when the key looks off.
+    var why: String?
+    var whyNot: [String: String]?
+    var keyDoubt: String?
 }
 
 struct Deck: Codable, Identifiable, Hashable {
