@@ -2,6 +2,10 @@ name = "flashdeck-relay"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
+# Workers AI: /explain answers follow-up questions from the practice test
+[ai]
+binding = "AI"
+
 [[durable_objects.bindings]]
 name = "HUB"
 class_name = "Hub"

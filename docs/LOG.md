@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-10-22 · v0.16.0 — ask about this question
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Prompt "spell out acronyms" once | model expanded only the first mention per card → RTO spelled, RPO bare in another field | ❌ → "every acronym in EVERY field, each field is read on its own" |
+| `POST /explain` on flashdeck-relay, Workers AI llama-3.3-70b | "RPO vs RTO?" → both spelled out + the one-line difference, ~2 s, no Mac needed | ✅ |
+| Return key on Mac with Ask open | Next button's `.keyboardShortcut(.return)` would steal it | ❌ → shortcut is nil while Ask is open |
+
 ## 2026-10-22 · v0.15.0 — practice test explanations
 
 | Tried | Result | Verdict |

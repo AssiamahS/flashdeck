@@ -89,7 +89,6 @@
   .tile span { flex: 1; white-space: pre-wrap; }
   .tile .mark { flex: 0; font-size: 20px; }
   .tile.picked { box-shadow: inset 0 0 0 3px #fff; }
-  .tile.dim { opacity: .3; }
   .tile:not(.locked):hover { filter: brightness(1.08); }
   .tile.locked { cursor: default; }
   .next-row { display: flex; justify-content: flex-end; margin-top: 16px; }
@@ -103,6 +102,12 @@
   .explain.wrong h3 { color: var(--miss); }
   .explain b { display: block; white-space: pre-wrap; }
   .explain .doubt { color: #ff9f0a; font-size: 13px; }
+  .ask { margin-top: 12px; padding: 14px; border-radius: 10px; background: rgba(64, 200, 224, .12); display: grid; gap: 8px; font-size: 15px; line-height: 1.4; }
+  .ask b { display: block; }
+  .ask form { display: flex; gap: 8px; }
+  .ask input { flex: 1; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: inherit; font: inherit; }
+  .ask button, .ask-open { color: var(--quiz-teal); font-weight: 650; }
+  .ask-open { margin-top: 12px; text-align: left; }
   .icon-btn.auto { font-size: 15px; font-weight: 800; }
   .done .pct { font-size: 20px; }
   .done .pct.pass { color: var(--got); }
@@ -360,6 +365,7 @@ function onKey(e) {
 
 // ---------- practice test (port of ios/FlashDeck/Quiz.swift + QuizView.swift) ----------
 const PALETTE = ['#40c8e0', '#30d158', '#ff9f0a', '#ff453a', '#bf5af2', '#0a84ff', '#ff375f', '#5e5ce6'];
+const ASK_URL = 'https://flashdeck-relay.sylvesterassiamahpm.workers.dev/explain';
 const OPTION_LINE = /^([A-H])\.\s*(.+)$/;
 const textOnly = c => !c.image && !c.backImage && !c.video;
 const canQuiz = deck => deck.cards.length >= 3 && deck.cards.some(textOnly);
@@ -420,7 +426,7 @@ function quiz(deck) {
 }
 
 function startQuiz(list) {
-  Object.assign(q, { questions: list, i: 0, picked: new Set(), checked: false, points: 0, missed: [] });
+  Object.assign(q, { questions: list, i: 0, picked: new Set(), checked: false, points: 0, missed: [], asks: null });
   renderQuiz();
   readQuestion();
 }
@@ -446,6 +452,45 @@ function explanation(qu) {
     <div><b>${right ? '' : 'Answer: '}${esc(answer)}</b>${qu.card.why ? esc(qu.card.why) : ''}</div>
     ${qu.card.keyDoubt ? `<div class="doubt">⚠ ${esc(qu.card.keyDoubt)}</div>` : ''}
   </div>`;
+}
+
+// "Ask about this": follow-ups on the question on screen, answered by the relay Worker (Workers AI)
+function askBox() {
+  if (!q.asks) return `<button class="ask-open" id="askOpen">💬 Ask about this question</button>`;
+  return `<div class="ask">
+    ${q.asks.map(t => `<div><b>${esc(t.ask)}</b>${esc(t.answer ?? '…')}</div>`).join('')}
+    <form id="askForm"><input id="askField" placeholder="e.g. what's the difference between RPO and RTO?" autocomplete="off" ${q.asking ? 'disabled' : ''}><button aria-label="Send">Ask</button></form>
+  </div>`;
+}
+
+function bindAsk(qu) {
+  const open = document.getElementById('askOpen');
+  if (open) open.onclick = () => { q.asks = []; renderQuiz(); document.getElementById('askField').focus(); };
+  const form = document.getElementById('askForm');
+  if (!form) return;
+  const field = document.getElementById('askField');
+  field.onkeydown = e => e.stopPropagation(); // typing must not pick tiles or hit Enter = next
+  form.onsubmit = async e => {
+    e.preventDefault();
+    const ask = field.value.trim();
+    if (!ask || q.asking) return;
+    const at = q.i, turn = { ask };
+    const history = q.asks.filter(t => t.answer).map(t => ({ ask: t.ask, answer: t.answer }));
+    q.asks.push(turn); q.asking = true; renderQuiz();
+    try {
+      const res = await fetch(ASK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        question: [qu.prompt, ...qu.options.map((_, i) => optLabel(qu, i))].join('\n'),
+        answer: answerLabel(qu, ', '), picked: [...q.picked].sort().map(i => optLabel(qu, i)).join(', '),
+        why: qu.card.why || '', ask, history }) });
+      const j = await res.json();
+      turn.answer = j.answer || j.error || 'No answer — try again.';
+    } catch { turn.answer = 'Couldn’t reach the tutor — check your connection.'; }
+    q.asking = false;
+    if (q.i !== at) return;
+    renderQuiz();
+    document.getElementById('askField')?.focus();
+    if (speak) say(turn.answer);
+  };
 }
 
 function verdict(qu, right) {
@@ -484,18 +529,18 @@ function renderQuiz() {
       ${need > 1 && !q.checked ? `<div class="pick">Pick ${need}</div>` : ''}
       <div class="tiles">${qu.options.map((opt, i) => {
         const right = qu.correct.has(i), picked = q.picked.has(i);
-        const dim = q.checked && !right && !picked;
         const mark = q.checked && right ? '✓' : q.checked && picked ? '✗' : picked ? '●' : '';
-        return `<button class="tile ${picked ? 'picked' : ''} ${dim ? 'dim' : ''} ${q.checked ? 'locked' : ''}"
+        return `<button class="tile ${picked ? 'picked' : ''} ${q.checked ? 'locked' : ''}"
           style="background:${PALETTE[i % PALETTE.length]}" data-i="${i}" aria-pressed="${picked}">
           <span>${esc(optLabel(qu, i))}</span>${mark ? `<b class="mark">${mark}</b>` : ''}</button>`;
       }).join('')}</div>
-      ${q.checked ? explanation(qu) : ''}
+      ${q.checked ? explanation(qu) + askBox() : ''}
       <div class="next-row"><button class="next" id="next" ${ready ? '' : 'disabled'} aria-label="${q.checked ? 'Next' : 'Check'}">${q.checked ? '→' : '✓'}</button></div>
       <p class="muted keys">${qu.letters.length ? 'A-' + qu.letters.at(-1) : '1-' + qu.options.length} pick · Enter ${q.checked ? 'next' : 'check'} · Esc decks</p>
     </div>`;
   document.getElementById('back').onclick = home;
   bindSpeaker(() => { renderQuiz(); readQuestion(); });
+  bindAsk(qu);
   document.getElementById('auto').onclick = () => { autoNext = !autoNext; store.set('fd.autoNext', autoNext); renderQuiz(); };
   document.getElementById('next').onclick = () => q.checked ? quizAdvance() : quizCheck();
   app.querySelectorAll('.tile').forEach(t => t.onclick = () => pickOption(+t.dataset.i));
@@ -519,13 +564,13 @@ function quizCheck() {
   gradeBox(q.deck, qu.card, right);
   renderQuiz();
   // auto-next waits for the verdict to be read out, or 1.5 s when muted
-  const at = q.i, next = () => { if (right && autoNext && q && q.i === at && q.checked) quizAdvance(); };
+  const at = q.i, next = () => { if (right && autoNext && q && q.i === at && q.checked && !q.asks) quizAdvance(); };
   if (speak && 'speechSynthesis' in window) say(verdict(qu, right), next);
   else setTimeout(next, 1500);
 }
 
 function quizAdvance() {
-  q.i++; q.picked = new Set(); q.checked = false;
+  q.i++; q.picked = new Set(); q.checked = false; q.asks = null;
   renderQuiz();
   if (q.i < q.questions.length) readQuestion();
 }

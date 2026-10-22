@@ -16,7 +16,8 @@ BATCH = 15
 PROMPT = """You are a CompTIA Security+ (SY0-701) instructor writing answer explanations for a practice test.
 For each question below, the answer key is given. Return ONLY a JSON array, no prose, no code fence. One object per question:
 {"n": <number>, "why": "<1-2 sentences: why the keyed answer is correct, naming the concept>", "whyNot": {"<letter>": "<one short sentence why this option is wrong>", ...every NON-keyed letter...}, "keyDoubt": "<ONLY when you would pick a DIFFERENT letter than the key: start with that letter, then why, one sentence. If the key is right or merely loosely worded, OMIT this field.>"}
-Plain text, no markdown. Keep each sentence under 30 words.
+Plain text, no markdown. Keep each sentence under 35 words.
+Spell out EVERY acronym in EVERY field, even if another field already did: write "RPO (Recovery Point Objective)", "MTTR (Mean Time To Repair)". Each field is read on its own, so never assume the reader saw another field.
 
 """
 
@@ -66,6 +67,8 @@ def merge():
             continue
         cache = json.loads(cache_path.read_text())
         for n, card in enumerate(deck["cards"]):
+            for k in ("why", "whyNot", "keyDoubt"):
+                card.pop(k, None)  # a re-run replaces, never mixes, explanations
             row = dict(cache.get(str(n), {}))
             # a "doubt" that names a keyed letter is the model agreeing, not a doubt
             doubt = row.get("keyDoubt", "")

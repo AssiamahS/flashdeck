@@ -16,6 +16,7 @@ struct QuizView: View {
     @State private var checked = false
     @State private var points = 0
     @State private var missed: [QuizQuestion] = []
+    @State private var askOpen = false
 
     private static let palette: [Color] = [.teal, .green, .orange, .red, .purple, .blue, .pink, .indigo]
 
@@ -92,7 +93,11 @@ struct QuizView: View {
                     ForEach(q.options.indices, id: \.self) { i in
                         optionTile(q, i)
                     }
-                    if checked { explanation(q) }
+                    if checked {
+                        explanation(q)
+                        AskBox(question: q, picked: picked, open: $askOpen)
+                            .id(index)
+                    }
                 }
             }
 
@@ -107,10 +112,12 @@ struct QuizView: View {
                         .foregroundStyle(.white)
                         .background(Circle().fill(.teal))
                 }
+                .buttonStyle(.plain)
                 .disabled(!checked && picked.count != q.picksNeeded)
                 .opacity(!checked && picked.count != q.picksNeeded ? 0.35 : 1)
                 .accessibilityIdentifier("quizNext")
-                .keyboardShortcut(.return, modifiers: [])
+                // Return belongs to the Ask field while it's open
+                .keyboardShortcut(askOpen ? nil : KeyboardShortcut(.return, modifiers: []))
             }
         }
         .padding()
@@ -120,7 +127,6 @@ struct QuizView: View {
         let isRight = q.correct.contains(i)
         let isPicked = picked.contains(i)
         let color = Self.palette[i % Self.palette.count]
-        let dimmed = checked && !isRight && !isPicked
         return Button {
             guard !checked else { return }
             if isPicked {
@@ -149,7 +155,7 @@ struct QuizView: View {
             }
             .foregroundStyle(.white)
             .padding(14)
-            .background(color.opacity(dimmed ? 0.3 : 1), in: RoundedRectangle(cornerRadius: 8))
+            .background(color, in: RoundedRectangle(cornerRadius: 8))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(.white, lineWidth: isPicked ? 3 : 0)
@@ -265,11 +271,12 @@ struct QuizView: View {
         index += 1
         picked = []
         checked = false
+        askOpen = false
         readCurrent()
     }
 
     private func autoAdvanceIfRight() {
-        guard autoNext, checked, index < questions.count, picked == questions[index].correct else { return }
+        guard autoNext, !askOpen, checked, index < questions.count, picked == questions[index].correct else { return }
         advance()
     }
 
@@ -297,5 +304,95 @@ struct QuizView: View {
         }
         if let why = q.card.why { lines.append(why) }
         return lines.joined(separator: "\n")
+    }
+}
+
+/// "Ask about this": follow-up questions on the card on screen, answered by the
+/// flashdeck-relay Worker (Workers AI). Answers are read aloud when read-aloud is on.
+private struct AskBox: View {
+    let question: QuizQuestion
+    let picked: Set<Int>
+    @Binding var open: Bool
+
+    @State private var text = ""
+    @State private var turns: [(ask: String, answer: String)] = []
+    @State private var busy = false
+    @FocusState private var focused: Bool
+
+    private static let endpoint = URL(string: "https://flashdeck-relay.sylvesterassiamahpm.workers.dev/explain")!
+
+    var body: some View {
+        if !open {
+            Button {
+                open = true
+                focused = true
+            } label: {
+                Label("Ask about this question", systemImage: "bubble.left.and.text.bubble.right")
+                    .font(.subheadline.weight(.semibold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.teal)
+            .accessibilityIdentifier("quizAskOpen")
+        } else {
+            VStack(alignment: .leading, spacing: 10) {
+                ForEach(turns.indices, id: \.self) { i in
+                    Text(turns[i].ask).font(.subheadline.weight(.semibold))
+                    Text(turns[i].answer).font(.subheadline)
+                }
+                if busy { ProgressView().controlSize(.small) }
+                HStack {
+                    TextField("e.g. what's the difference between RPO and RTO?", text: $text, axis: .vertical)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($focused)
+                        .onSubmit(send)
+                        .accessibilityIdentifier("quizAskField")
+                    Button(action: send) {
+                        Image(systemName: "arrow.up.circle.fill").font(.title2)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.teal)
+                    .disabled(busy || text.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+            }
+            .padding(14)
+            .background(Color.teal.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+        }
+    }
+
+    private func send() {
+        let ask = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !ask.isEmpty, !busy else { return }
+        text = ""
+        busy = true
+        let q = question
+        let body: [String: Any] = [
+            "question": ([q.prompt] + q.options.indices.map { QuizBuilder.label(q, $0) }).joined(separator: "\n"),
+            "answer": q.correct.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", "),
+            "picked": picked.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", "),
+            "why": q.card.why ?? "",
+            "ask": ask,
+            "history": turns.map { ["ask": $0.ask, "answer": $0.answer] },
+        ]
+        Task {
+            let answer = await Self.post(body)
+            turns.append((ask, answer))
+            busy = false
+            if CardSpeaker.shared.enabled { CardSpeaker.shared.speak(answer) }
+        }
+    }
+
+    private static func post(_ body: [String: Any]) async -> String {
+        var req = URLRequest(url: endpoint)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        do {
+            let (data, _) = try await URLSession.shared.data(for: req)
+            let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            return (json?["answer"] ?? json?["error"]) as? String ?? "No answer — try again."
+        } catch {
+            return "Couldn’t reach the tutor — check your connection."
+        }
     }
 }

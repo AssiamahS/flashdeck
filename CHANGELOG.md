@@ -3,6 +3,23 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.16.0 — 2026-10-22
+
+Ask about any question (iPhone / iPad / Mac 1.11.0 + web).
+
+- "Ask about this question" under every explanation: type a follow-up
+  ("difference between RPO and RTO?") and get a short answer about that
+  exact question. Follow-ups keep the thread; answers are read aloud when
+  the speaker is on. Backend = `POST /explain` on the flashdeck-relay Worker
+  (Workers AI, Llama 3.3 70B), so the Mac doesn't need to be on.
+- Explanations regenerated so every field spells out every acronym
+  ("RPO (Recovery Point Objective)"), not just the first one it meets.
+- Answer tiles keep their full color after you answer (the 30% fade on the
+  untouched options is gone); ✓ / ✗ and the white ring still mark them.
+- Mac: the Next button no longer draws a blue default-button box around the
+  teal circle; Return goes to the Ask field while it's open, and auto-next
+  holds while you're asking.
+
 ## v0.15.0 — 2026-10-22
 
 Practice Test explains every answer (iPhone / Mac 1.10.0 + web study.html).

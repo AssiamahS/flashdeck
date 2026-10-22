@@ -6,9 +6,43 @@
 // the fetching happens on the Mac (tools/quizlet_agent.py), which keeps a
 // websocket open to this Worker. The page POSTs a link here, the Durable
 // Object hands it to the Mac and returns the cards.
+//
+// /explain is the practice test's "Ask" box: a follow-up question about the
+// card on screen, answered by Workers AI (no Mac needed).
 
 const ORIGINS = ['https://assiamahs.github.io', 'http://localhost:8931', 'http://127.0.0.1:8931'];
 const TIMEOUT_MS = 45000;
+const MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
+const TUTOR = `You are a CompTIA Security+ (SY0-701) tutor answering a student's follow-up question about one practice-test question.
+Answer in 2-5 short sentences of plain text, no markdown. Spell out every acronym the first time, e.g. "RPO (Recovery Point Objective)".
+If the student asks to compare terms, give each one's meaning and the one-line difference. If the answer key looks wrong for SY0-701, say so.`;
+
+const clip = (v, n) => String(v ?? '').slice(0, n);
+
+async function explain(req, env) {
+  const body = await req.json().catch(() => ({}));
+  const ask = clip(body.ask, 500).trim();
+  if (!ask) return json(req, { error: 'Type a question.' }, 400);
+  const context = [
+    `Question:\n${clip(body.question, 3000)}`,
+    `Answer key: ${clip(body.answer, 500)}`,
+    body.picked ? `Student picked: ${clip(body.picked, 500)}` : '',
+    body.why ? `Explanation shown: ${clip(body.why, 1000)}` : '',
+  ].filter(Boolean).join('\n\n');
+  const history = (Array.isArray(body.history) ? body.history : []).slice(-6).flatMap(t => [
+    { role: 'user', content: clip(t.ask, 500) },
+    { role: 'assistant', content: clip(t.answer, 1500) },
+  ]);
+  try {
+    const out = await env.AI.run(MODEL, {
+      messages: [{ role: 'system', content: `${TUTOR}\n\n${context}` }, ...history, { role: 'user', content: ask }],
+      max_tokens: 400,
+    });
+    return json(req, { answer: String(out.response || '').trim() });
+  } catch (e) {
+    return json(req, { error: 'Couldn’t reach the tutor — try again.' }, 502);
+  }
+}
 
 function cors(req) {
   const origin = req.headers.get('Origin') || '';
@@ -45,6 +79,7 @@ export default {
       if (new URL(req.url).searchParams.get('key') !== env.AGENT_KEY) return new Response('forbidden', { status: 403 });
       return hub.fetch(req);
     }
+    if (pathname === '/explain' && req.method === 'POST') return explain(req, env);
     if (pathname === '/health') {
       const r = await hub.fetch('https://hub/health');
       return json(req, await r.json());

@@ -167,7 +167,10 @@ jobs:
     name: Mac app (ad hoc zip)
     runs-on: macos-26
     timeout-minutes: 30
-    if: github.event_name == 'workflow_dispatch'
+    # after adhoc: both jobs commit docs/install.html, and running them side by side made the
+    # IPA's rebase conflict (v1.10.0 build 64). always() so a failed IPA still ships the Mac zip.
+    needs: adhoc
+    if: always() && github.event_name == 'workflow_dispatch'
     permissions:
       contents: write
       pages: write

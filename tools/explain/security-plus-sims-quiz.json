@@ -1,543 +1,543 @@
 {
  "0": {
-  "why": "On a server never updated since install, any hash change is suspicious, and the key treats the earliest iptables-save entry as the start; that entry is really only the baseline.",
+  "why": "File Integrity Monitoring (FIM) on a server never updated since install should show no changes, so the first hash difference is the first compromise indicator. The key treats the 12/30 iptables-save entry as that first instance.",
   "whyNot": {
-   "A": "The /etc/passwd hash changes on 1/1 come after the iptables-save hash changed on 12/31, so they are not the first.",
-   "C": "The key rejects this, though it is the first entry where the iptables-save hash differs from the baseline.",
-   "D": "The initrd.img hash change on 1/1 at 3:30 is the latest change in the log, so it cannot be first."
+   "A": "The /etc/passwd hash changes at 1:20 on 1/1/2017 come after the iptables-save entry, so they are not the first instance.",
+   "C": "The 12/31 iptables-save entry is later than the 12/30 entry the key selects as first.",
+   "D": "The /boot/initrd.img hash change at 3:30 on 1/1/2017 is the latest of the listed changes, so it cannot be the first."
   },
-  "keyDoubt": "C, because the iptables-save hash first changes from ...cc3 to ...co3 at 12/31 2:00, while the 12/30 entry is just the baseline."
+  "keyDoubt": "C. The iptables-save hash is the same on 12/30 and changes on 12/31 at 2:00, so the first change from the baseline is the 12/31/2016 2:00:00 entry."
  },
  "1": {
-  "why": "Screen lock is a mobile device hardening control that prevents unauthorized access to a lost or unattended company-managed smartphone.",
+  "why": "A screen lock is a mobile device control that stops someone who picks up an unattended or lost company managed smartphone from using it.",
   "whyNot": {
-   "B": "Terminal servers sit in controlled data centers and are not locked by idle-screen timers in the same way as handheld devices."
+   "B": "A data center terminal server sits in a physically secured room and is managed remotely, so a screen lock is not its primary control."
   }
  },
  "2": {
-  "why": "A strong password or PIN is a core mobile device management control that protects a company-managed smartphone against unauthorized access.",
+  "why": "A strong password (passcode) on a company managed smartphone protects the device and its data if it is lost, stolen, or used in public places.",
   "whyNot": {
-   "B": "Data center servers rely mainly on physical and network controls, and this simulation pairs strong passwords with the phone."
+   "B": "The data center terminal server relies mainly on physical controls and centrally managed authentication, so this phone-focused item is not placed there."
   }
  },
  "3": {
-  "why": "Device encryption protects data at rest on a portable smartphone that can be lost or stolen, a standard mobile device management requirement.",
+  "why": "Device encryption protects data at rest on a company managed smartphone, so a lost or stolen phone does not expose stored corporate data.",
   "whyNot": {
-   "B": "A server in a physically secured data center is not the intended match for this device-level, loss-driven control."
+   "B": "A data center terminal server is physically protected and is not the portable device where full device encryption is the key concern."
   }
  },
  "4": {
-  "why": "Remote wipe lets administrators erase corporate data from a lost or stolen mobile device, a classic mobile device management capability.",
+  "why": "Remote wipe lets administrators erase corporate data from a lost or stolen company managed smartphone through Mobile Device Management (MDM).",
   "whyNot": {
-   "B": "Servers in a data center are not lost or stolen in the field, so remote wipe is not their typical control."
+   "B": "A terminal server stays in a secured data center and is not lost or stolen in the field, so remote wipe does not apply."
   }
  },
  "5": {
-  "why": "GPS tracking locates a lost or stolen mobile device, so it applies to the portable company-managed smartphone.",
+  "why": "Global Positioning System (GPS) tracking helps locate a lost or stolen company managed smartphone, because phones are mobile and leave the premises.",
   "whyNot": {
-   "B": "A fixed data center server has a known location and does not need GPS tracking."
+   "B": "A data center terminal server is a fixed system in a known location, so Global Positioning System tracking adds little value."
   }
  },
  "6": {
-  "why": "A pop-up blocker is a browser-level control on a smartphone used for web browsing, reducing malicious ads and drive-by content.",
+  "why": "A pop-up blocker protects the web browser on a company managed smartphone from malicious or deceptive pop-up windows during mobile browsing.",
   "whyNot": {
-   "B": "Terminal servers are not used for general web browsing, so a pop-up blocker is not their typical control."
+   "B": "A data center terminal server is not used for general web browsing, so a pop-up blocker is not its characteristic control."
   }
  },
  "7": {
-  "why": "Cable locks are a physical security control that deters theft of hardware, matching the data center terminal server in this exercise.",
+  "why": "Cable locks physically secure hardware to a fixed object, which fits equipment in the data center and deters theft of the terminal server.",
   "whyNot": {
-   "A": "Smartphones are carried by users and are not secured with cable locks, so this control does not fit the phone."
+   "A": "A company managed smartphone is carried by its user, so a cable lock is impractical and not a typical control for it."
   }
  },
  "8": {
-  "why": "Antivirus is an endpoint protection control that detects malware on servers, so it belongs with the data center terminal server.",
+  "why": "Antivirus software on the data center terminal server detects and removes malware that could compromise the server and the users who connect to it.",
   "whyNot": {
-   "A": "The simulation pairs antivirus with the server, not the smartphone, where mobile management controls are expected."
+   "A": "The key places antivirus on the server; a managed smartphone relies more on mobile controls such as screen lock, encryption, and remote wipe."
   }
  },
  "9": {
-  "why": "A host-based firewall filters traffic on an individual server, providing a host-level network control for the data center terminal server.",
+  "why": "A host based firewall filters inbound and outbound traffic on the data center terminal server itself, limiting which network connections can reach it.",
   "whyNot": {
-   "A": "In this simulation the host-based firewall is a server control, not a mobile device control."
+   "A": "The key places the host based firewall on the server; the smartphone controls in this exercise are mobile-focused such as screen lock and remote wipe."
   }
  },
  "10": {
-  "why": "A proximity reader is a physical access control that restricts entry to the data center where the terminal server is housed.",
+  "why": "A proximity reader is a physical access control that reads badges or cards at the data center door, restricting who can reach the terminal server.",
   "whyNot": {
-   "A": "A smartphone does not use a proximity reader as a protective control."
+   "A": "A proximity reader controls entry to a physical space and is not a control installed on a company managed smartphone."
   }
  },
  "11": {
-  "why": "A sniffer (protocol analyzer) is used to monitor and analyze traffic on the data center network where the terminal server sits.",
+  "why": "A sniffer (network protocol analyzer) captures and inspects network traffic, which is used to monitor and troubleshoot traffic at the data center terminal server.",
   "whyNot": {
-   "A": "Network traffic monitoring with a sniffer is not a standard control for a company-managed smartphone."
+   "A": "A sniffer is a network monitoring tool for infrastructure, not a protection control placed on a company managed smartphone."
   }
  },
  "12": {
-  "why": "A mantrap is a physical access control that prevents tailgating into the data center holding the terminal server.",
+  "why": "A mantrap is a two-door vestibule that allows one person in at a time, a physical control protecting the data center where the terminal server is housed.",
   "whyNot": {
-   "A": "A mantrap is a building-entry control and cannot be applied to a handheld smartphone."
+   "A": "A mantrap is a building entry structure and cannot be applied to a portable company managed smartphone."
   }
  },
  "13": {
-  "why": "Whaling is a form of spear phishing aimed at senior executives such as the CEO and board members to steal confidential information.",
+  "why": "Whaling is a phishing attack aimed at senior executives such as the Chief Executive Officer and board members, in order to steal confidential company information.",
   "whyNot": {
-   "B": "A hoax is a false warning or claim, not a targeted attack on executives.",
-   "C": "Vishing uses voice calls, and the scenario does not describe a phone-based attack.",
-   "D": "Spam is unsolicited bulk messaging with no executive targeting.",
-   "E": "Pharming redirects users to fake sites through DNS or hosts manipulation and does not target executives.",
-   "F": "Spim is spam sent over instant messaging and is not aimed at executives.",
-   "G": "Generic phishing targets broad groups, not specific senior leaders.",
-   "H": "Spear phishing targets specific individuals, but whaling is the specific term for executive targets."
+   "B": "A hoax is a false warning or claim meant to deceive or waste time, not a targeted theft of executive information.",
+   "C": "Vishing (voice phishing) uses phone calls, and the scenario does not describe a voice-based attack on executives.",
+   "D": "Spam is unsolicited bulk messaging sent to many recipients, not aimed specifically at executives.",
+   "E": "Pharming redirects users to fake websites by tampering with name resolution, and it is not targeted at executives.",
+   "F": "Spim (Spam over Instant Messaging) is unsolicited instant messages, not a targeted attack on executives.",
+   "G": "Generic phishing casts a wide net at many victims, while this scenario targets only the Chief Executive Officer and board.",
+   "H": "Spear phishing targets specific individuals or groups generally, but the executive-only target makes whaling the more precise answer."
   }
  },
  "14": {
-  "why": "A hoax is a false claim, here a fake antivirus warning and link, spread widely to trick victims into trusting and installing malicious software.",
+  "why": "A hoax spreads a false claim, such as a fake antivirus warning or tool, to many people on social networks, tricking them into acting on it.",
   "whyNot": {
-   "A": "Whaling targets senior executives, but this attack hits a broad set of victims.",
-   "C": "Vishing uses voice calls, while this attack spreads through social network posts.",
-   "D": "Spam is unsolicited bulk messaging, not a fake-warning lure posted on social networks.",
-   "E": "Pharming redirects traffic through DNS or hosts-file tampering, which is not described here.",
-   "F": "Spim is spam delivered by instant messaging, not social network posts.",
-   "G": "Phishing typically solicits credentials by email or message, while this is a deceptive fake-warning post.",
-   "H": "Spear phishing targets specific individuals, but this attack targets a broad audience."
+   "A": "Whaling targets senior executives, but this scenario targets a broad set of victims on social networks.",
+   "C": "Vishing (voice phishing) happens over phone calls, not through links posted on social networks.",
+   "D": "Spam is unsolicited bulk messages, but the scenario describes a fake antivirus link posted on social networks as a deceptive claim.",
+   "E": "Pharming redirects traffic to fake sites by corrupting name resolution, not by posting links on social networks.",
+   "F": "Spim (Spam over Instant Messaging) uses instant messaging, not posts across multiple social networks.",
+   "G": "Phishing typically uses messages to steal credentials or information, whereas this scenario is a fake antivirus claim spread widely.",
+   "H": "Spear phishing targets specific individuals, but this scenario targets a broad set of victims."
   }
  },
  "15": {
-  "why": "Vishing is voice phishing: the attacker phones the victim to extract credit card details by phone.",
+  "why": "Vishing (voice phishing) uses phone calls to trick victims into revealing sensitive data such as credit card numbers, which matches an attacker targeting a phone-based victim.",
   "whyNot": {
-   "A": "Whaling targets senior executives, and the scenario does not mention that.",
-   "B": "A hoax is a false warning or claim and does not collect card data.",
-   "D": "Spam is unsolicited bulk messaging and does not involve phone-based data theft.",
-   "E": "Pharming redirects DNS or hosts entries to fake sites and involves no phone call.",
-   "F": "Spim is spam sent over instant messaging, not voice calls.",
-   "G": "Phishing is generally email-based, whereas this attack is phone-based.",
-   "H": "Spear phishing is a targeted email attack and does not match a phone-based attack."
+   "A": "Whaling targets senior executives, usually through email, rather than collecting card details over a phone call.",
+   "B": "A hoax is a false warning or rumor meant to cause worry or action, not a call collecting card details.",
+   "D": "Spam is unsolicited bulk messaging, and it does not involve a voice call to harvest card details.",
+   "E": "Pharming redirects Domain Name System (DNS) lookups to fake sites, which is not a phone-based attack.",
+   "F": "Spim is spam delivered over instant messaging, not over a voice call.",
+   "G": "Phishing generally uses email or text messages, while a phone call is specifically vishing.",
+   "H": "Spear phishing is a targeted email attack on specific individuals, not a phone-based one."
   }
  },
  "16": {
-  "why": "Spam is unsolicited bulk messaging, and sending product information to recipients who opted out of advertising fits it.",
+  "why": "Spam is unsolicited bulk messaging. Mass-mailing product information to parties who already opted out of advertisements is the classic example of spam.",
   "whyNot": {
-   "A": "Whaling targets high-level executives and does not describe mass advertising.",
-   "B": "A hoax is a false warning meant to deceive, not product advertising.",
-   "C": "Vishing uses voice calls to steal information, not mass mail.",
-   "E": "Pharming redirects name resolution to fake sites and is not mass advertising.",
-   "F": "Spim is unsolicited instant messages, while this attack uses mass mail.",
-   "G": "Phishing tries to steal credentials or data, which this advertising does not.",
-   "H": "Spear phishing targets specific individuals, not a mass mailing."
+   "A": "Whaling targets senior executives with tailored lures, not mass advertising mail.",
+   "B": "A hoax spreads false warnings or rumors, not product advertisements.",
+   "C": "Vishing uses voice phone calls to steal information, not mass email.",
+   "E": "Pharming redirects Domain Name System (DNS) lookups to fraudulent sites and does not send advertising.",
+   "F": "Spim is spam sent over instant messaging, while this scenario describes mass mailing.",
+   "G": "Phishing tries to trick victims into giving up credentials or data, whereas this scenario is plain advertising.",
+   "H": "Spear phishing is a targeted deception attack on specific people, not bulk advertising to opted-out parties."
   }
  },
  "17": {
-  "why": "Pharming poisons or alters name resolution (DNS or hosts entries) so users reach a fraudulent site while typing the legitimate address.",
+  "why": "Pharming corrupts name resolution, such as Domain Name System (DNS) records or hosts file entries, so users who type a legitimate address land on a fraudulent site.",
   "whyNot": {
-   "A": "Whaling is a targeted attack on executives, not name resolution tampering.",
-   "B": "A hoax is a false warning and does not alter DNS entries.",
-   "C": "Vishing is a voice-call attack and does not change name resolution.",
-   "D": "Spam is unsolicited bulk messaging and has nothing to do with DNS.",
+   "A": "Whaling is a targeted message attack on senior executives and does not alter name resolution.",
+   "B": "A hoax is a false warning or rumor and does not change name resolution entries.",
+   "C": "Vishing is a voice phone call attack and does not redirect name resolution.",
+   "D": "Spam is unsolicited bulk messaging and does not alter Domain Name System (DNS) entries.",
    "F": "Spim is spam over instant messaging and does not redirect name resolution.",
-   "G": "Phishing lures users with messages and does not alter resolution entries.",
-   "H": "Spear phishing is a targeted lure and does not manipulate name resolution."
+   "G": "Phishing lures victims with deceptive messages, while pharming silently redirects them through name resolution tampering.",
+   "H": "Spear phishing is a targeted deceptive message attack and does not modify name resolution entries."
   }
  },
  "18": {
-  "why": "Cable locks physically tether unattended laptops to fixed objects, deterring theft, and the 6 locks match the 6 lab laptops.",
+  "why": "Unsupervised lab laptops are portable and easy to steal, so cable locks physically tether each one to a fixed object. The exhibit supplies six cable locks for the six laptops.",
   "whyNot": {
-   "B": "A proximity badge and safe protect access and storage but do not secure laptops in place.",
-   "C": "This is the full data center control set and is excessive for lab laptops.",
-   "D": "A biometric reader controls entry but does not physically secure a laptop against theft."
+   "B": "A proximity badge reader and a safe do not secure six laptops sitting out in an open lab.",
+   "C": "Closed-Circuit Television (CCTV), a mantrap, locking cabinets, and a biometric reader are data center controls, not a way to tether lab laptops.",
+   "D": "A biometric reader controls door or system access but does not physically stop a laptop from being carried away."
   }
  },
  "19": {
-  "why": "The office needs controlled entry through a proximity badge, plus a safe to store sensitive items such as the key box.",
+  "why": "The office holds a workstation, a laptop, and a key box. A proximity badge controls entry to the room, and the safe protects the sensitive items such as the keys and laptop.",
   "whyNot": {
-   "A": "Cable locks secure laptops but do not control entry or protect the key box.",
-   "C": "This full set belongs to the data center and is more than the office needs.",
-   "D": "A biometric reader alone provides no secure storage for keys or equipment."
+   "A": "Cable locks only tether devices and do not control room entry or protect the key box.",
+   "C": "This is the full data center control set, including a mantrap and Closed-Circuit Television (CCTV), which is more than an office needs and would use up the limited objects.",
+   "D": "A biometric reader alone does not provide secure storage for the keys and laptop."
   }
  },
  "20": {
-  "why": "The data center holds the most critical assets, so it gets layered physical security: CCTV, badge, mantrap, locking cabinets and biometrics.",
+  "why": "The data center holds the servers, so it gets layered physical security: Closed-Circuit Television (CCTV) monitoring, a proximity badge, a mantrap, locking cabinets, and a biometric reader.",
   "whyNot": {
-   "A": "Cable locks only tether devices and give no layered access control for servers.",
-   "B": "A proximity badge and safe are not enough layers for a server room.",
-   "D": "A single biometric reader is one control and lacks the defense in depth servers require."
+   "A": "Cable locks only tether portable devices and are not layered protection for server rooms.",
+   "B": "A proximity badge and a safe are too little protection for servers and omit the mantrap, monitoring, and locking cabinets.",
+   "D": "A single biometric reader gives one authentication layer but no mantrap, monitoring, or rack locking."
   }
  },
  "21": {
-  "why": "A biometric reader gives strong authentication for access to the area where these laptops are used, with the remaining objects placed elsewhere.",
+  "why": "Employee laptops on wireless are mobile users' devices, so a biometric reader gives strong user authentication. The exhibit supplies biometric readers for these three laptops.",
   "whyNot": {
-   "A": "The 6 cable locks are allocated to the 6 unsupervised lab laptops.",
-   "B": "The proximity badge and safe are allocated to the office.",
-   "C": "The full control set is allocated to the data center."
+   "A": "Cable locks are assigned to the six unsupervised lab laptops, not these three employee laptops.",
+   "B": "A proximity badge and a safe belong to the office and do not authenticate the laptops' users.",
+   "C": "Closed-Circuit Television (CCTV), a mantrap, and locking cabinets are data center controls, not suited to mobile laptops."
   }
  },
  "22": {
-  "why": "RAID-0 striping maximizes read and write throughput, which suits streaming media where speed matters and redundancy does not.",
+  "why": "A media streaming server needs maximum read speed and capacity. Redundant Array of Independent Disks level 0 (RAID-0) stripes data across disks for performance, and the media can be re-created if a disk fails.",
   "whyNot": {
-   "B": "RAID-1 mirroring prioritizes redundancy and halves usable capacity, which streaming does not need.",
-   "C": "RAID-5 parity adds write overhead and redundancy that this workload does not need.",
-   "D": "RAID-6 uses two parity blocks, adding overhead and cost that streaming does not justify."
+   "B": "Mirroring halves usable capacity and adds redundancy that a streaming workload does not need as much as speed.",
+   "C": "Striping with single parity adds write overhead and capacity cost that a speed-focused streaming server does not need.",
+   "D": "Striping with double parity has the highest write overhead and capacity cost, which is unnecessary for replaceable media."
   }
  },
  "23": {
-  "why": "RAID-1 mirroring keeps an exact copy of the data, giving simple, reliable fault tolerance for a small, critical authentication server.",
+  "why": "An authentication server needs high availability and simple, fast recovery. Redundant Array of Independent Disks level 1 (RAID-1) mirrors data to a second disk, so one disk can fail without downtime or data loss.",
   "whyNot": {
-   "A": "RAID-0 has no redundancy, so one disk failure would take authentication down.",
-   "C": "RAID-5 is better suited to larger, read-heavy arrays than a small authentication volume.",
-   "D": "RAID-6 needs more disks and has more overhead than this server needs."
+   "A": "Striping with no redundancy means one disk failure destroys all authentication data and takes the server down.",
+   "C": "Single parity striping needs at least three disks and has slower writes, which is not the expected match for a small authentication server.",
+   "D": "Double parity striping needs at least four disks and has heavy write overhead, which is more than an authentication server's profile calls for."
   }
  },
  "24": {
-  "why": "RAID-5 stripes data with single parity, balancing capacity, read performance and tolerance of one disk failure, which suits an archive.",
+  "why": "An email archive is read often and written less often, and it needs capacity efficiency with fault tolerance. Redundant Array of Independent Disks level 5 (RAID-5) stripes data with distributed single parity and survives one disk failure.",
   "whyNot": {
-   "A": "RAID-0 offers no fault tolerance, which is unacceptable for archived mail.",
-   "B": "RAID-1 wastes half the capacity, which is costly for a large archive.",
-   "D": "RAID-6 survives two failures but costs more capacity than an archive needs."
+   "A": "Striping with no parity gives no fault tolerance, so one disk failure would lose the archive.",
+   "B": "Mirroring survives a disk failure but wastes half the capacity, which is costly for a large archive.",
+   "D": "Striping with double parity survives two failures but costs more capacity and write speed than an archive requires."
   }
  },
  "25": {
-  "why": "RAID-6 uses double parity and survives two simultaneous disk failures, fitting a critical identity management system.",
+  "why": "An identity management server holds critical data and warrants the strongest protection. Redundant Array of Independent Disks level 6 (RAID-6) uses double distributed parity and survives two simultaneous disk failures.",
   "whyNot": {
-   "A": "RAID-0 has no redundancy and would risk losing identity data.",
-   "B": "RAID-1 tolerates only one disk failure in the mirrored pair and offers less capacity efficiency.",
-   "C": "RAID-5 survives only one disk failure, which is less resilient than RAID-6."
+   "A": "Striping with no parity provides no fault tolerance for critical identity data.",
+   "B": "Mirroring tolerates only one disk failure in a pair, which is less resilient than double parity.",
+   "C": "Single parity striping survives only one disk failure, so it is less protective than double parity for critical identity data."
   }
  },
  "26": {
-  "why": "RAID-5 stripes data across the disks with distributed single parity, so 4 disks give 3 disks of data capacity plus 1 of parity.",
+  "why": "Redundant Array of Independent Disks level 5 (RAID-5) on four disks stripes data across all of them with distributed parity, giving the capacity of three data disks and one disk's worth of parity.",
   "whyNot": {
-   "B": "Mirroring with no parity describes RAID-1, not RAID-5.",
-   "C": "Two parity boxes describe RAID-6, and 4 data plus 2 parity cannot fit on 4 disks.",
-   "D": "Striping with no parity describes RAID-0, which has no redundancy."
+   "B": "Mirroring with no parity describes Redundant Array of Independent Disks level 1 (RAID-1), not level 5.",
+   "C": "Two parity boxes describes Redundant Array of Independent Disks level 6 (RAID-6), and four data stripes would leave no room for parity.",
+   "D": "Two data stripes with no parity describes striping without redundancy and does not match level 5 on four disks."
   }
  },
  "27": {
-  "why": "RAID-6 stripes data with two parity blocks, so the build is striping plus both parity boxes checked, tolerating two disk failures.",
+  "why": "Redundant Array of Independent Disks level 6 (RAID-6) uses two parity blocks. On four disks, the parity boxes are checked and the array tolerates two disk failures.",
   "whyNot": {
-   "A": "One parity box describes RAID-5, not RAID-6.",
-   "B": "Mirroring with no parity describes RAID-1.",
-   "D": "Striping with no parity describes RAID-0."
+   "A": "One parity box describes Redundant Array of Independent Disks level 5 (RAID-5), which tolerates only one disk failure.",
+   "B": "Mirroring with no parity describes Redundant Array of Independent Disks level 1 (RAID-1), not level 6.",
+   "D": "Two data stripes with no parity gives no fault tolerance, which does not match level 6."
   }
  },
  "28": {
-  "why": "FTP uses TCP port 21 for its control channel.",
+  "why": "File Transfer Protocol (FTP) uses TCP (Transmission Control Protocol) port 21 for its control connection, which is the default port for FTP.",
   "whyNot": {
-   "B": "Port 22 is SSH, which also carries SFTP.",
-   "C": "Port 23 is Telnet.",
-   "D": "Port 25 is SMTP for mail transfer.",
-   "E": "Port 69 is TFTP, a different file transfer protocol.",
-   "F": "Port 161 is SNMP."
+   "B": "Port 22 is used by Secure Shell (SSH), not File Transfer Protocol (FTP).",
+   "C": "Port 23 is used by Telnet (Teletype Network), not File Transfer Protocol (FTP).",
+   "D": "Port 25 is used by Simple Mail Transfer Protocol (SMTP), not File Transfer Protocol (FTP).",
+   "E": "Port 69 is used by Trivial File Transfer Protocol (TFTP), a different protocol from File Transfer Protocol (FTP).",
+   "F": "Port 161 is used by Simple Network Management Protocol (SNMP), not File Transfer Protocol (FTP)."
   }
  },
  "29": {
-  "why": "Telnet, the unencrypted remote terminal protocol, uses TCP port 23.",
+  "why": "Telnet (Teletype Network) provides unencrypted remote terminal access and uses TCP (Transmission Control Protocol) port 23 by default.",
   "whyNot": {
-   "A": "Port 21 is FTP.",
-   "B": "Port 22 is SSH, the encrypted replacement for Telnet.",
-   "D": "Port 25 is SMTP.",
-   "E": "Port 69 is TFTP.",
-   "F": "Port 161 is SNMP."
+   "A": "Port 21 is the control port for File Transfer Protocol (FTP), not Telnet (Teletype Network).",
+   "B": "Port 22 is used by Secure Shell (SSH), the encrypted replacement for Telnet (Teletype Network).",
+   "D": "Port 25 is used by Simple Mail Transfer Protocol (SMTP), not Telnet (Teletype Network).",
+   "E": "Port 69 is used by Trivial File Transfer Protocol (TFTP), not Telnet (Teletype Network).",
+   "F": "Port 161 is used by Simple Network Management Protocol (SNMP), not Telnet (Teletype Network)."
   }
  },
  "30": {
-  "why": "SMTP uses TCP port 25 by default to relay mail between mail servers.",
+  "why": "SMTP (Simple Mail Transfer Protocol) uses TCP (Transmission Control Protocol) port 25 by default to send and relay email between mail servers.",
   "whyNot": {
-   "A": "Port 21 is FTP control.",
-   "B": "Port 22 is SSH, which also carries SCP and SFTP.",
-   "C": "Port 23 is Telnet.",
-   "E": "Port 69 is TFTP.",
-   "F": "Port 161 is SNMP."
+   "A": "Port 21 is the control port for FTP (File Transfer Protocol), not SMTP (Simple Mail Transfer Protocol).",
+   "B": "Port 22 is used by SSH (Secure Shell) and tools built on it, such as SCP (Secure Copy Protocol).",
+   "C": "Port 23 is used by Telnet, an unencrypted remote terminal protocol.",
+   "E": "Port 69 is used by TFTP (Trivial File Transfer Protocol) over UDP (User Datagram Protocol).",
+   "F": "Port 161 is used by SNMP (Simple Network Management Protocol) over UDP (User Datagram Protocol)."
   }
  },
  "31": {
-  "why": "SNMP agents listen on UDP port 161 for manager queries; traps go to UDP 162.",
+  "why": "SNMP (Simple Network Management Protocol) uses UDP (User Datagram Protocol) port 161 by default for managers to query and monitor network devices.",
   "whyNot": {
-   "A": "Port 21 is FTP control.",
-   "B": "Port 22 is SSH.",
-   "C": "Port 23 is Telnet.",
-   "D": "Port 25 is SMTP.",
-   "E": "Port 69 is TFTP."
+   "A": "Port 21 is the control port for FTP (File Transfer Protocol), not network device management.",
+   "B": "Port 22 is used by SSH (Secure Shell) for encrypted remote administration and file transfer.",
+   "C": "Port 23 is used by Telnet, an unencrypted remote terminal protocol.",
+   "D": "Port 25 is used by SMTP (Simple Mail Transfer Protocol) for email relay.",
+   "E": "Port 69 is used by TFTP (Trivial File Transfer Protocol), a simple file transfer service."
   }
  },
  "32": {
-  "why": "SCP runs over SSH, so it uses TCP port 22.",
+  "why": "SCP (Secure Copy Protocol) runs over SSH (Secure Shell), so it uses TCP (Transmission Control Protocol) port 22 by default for encrypted file transfer.",
   "whyNot": {
-   "A": "Port 21 is FTP control, not SSH-based.",
-   "C": "Port 23 is Telnet, which is unencrypted.",
-   "D": "Port 25 is SMTP.",
-   "E": "Port 69 is TFTP.",
-   "F": "Port 161 is SNMP."
+   "A": "Port 21 is the control port for FTP (File Transfer Protocol), which does not encrypt traffic.",
+   "C": "Port 23 is used by Telnet, an unencrypted remote terminal protocol.",
+   "D": "Port 25 is used by SMTP (Simple Mail Transfer Protocol) for email relay.",
+   "E": "Port 69 is used by TFTP (Trivial File Transfer Protocol), which has no encryption or authentication.",
+   "F": "Port 161 is used by SNMP (Simple Network Management Protocol) for device monitoring."
   }
  },
  "33": {
-  "why": "TFTP is a simple, unauthenticated file transfer protocol that uses UDP port 69.",
+  "why": "TFTP (Trivial File Transfer Protocol) uses UDP (User Datagram Protocol) port 69 by default for simple, unauthenticated file transfers such as network device boot images.",
   "whyNot": {
-   "A": "Port 21 is FTP control, not TFTP.",
-   "B": "Port 22 is SSH/SCP.",
-   "C": "Port 23 is Telnet.",
-   "D": "Port 25 is SMTP.",
-   "F": "Port 161 is SNMP."
+   "A": "Port 21 is the control port for FTP (File Transfer Protocol), a different and more full-featured protocol.",
+   "B": "Port 22 is used by SSH (Secure Shell) and SCP (Secure Copy Protocol).",
+   "C": "Port 23 is used by Telnet, an unencrypted remote terminal protocol.",
+   "D": "Port 25 is used by SMTP (Simple Mail Transfer Protocol) for email relay.",
+   "F": "Port 161 is used by SNMP (Simple Network Management Protocol) for device monitoring."
   }
  },
  "34": {
-  "why": "CPU cache and registers are the most volatile data, lost almost instantly and changing constantly, so they are collected first in the order of volatility.",
+  "why": "CPU (Central Processing Unit) cache is the most volatile evidence source because it holds data for nanoseconds and changes constantly, so it is collected first in the order of volatility.",
   "whyNot": {
-   "B": "RAM is less volatile than CPU cache and comes second.",
-   "C": "Swap space is on disk and is less volatile than RAM.",
-   "D": "Hard drive data persists without power and is among the least volatile."
+   "B": "RAM (Random Access Memory) is volatile but holds data longer than CPU (Central Processing Unit) cache, so it ranks second.",
+   "C": "Swap space lives on disk and survives longer than RAM (Random Access Memory), so it ranks third.",
+   "D": "A hard drive keeps data without power, making it the least volatile of these sources."
   }
  },
  "35": {
-  "why": "RAM holds running processes, network connections, and keys, and is lost at power-off. It is the second most volatile source after CPU cache.",
+  "why": "RAM (Random Access Memory) is the second most volatile source: its contents vanish at power loss, but they persist longer than CPU (Central Processing Unit) cache.",
   "whyNot": {
-   "A": "CPU cache is more volatile and ranks first.",
-   "C": "Swap is disk-backed and persists longer than RAM.",
-   "D": "Hard drive data is non-volatile and ranks after swap."
+   "A": "CPU (Central Processing Unit) cache changes faster than RAM (Random Access Memory), so it is first in the order of volatility.",
+   "C": "Swap space is stored on disk and lasts longer than RAM (Random Access Memory), so it ranks third.",
+   "D": "A hard drive retains data without power, so it is the least volatile of these sources."
   }
  },
  "36": {
-  "why": "Swap or page-file data lives on disk but is tied to the running system and is often overwritten or cleared, so it ranks third.",
+  "why": "Swap space is third because it extends RAM (Random Access Memory) onto disk, so it is less volatile than memory but still temporary and rewritten as the system runs.",
   "whyNot": {
-   "A": "CPU cache is the most volatile, not third.",
-   "B": "RAM is more volatile than swap and ranks second.",
-   "D": "The hard drive's persistent data is the least volatile of these."
+   "A": "CPU (Central Processing Unit) cache is the most volatile source, so it ranks first, not third.",
+   "B": "RAM (Random Access Memory) loses data at power loss and changes faster than swap, so it ranks second.",
+   "D": "A hard drive holds persistent data and is the least volatile, so it ranks fourth."
   }
  },
  "37": {
-  "why": "Data on a hard drive persists without power, so it is the least volatile of these and collected last.",
+  "why": "The hard drive is the least volatile of these sources because it stores data persistently without power, so it is collected last in the order of volatility.",
   "whyNot": {
-   "A": "CPU cache is the most volatile item.",
-   "B": "RAM loses its contents at power-off, so it ranks much higher.",
-   "C": "Swap is more volatile than general disk contents."
+   "A": "CPU (Central Processing Unit) cache is the most volatile source, so it ranks first.",
+   "B": "RAM (Random Access Memory) is lost at power-off and ranks second, well above a hard drive.",
+   "C": "Swap space is temporary paging data that changes while the system runs, so it ranks third."
   }
  },
  "38": {
-  "why": "Phishing is a mass email that lures many users to an external site to harvest credentials.",
+  "why": "Phishing is a mass email that lures many recipients to a fake external site to steal their credentials, which matches this scenario.",
   "whyNot": {
    "B": "Whaling targets senior executives specifically, not a broad group of users.",
-   "C": "Vishing uses voice calls, not email.",
-   "D": "Spim is spam over instant messaging.",
-   "E": "Social engineering is the general category, not the specific email-based attack.",
-   "F": "Pharming redirects users via DNS or hosts-file tampering, with no lure email needed.",
-   "G": "Spoofing is falsifying an identity or address, a technique rather than this attack.",
-   "H": "A hoax is a false warning or claim, not a credential-harvesting link."
+   "C": "Vishing (voice phishing) uses phone calls, not email.",
+   "D": "Spim (Spam over Instant Messaging) is unsolicited messaging sent through instant message platforms, not email.",
+   "E": "Social engineering is the broad category of manipulating people; phishing is the specific technique used here.",
+   "F": "Pharming redirects users to a fake site by corrupting DNS (Domain Name System) resolution, without relying on an emailed link.",
+   "G": "Spoofing means falsifying an identity or address, which is a technique rather than this attack type.",
+   "H": "A hoax is a false warning or story meant to deceive, not a credential-stealing link."
   }
  },
  "39": {
-  "why": "Whaling is a social engineering attack aimed at high-value executives such as the CEO to extract sensitive financial information.",
+  "why": "Whaling is a social engineering attack aimed at senior executives such as the CEO (Chief Executive Officer) to obtain high-value information like financial data.",
   "whyNot": {
-   "A": "Phishing is mass email aimed at general users.",
-   "C": "Vishing is voice-based but is not defined by an executive target; the CEO target makes this whaling.",
-   "D": "Spim is spam over instant messaging.",
-   "E": "Social engineering is the broad category rather than the specific named attack.",
-   "F": "Pharming redirects traffic through DNS poisoning.",
-   "G": "Spoofing is falsifying identity, not a targeted request for data.",
-   "H": "A hoax is a false warning, not a data-gathering call."
+   "A": "Phishing is a broad email lure aimed at many users, not a targeted call to one executive.",
+   "C": "Vishing is voice phishing aimed at ordinary users; here the high-value executive target defines the attack as whaling.",
+   "D": "Spim (Spam over Instant Messaging) is unsolicited instant messages, not phone calls.",
+   "E": "Social engineering is the general category; whaling is the more specific answer for an executive target.",
+   "F": "Pharming redirects users to fake sites through DNS (Domain Name System) tampering, not phone calls.",
+   "G": "Spoofing means falsifying an identity or address, which is a technique rather than this attack type.",
+   "H": "A hoax is a false warning or story, not a request for financial data."
   }
  },
  "40": {
-  "why": "Vishing is voice phishing: a caller poses as IT support over the phone to trick the user into revealing a password.",
+  "why": "Vishing is voice phishing: the attacker phones the victim, claims an IT (Information Technology) problem, and tricks them into revealing a password.",
   "whyNot": {
-   "A": "Phishing is typically email-based.",
-   "B": "Whaling targets executives, and this target is an ordinary user.",
-   "D": "Spim is spam over instant messaging.",
-   "E": "Social engineering is the general category, not the specific voice-based attack.",
-   "F": "Pharming manipulates name resolution, not phone calls.",
-   "G": "Spoofing falsifies a source but is not defined by the phone-call method.",
-   "H": "A hoax is a false warning, not a credential request."
+   "A": "Phishing is typically delivered by email or text with a link, not a live phone call.",
+   "B": "Whaling targets senior executives, but this victim is an ordinary individual.",
+   "D": "Spim (Spam over Instant Messaging) uses instant messages, not phone calls.",
+   "E": "Social engineering is the broad category; vishing is the specific phone-based technique here.",
+   "F": "Pharming redirects users to fake sites through DNS (Domain Name System) tampering, not phone calls.",
+   "G": "Spoofing means falsifying an identity or address, which is a technique rather than this attack type.",
+   "H": "A hoax is a false warning or story, not a request for a password."
   }
  },
  "41": {
-  "why": "Spim is unsolicited spam delivered through instant messaging or social media messaging, here with a link to a bogus diet.",
+  "why": "Spim (Spam over Instant Messaging) is unsolicited or malicious content, here a diet link, delivered through instant messaging or social media message platforms.",
   "whyNot": {
-   "A": "Phishing is typically email-based and credential-focused.",
-   "B": "Whaling targets executives.",
-   "C": "Vishing uses voice calls.",
-   "E": "Social engineering is the general category, not the specific IM spam.",
-   "F": "Pharming redirects users through DNS manipulation.",
-   "G": "Spoofing is falsifying an identity, not unsolicited message spam.",
-   "H": "A hoax is a false warning or claim, whereas this is spam delivered over IM."
+   "A": "Phishing is usually an email lure aimed at stealing credentials, not an instant message promoting a diet.",
+   "B": "Whaling targets senior executives, not a general social media contact.",
+   "C": "Vishing uses voice phone calls, not instant messages.",
+   "E": "Social engineering is the broad category; spim is the specific message-based form described here.",
+   "F": "Pharming redirects users to fake sites through DNS (Domain Name System) tampering, not a messaged link.",
+   "G": "Spoofing means falsifying an identity or address, which is a technique rather than this attack type.",
+   "H": "A hoax is a false warning or story, while this scenario is a spam message with a link."
   }
  },
  "42": {
-  "why": "Social engineering manipulates people through trust and conversation, here eliciting answers to typical password-reset questions.",
+  "why": "Social engineering manipulates people into revealing information; asking casual personal questions that match password reset answers is a classic elicitation tactic.",
   "whyNot": {
-   "A": "Phishing uses deceptive electronic messages, not in-person questioning.",
-   "B": "Whaling targets executives.",
-   "C": "Vishing is specifically a voice call.",
-   "D": "Spim is spam over instant messaging.",
-   "F": "Pharming redirects traffic via DNS tampering.",
-   "G": "Spoofing falsifies a source identity or address.",
-   "H": "A hoax is a false warning, not information elicitation."
+   "A": "Phishing relies on deceptive email or messages with lures, not friendly in-person questions.",
+   "B": "Whaling targets senior executives, but nothing here points to an executive target.",
+   "C": "Vishing is a voice phone call attack, while this scenario describes a friend or colleague asking questions.",
+   "D": "Spim (Spam over Instant Messaging) is unsolicited instant messages, not personal questions.",
+   "F": "Pharming redirects users to fake sites through DNS (Domain Name System) tampering.",
+   "G": "Spoofing means falsifying an identity or address, which is a technique rather than this attack type.",
+   "H": "A hoax is a false warning or story, not a series of probing questions."
   }
  },
  "43": {
-  "why": "Iris (inherent) plus smart card (possession) plus PIN (knowledge) gives three distinct factors, with redundant same-type controls removed.",
+  "why": "Iris scanning is something you are, a smart card is something you have, and a PIN (Personal Identification Number) is something you know, giving three distinct factors.",
   "whyNot": {
-   "B": "Iris, thumbprint, and voice are all inherent biometrics, so this is one factor type.",
-   "C": "Username/password and PIN are both knowledge factors, so it lacks a possession factor.",
-   "D": "Iris plus smart card provides only two factors."
+   "B": "Iris, thumbprint, and voice recognition are all something you are, so they count as only one factor type.",
+   "C": "A username/password and a PIN (Personal Identification Number) are both something you know, so there is no something you have factor.",
+   "D": "Iris scanner plus smart card reader gives only two factors, missing something you know."
   }
  },
  "44": {
-  "why": "Adding a PIN pad supplies the something-you-know factor, which combined with the smart card (something you have) gives two-factor authentication.",
+  "why": "Adding a PIN (Personal Identification Number) pad supplies something you know, which combines with the smart card reader's something you have for two-factor authentication.",
   "whyNot": {
-   "B": "Smart card plus iris adds an inherent factor, not a knowledge factor.",
-   "C": "A smart card alone is a single possession factor.",
-   "D": "A mantrap is a physical control, and a thumbprint is an inherent factor, not knowledge."
+   "B": "A smart card (something you have) plus an iris scan (something you are) adds no something you know factor.",
+   "C": "A smart card reader alone provides only a single factor, something you have.",
+   "D": "A mantrap is a physical access control vestibule, and with a thumbprint scanner it lacks both the smart card and a something you know factor."
   }
  },
  "45": {
-  "why": "A smart card reader accepts a physical token (something you have), which fits single-factor authentication using tokens handed out by the receptionist.",
+  "why": "Physical tokens handed to guests are 'something you have' single-factor authentication, and a smart card reader reads those tokens to grant access to the room.",
   "whyNot": {
-   "B": "A PIN pad checks something you know, not a physical token.",
-   "C": "A thumbprint scanner is biometric (something you are), not a handed-out token.",
-   "D": "Username/password is knowledge-based and involves no physical token."
+   "B": "A PIN (Personal Identification Number) pad checks a memorized code, which is 'something you know', not a physical token handed out by the receptionist.",
+   "C": "A thumbprint scanner checks a biometric trait ('something you are'), which cannot be handed to guests as a token.",
+   "D": "A username and password pair is 'something you know' and involves no physical token."
   }
  },
  "46": {
-  "why": "WPA with a pre-shared key lets customers join using a simple passphrase printed on receipts, which suits a small public cafe.",
+  "why": "WPA (Wi-Fi Protected Access) with a PSK (Pre-Shared Key) lets a cafe print one shared passphrase on receipts, encrypting traffic while keeping setup simple for customers.",
   "whyNot": {
-   "B": "WPA Enterprise with RADIUS needs per-user credentials and infrastructure, so a shared passphrase on receipts does not apply.",
-   "C": "An open network with a captive portal does not secure the WAP with WPA or use a passphrase.",
-   "D": "WEP with a 40-bit key is obsolete and easily cracked, so it is not a secure choice."
+   "B": "WPA Enterprise with RADIUS (Remote Authentication Dial-In User Service) needs per-user accounts and a server, which is impractical for anonymous cafe customers using a printed passphrase.",
+   "C": "An open network with a captive portal does not use a WPA passphrase and leaves wireless traffic unencrypted.",
+   "D": "WEP (Wired Equivalent Privacy) with a 40-bit key is obsolete and easily cracked, and it is not WPA."
   }
  },
  "47": {
-  "why": "HTTPS runs over TCP port 443, so the least-privilege rule allows only that port and protocol from Accounting to Administrative Server 1.",
+  "why": "HTTPS (Hypertext Transfer Protocol Secure) uses TCP (Transmission Control Protocol) port 443, so allowing that port and protocol from the Accounting computer to Administrative Server 1 permits only HTTPS.",
   "whyNot": {
-   "B": "Port 80 is unencrypted HTTP, not HTTPS.",
-   "C": "HTTPS uses TCP, and UDP 443 is not the standard HTTPS transport.",
-   "D": "This targets 10.4.255.102 with any port and protocol, which is the wrong server and overly permissive."
+   "B": "Port 80 TCP (Transmission Control Protocol) is unencrypted HTTP (Hypertext Transfer Protocol), not HTTPS (Hypertext Transfer Protocol Secure).",
+   "C": "HTTPS (Hypertext Transfer Protocol Secure) runs over TCP (Transmission Control Protocol), so UDP (User Datagram Protocol) on port 443 does not match the requirement.",
+   "D": "This rule targets 10.4.255.102, the wrong server, and allows any port and protocol, which violates least privilege."
   }
  },
  "48": {
-  "why": "SCP runs over SSH, which uses TCP port 22, so this rule permits only SCP from HR to Server 2.",
+  "why": "SCP (Secure Copy Protocol) runs over SSH (Secure Shell), which uses TCP (Transmission Control Protocol) port 22, so that rule permits only SCP from the HR computer to Server 2.",
   "whyNot": {
-   "B": "TCP 21 is FTP control, not SCP.",
-   "C": "UDP 69 is TFTP, which is unrelated to SCP.",
-   "D": "TCP 443 is HTTPS, not SCP."
+   "B": "Port 21 TCP (Transmission Control Protocol) is FTP (File Transfer Protocol), which is unencrypted and not SCP (Secure Copy Protocol).",
+   "C": "Port 69 UDP (User Datagram Protocol) is TFTP (Trivial File Transfer Protocol), an unencrypted transfer service and not SCP (Secure Copy Protocol).",
+   "D": "Port 443 TCP (Transmission Control Protocol) is HTTPS (Hypertext Transfer Protocol Secure) web traffic, not SCP (Secure Copy Protocol)."
   }
  },
  "49": {
-  "why": "Reaching both administrative servers requires one allow rule per destination, .101 and .102, sourced from the IT computer's correct /25 network.",
+  "why": "The IT computer needs one allow rule per server, so one rule to 10.4.255.101 and one to 10.4.255.102 using the correct /25 source, give access to both Administrative Servers.",
   "whyNot": {
-   "C": "This targets 10.4.255.2 on SSH, which is neither administrative server.",
-   "D": "The /26 source mask does not match the IT computer's /25 network, so the rule is wrong, and it duplicates the .101 destination."
+   "C": "This rule targets 10.4.255.2 on SSH (Secure Shell) port 22, which is neither Administrative Server 1 nor Administrative Server 2.",
+   "D": "The /26 source mask does not match the IT computer's /25 network, so this rule would not correctly cover the IT computer's address range."
   }
  },
  "50": {
-  "why": "A retina scan is a biometric trait, which falls under the something-you-are authentication factor.",
+  "why": "A retina scan measures a physical biological trait, which is the 'something you are' (inherence) authentication factor, also called biometrics.",
   "whyNot": {
-   "A": "Something you have is a physical item like a token or card, not a body trait.",
-   "B": "Something you know is knowledge such as a password or PIN.",
-   "D": "A retina scan fits only the inherence category, not all of them."
+   "A": "'Something you have' covers physical items like smart cards or tokens, and a retina is a body trait, not an item.",
+   "B": "'Something you know' covers memorized secrets like passwords or PINs (Personal Identification Numbers), not body traits.",
+   "D": "A retina scan belongs to only one category, 'something you are', so 'all given categories' is incorrect."
   }
  },
  "51": {
-  "why": "A smart card is a physical object the user possesses, making it a something-you-have factor.",
+  "why": "A smart card is a physical object the user carries, which makes it the 'something you have' (possession) authentication factor.",
   "whyNot": {
-   "B": "Something you know is memorized information, and a card is not.",
-   "C": "Something you are refers to biometrics, which a card is not.",
-   "D": "A smart card fits only the possession category."
+   "B": "'Something you know' covers memorized secrets such as passwords or PINs (Personal Identification Numbers), not a carried card.",
+   "C": "'Something you are' covers biometric traits such as fingerprints or retina scans, not a physical card.",
+   "D": "A smart card is only a possession factor, so 'all given categories' is incorrect."
   }
  },
  "52": {
-  "why": "A hardware token is a physical device the user carries, so it is a something-you-have factor.",
+  "why": "A hardware token is a physical device the user carries to generate or present codes, so it is the 'something you have' (possession) authentication factor.",
   "whyNot": {
-   "B": "Something you know is memorized information, not a device.",
-   "C": "Something you are refers to biometric traits, not a device.",
-   "D": "A hardware token fits only the possession category."
+   "B": "'Something you know' covers memorized secrets such as passwords or PINs (Personal Identification Numbers), and a token is a physical device.",
+   "C": "'Something you are' covers biometric traits such as fingerprints, not a carried device.",
+   "D": "A hardware token fits only the possession category, so 'all given categories' is incorrect."
   }
  },
  "53": {
-  "why": "A password is memorized secret information, which is the something-you-know factor.",
+  "why": "A password is a secret the user memorizes, so it is the 'something you know' (knowledge) authentication factor.",
   "whyNot": {
-   "A": "Something you have requires a physical item, and a password is not one.",
-   "C": "Something you are is biometric, and a password is not.",
-   "D": "A password fits only the knowledge category."
+   "A": "'Something you have' covers physical items such as smart cards or tokens, and a password is memorized, not carried.",
+   "C": "'Something you are' covers biometric traits such as fingerprints, and a password is not a body trait.",
+   "D": "A password fits only the knowledge category, so 'all given categories' is incorrect."
   }
  },
  "54": {
-  "why": "A PIN is a memorized secret, making it a something-you-know factor.",
+  "why": "A PIN (Personal Identification Number) is a memorized numeric secret, so it is the 'something you know' (knowledge) authentication factor.",
   "whyNot": {
-   "A": "Something you have requires a physical item, and a PIN is not one.",
-   "C": "Something you are is biometric, and a PIN is not.",
-   "D": "A PIN fits only the knowledge category."
+   "A": "'Something you have' covers physical items such as smart cards or tokens, and a PIN (Personal Identification Number) is memorized, not carried.",
+   "C": "'Something you are' covers biometric traits such as fingerprints, and a PIN (Personal Identification Number) is not a body trait.",
+   "D": "A PIN (Personal Identification Number) fits only the knowledge category, so 'all given categories' is incorrect."
   }
  },
  "55": {
-  "why": "A fingerprint is a unique physical characteristic, so it is a something-you-are (inherence) factor.",
+  "why": "A fingerprint is a unique physical trait of the user, so scanning it is the 'something you are' (inherence) authentication factor, also called biometrics.",
   "whyNot": {
-   "A": "Something you have is a physical item, not a body trait.",
-   "B": "Something you know is memorized information, not a body trait.",
-   "D": "A fingerprint fits only the inherence category."
+   "A": "'Something you have' covers physical items such as smart cards or tokens, and a fingerprint is a body trait, not an item.",
+   "B": "'Something you know' covers memorized secrets such as passwords or PINs (Personal Identification Numbers), not body traits.",
+   "D": "A fingerprint fits only the inherence category, so 'all given categories' is incorrect."
   }
  },
  "56": {
-  "why": "A fingerprint scan measures a physical characteristic of the user, which is biometric authentication.",
+  "why": "A fingerprint scan verifies a unique physical characteristic of the user, which is biometric authentication.",
   "whyNot": {
-   "B": "A one time password is a single-use code, not a body trait.",
-   "C": "Multi-factor needs two or more factor categories, and a fingerprint alone is one.",
-   "D": "PAP is a legacy plaintext password protocol and has nothing to do with fingerprints."
+   "B": "An OTP (One Time Password) is a code valid for a single use, not a physical trait like a fingerprint.",
+   "C": "Multi-factor authentication combines two or more factor categories, and a fingerprint scan alone is only one factor.",
+   "D": "PAP (Password Authentication Protocol) sends a username and password in plain text, which has nothing to do with fingerprints."
   }
  },
  "57": {
-  "why": "A hardware token typically generates a time-based or counter-based code that is valid once, which is a one time password.",
+  "why": "A hardware token typically displays a code that changes each time or after a short interval, which is an OTP (One Time Password) used once per login.",
   "whyNot": {
-   "A": "Biometric authentication uses body traits, not a code-generating device.",
-   "C": "A token alone is a single factor, so it is not multi-factor by itself.",
-   "D": "PAP sends a static password in plaintext and does not describe a code-generating token."
+   "A": "Biometric authentication uses body traits like fingerprints or retinas, and a hardware token is a carried device.",
+   "C": "Multi-factor authentication combines two or more factor categories, and a hardware token by itself is only the possession factor.",
+   "D": "PAP (Password Authentication Protocol) is a legacy plain-text password exchange, not a token that generates changing codes."
   }
  },
  "58": {
-  "why": "Smart cards are typically paired with a PIN, combining something you have with something you know, which is multi-factor authentication.",
+  "why": "A smart card is normally paired with a PIN (Personal Identification Number), combining 'something you have' with 'something you know', which makes it multi-factor authentication.",
   "whyNot": {
-   "A": "A smart card is a possession item, not a biometric trait.",
-   "B": "A smart card holds a certificate and does not inherently generate a one time password.",
-   "D": "PAP is a legacy plaintext password protocol and does not describe a smart card."
-  },
-  "keyDoubt": "B is arguably the intended match if the sim treats card-based tokens as OTP, but a smart card plus PIN is most defensibly multi-factor, so the key is loosely worded."
+   "A": "Biometric authentication uses body traits like fingerprints, and a smart card is a carried object.",
+   "B": "An OTP (One Time Password) is a single-use code, and a smart card stores a certificate rather than generating a one-time code.",
+   "D": "PAP (Password Authentication Protocol) is a plain-text password exchange, not a smart card method."
+  }
  },
  "59": {
-  "why": "A password sent by itself matches PAP, a simple authentication method that transmits a static credential, usually in plaintext.",
+  "why": "A password sent as a plain-text username and password pair matches PAP (Password Authentication Protocol), the simple legacy authentication type in this list.",
   "whyNot": {
-   "A": "Biometric authentication uses body traits, not a typed secret.",
-   "B": "A one time password is single-use, whereas a standard password is reused.",
-   "C": "Multi-factor needs two or more factor categories, and a password is only one."
+   "A": "Biometric authentication uses body traits such as fingerprints, and a password is a memorized secret.",
+   "B": "An OTP (One Time Password) is valid for only one use, while an ordinary password is reused.",
+   "C": "Multi-factor authentication needs two or more factor categories, and a password alone is only one factor."
   }
  },
  "60": {
-  "why": "A PIN is a shared secret the user supplies, which fits password-based PAP authentication, where the secret is sent to the server for comparison.",
+  "why": "PAP (Password Authentication Protocol) sends a simple credential such as a PIN or password in cleartext, so a PIN number maps to PAP authentication as a single knowledge-based secret.",
   "whyNot": {
-   "A": "Biometrics use physical traits such as fingerprints or retinas, not a memorized number.",
-   "B": "A one-time password is generated per session and is not a static PIN.",
-   "C": "A PIN alone is a single knowledge factor, so it is not multi-factor."
-  }
+   "A": "Biometric authentication uses physical traits such as a fingerprint or retina, not a memorized PIN number.",
+   "B": "A One Time Password (OTP) is a dynamically generated code valid for one use, while a PIN is static.",
+   "C": "Multi-factor authentication (MFA) combines two or more different factor types, and a PIN alone is only one factor."
+  },
+  "keyDoubt": "D is the intended answer on this simulation, though a PIN is strictly a knowledge factor and PAP (Password Authentication Protocol) is a protocol rather than a factor type."
  },
  "61": {
-  "why": "A retina scan measures a unique physical trait of the user, which is biometric authentication (something you are).",
+  "why": "A retina scan measures a unique physical characteristic of the eye, which is the 'something you are' factor and defines biometric authentication.",
   "whyNot": {
-   "B": "A one-time password is a generated code, not a body measurement.",
-   "C": "A retina scan alone is one factor, so it is not multi-factor.",
-   "D": "PAP is a password-based protocol and does not use physical traits."
+   "B": "A One Time Password (OTP) is a temporary code used once, not a scan of a body feature.",
+   "C": "Multi-factor authentication (MFA) requires combining two or more factor categories, and a retina scan alone is one factor.",
+   "D": "PAP (Password Authentication Protocol) transmits a password in cleartext and has nothing to do with scanning a retina."
   }
  },
  "62": {
-  "why": "The database server at 10.10.10.12 is the node the logs show was successfully attacked, so it is the compromised host.",
+  "why": "The logs show the attack traffic completing against the database server at 10.10.10.12, so that node holds the evidence of compromise, which is the target of the successful attack.",
   "whyNot": {
-   "B": "The web server at 10.10.10.10 appears in the logs as a pass-through or target, not as the compromised node.",
-   "C": "The IDS at 10.10.10.20 detected and logged the activity rather than being compromised.",
-   "D": "The user PC at 172.30.0.1 is on a separate network and was not the node the attack completed against."
+   "B": "The web server at 10.10.10.10 appears in the logs as a path or relay, but the attack did not complete against it.",
+   "C": "The IDS (Intrusion Detection System) at 10.10.10.20 only monitors and alerts, so it recorded the attack rather than being compromised.",
+   "D": "The user PC at 172.30.0.1 is on a different network segment and is not where the attack completed."
   }
  },
  "63": {
-  "why": "Capturing network traffic preserves volatile evidence without taking anything offline, and chain of custody keeps that evidence admissible. Both avoid disrupting a critical production network.",
+  "why": "Capturing network traffic preserves volatile evidence without interrupting production, and chain of custody documents who handled the evidence, so both support incident response with the least disruption.",
   "whyNot": {
-   "C": "Shutting down the server causes an outage and destroys volatile memory evidence.",
-   "D": "Reimaging wipes forensic evidence and takes the server out of service.",
-   "E": "Disconnecting the whole network disrupts every production system, not just the compromised database server."
+   "C": "Shutting down the server causes an outage on a critical production network and destroys volatile memory evidence.",
+   "D": "Reimaging the server wipes forensic evidence and causes downtime, so it is a disruptive recovery step, not a least disruptive response.",
+   "E": "Disconnecting the whole network halts all production systems, which is far more disruptive than isolating or monitoring only the affected server."
   }
  }
 }
