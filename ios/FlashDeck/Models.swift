@@ -14,6 +14,13 @@ struct Card: Codable, Hashable {
     var why: String?
     var whyNot: [String: String]?
     var keyDoubt: String?
+    /// Pre-written follow-ups (tools/ask_bank.py) so "Ask about this question" works offline.
+    var asks: [CardAsk]?
+}
+
+struct CardAsk: Codable, Hashable {
+    var q: String
+    var a: String
 }
 
 struct Deck: Codable, Identifiable, Hashable {

@@ -4,7 +4,7 @@
 
 <h1 align="center">Flash Deck</h1>
 
-**Install:** open [assiamahs.github.io/flashdeck/install.html](https://assiamahs.github.io/flashdeck/install.html) in Safari on your iPhone.
+<p align="center"><a href="https://assiamahs.github.io/flashdeck/install.html"><b>Install on iPhone</b></a> · open in Safari · <a href="https://github.com/AssiamahS/flashdeck/releases/latest">Mac app</a></p>
 
 <p align="center"><b>Your Echo Show is now a study machine.</b><br>
 Flashcards with pictures &amp; animations · spaced repetition · phone editing · voice post-its</p>

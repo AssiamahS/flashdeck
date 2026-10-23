@@ -7,7 +7,7 @@
 <meta name="description" content="Study your Flash Deck decks in the browser — same decks as the Echo Show, iPhone, watch and Mac.">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="study.webmanifest">
 <style>
   :root {
     --bg: #0d1117; --panel: #161d29; --panel2: #1d2635; --line: #2a3548;
@@ -108,6 +108,9 @@
   .ask input { flex: 1; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: inherit; font: inherit; }
   .ask button, .ask-open { color: var(--quiz-teal); font-weight: 650; }
   .ask-open { margin-top: 12px; text-align: left; }
+  .ask .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ask .chip { padding: 6px 10px; border-radius: 999px; background: rgba(64, 200, 224, .18); color: var(--quiz-teal); font-size: 14px; font-weight: 600; text-align: left; }
+  .ask .note { display: block; font-size: 12px; color: var(--dim); margin-top: 2px; }
   .icon-btn.auto { font-size: 15px; font-weight: 800; }
   .done .pct { font-size: 20px; }
   .done .pct.pass { color: var(--got); }
@@ -158,16 +161,31 @@ function say(text, onend) {
   setTimeout(() => speechSynthesis.speak(u), 60);
 }
 
+// Last good decks.json lives in Cache Storage (too big for localStorage), so the page works offline.
+const DECKS_CACHE = ['fd-decks', 'decks.json'];
+async function cachedDecks(text) {
+  try {
+    const c = await caches.open(DECKS_CACHE[0]);
+    if (text) return c.put(DECKS_CACHE[1], new Response(text));
+    const res = await c.match(DECKS_CACHE[1]);
+    return res && res.text();
+  } catch {}
+}
+
 async function load() {
   app.innerHTML = '<p class="muted">Loading decks…</p>';
   for (const [url, opts] of SOURCES) {
     try {
       const res = await fetch(url, opts);
       if (!res.ok) continue;
-      decks = (await res.json()).decks.filter(d => d.cards?.length);
+      const text = await res.text();
+      decks = JSON.parse(text).decks.filter(d => d.cards?.length);
+      cachedDecks(text);
       return home();
     } catch {}
   }
+  const saved = await cachedDecks();
+  if (saved) { decks = JSON.parse(saved).decks.filter(d => d.cards?.length); return home(); }
   app.innerHTML = '<div class="error">Couldn\'t load decks.json from GitHub. Check your connection and reload.</div>';
 }
 
@@ -454,13 +472,106 @@ function explanation(qu) {
   </div>`;
 }
 
-// "Ask about this": follow-ups on the question on screen, answered by the relay Worker (Workers AI)
+// "Ask about this": follow-ups on the question on screen. Online = the relay Worker (Workers AI);
+// offline = the card's banked follow-ups (tools/ask_bank.py), then the deck's own explanations.
+const ASK_NOTE = {
+  notes: 'Offline: from this deck’s explanations. Connect for the full tutor.',
+};
+
 function askBox() {
   if (!q.asks) return `<button class="ask-open" id="askOpen">💬 Ask about this question</button>`;
+  const qu = q.questions[q.i];
+  const left = (qu.card.asks || []).filter(a => !q.asks.some(t => t.ask === a.q));
   return `<div class="ask">
-    ${q.asks.map(t => `<div><b>${esc(t.ask)}</b>${esc(t.answer ?? '…')}</div>`).join('')}
+    ${q.asks.map(t => `<div><b>${esc(t.ask)}</b>${esc(t.answer ?? '…')}${ASK_NOTE[t.source] ? `<span class="note">${ASK_NOTE[t.source]}</span>` : ''}</div>`).join('')}
+    ${left.length ? `<div class="chips">${left.map(a => `<button class="chip" data-q="${esc(a.q)}">${esc(a.q)}</button>`).join('')}</div>` : ''}
     <form id="askForm"><input id="askField" placeholder="e.g. what's the difference between RPO and RTO?" autocomplete="off" ${q.asking ? 'disabled' : ''}><button aria-label="Send">Ask</button></form>
   </div>`;
+}
+
+// --- offline tutor: banked follow-ups + acronyms the explanations already spell out ---
+const FILLER = new Set('what whats does is are the a an of to in on for and or how why do i it this that mean means meaning with about between me can you explain tell be so not vs versus again'.split(' '));
+const stems = t => new Set(String(t).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length >= 2 && !FILLER.has(w)).map(w => w.slice(0, 5)));
+const overlap = (ask, banked) => { if (!ask.size) return 0; const b = stems(banked); return [...ask].filter(w => b.has(w)).length / ask.size; };
+
+// this card's bank first; any other card's only on a near-exact match
+function bankMatch(ask, card) {
+  const words = stems(ask);
+  let best = null, score = 0.49;
+  for (const a of card.asks || []) { const v = overlap(words, a.q); if (v > score) { best = a; score = v; } }
+  if (best) return best.a;
+  score = 0.79;
+  for (const d of decks) for (const c of d.cards) if (c !== card) for (const a of c.asks || []) {
+    const v = overlap(words, a.q); if (v > score) { best = a; score = v; }
+  }
+  return best?.a;
+}
+
+let glossary = null;
+function buildGlossary() {
+  const ACR = '[A-Z][A-Za-z0-9]*[A-Z][A-Za-z0-9]*';
+  const shortFirst = new RegExp(`\\b(${ACR})s? \\(([A-Za-z][^()]{2,80}?)\\)`, 'g');
+  const longFirst = new RegExp(`((?:[\\w/-]+ ){1,8})\\((${ACR})s?\\)`, 'g');
+  const counts = {}, earliest = {};
+  const add = (term, full, at, sentence) => {
+    (counts[term] ||= {})[full] = (counts[term][full] || 0) + 1;
+    at += sentence.includes(' not ') ? 100 : 0; // the term opening a plain sentence reads as its definition
+    if (!(term in earliest) || at < earliest[term].at) earliest[term] = { at, text: sentence.endsWith('.') ? sentence : sentence + '.' };
+  };
+  for (const d of decks) for (const c of d.cards) for (const text of [c.why || '', ...Object.values(c.whyNot || {})]) {
+    for (const sentence of text.split('. ')) {
+      for (const m of sentence.matchAll(shortFirst)) if (m[2][0].toUpperCase() === m[1][0]) add(m[1], m[2], m.index, sentence);
+      for (const m of sentence.matchAll(longFirst)) {
+        const words = m[1].trim().split(' '), term = m[2];
+        let fit = 0; // longest run of preceding words (≤ letters + 1) that starts with the acronym's letter
+        for (let k = 1; k <= Math.min(words.length, term.length + 1); k++) if (words[words.length - k][0]?.toUpperCase() === term[0]) fit = k;
+        if (fit) add(term, words.slice(-fit).join(' '), m.index, sentence);
+      }
+    }
+  }
+  const name = {}, sentence = {};
+  for (const [term, names] of Object.entries(counts)) {
+    name[term] = Object.entries(names).sort((a, b) => b[1] - a[1])[0][0];
+    sentence[term] = earliest[term]?.text;
+  }
+  return { name, sentence };
+}
+
+function glossaryTerms(ask) {
+  glossary ||= buildGlossary();
+  const found = [];
+  for (const raw of ask.split(/[^\p{L}\p{N}]+/u).filter(Boolean)) {
+    let w = raw.toUpperCase();
+    if (!glossary.name[w] && w.endsWith('S')) w = w.slice(0, -1);
+    const min = raw === raw.toLowerCase() ? 3 : 2; // typed lowercase, "is" / "it" are words, not IS / IT
+    if (w.length >= min && glossary.name[w] && !found.includes(w)) found.push(w);
+  }
+  const lower = ask.toLowerCase();
+  for (const [term, full] of Object.entries(glossary.name)) if (full.length > 6 && lower.includes(full.toLowerCase()) && !found.includes(term)) found.push(term);
+  return found.slice(0, 4);
+}
+
+// no model at all: the explanation lines for any letter or acronym the student named
+function notesAnswer(ask, qu) {
+  const lines = [];
+  for (const w of ask.split(/[^\p{L}\p{N}]+/u)) if (/^[A-H]$/.test(w) && qu.card.whyNot?.[w]) lines.push(`${w}: ${qu.card.whyNot[w]}`);
+  for (const t of glossaryTerms(ask)) lines.push(glossary.sentence[t] || `${t} means ${glossary.name[t]}.`);
+  if (!lines.length) lines.push(qu.card.why || `The answer is ${answerLabel(qu, ', ')}.`);
+  return lines.join('\n');
+}
+
+async function tutor(ask, qu, history) {
+  try {
+    const res = await fetch(ASK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(10000), body: JSON.stringify({
+      question: [qu.prompt, ...qu.options.map((_, i) => optLabel(qu, i))].join('\n'),
+      answer: answerLabel(qu, ', '), picked: [...q.picked].sort().map(i => optLabel(qu, i)).join(', '),
+      why: qu.card.why || '', ask, history }) });
+    const j = await res.json();
+    if (res.ok && j.answer) return { answer: j.answer, source: 'online' };
+  } catch {}
+  const banked = bankMatch(ask, qu.card);
+  if (banked) return { answer: banked, source: 'bank' };
+  return { answer: notesAnswer(ask, qu), source: 'notes' };
 }
 
 function bindAsk(qu) {
@@ -470,6 +581,19 @@ function bindAsk(qu) {
   if (!form) return;
   const field = document.getElementById('askField');
   field.onkeydown = e => e.stopPropagation(); // typing must not pick tiles or hit Enter = next
+  const answered = turn => {
+    renderQuiz();
+    document.getElementById('askField')?.focus();
+    if (speak) say(turn.answer);
+  };
+  // banked follow-up: one tap, instant answer, no network
+  for (const chip of document.querySelectorAll('.ask .chip')) chip.onclick = () => {
+    const a = (qu.card.asks || []).find(x => x.q === chip.dataset.q);
+    if (!a || q.asking) return;
+    const turn = { ask: a.q, answer: a.a, source: 'bank' };
+    q.asks.push(turn);
+    answered(turn);
+  };
   form.onsubmit = async e => {
     e.preventDefault();
     const ask = field.value.trim();
@@ -477,19 +601,10 @@ function bindAsk(qu) {
     const at = q.i, turn = { ask };
     const history = q.asks.filter(t => t.answer).map(t => ({ ask: t.ask, answer: t.answer }));
     q.asks.push(turn); q.asking = true; renderQuiz();
-    try {
-      const res = await fetch(ASK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-        question: [qu.prompt, ...qu.options.map((_, i) => optLabel(qu, i))].join('\n'),
-        answer: answerLabel(qu, ', '), picked: [...q.picked].sort().map(i => optLabel(qu, i)).join(', '),
-        why: qu.card.why || '', ask, history }) });
-      const j = await res.json();
-      turn.answer = j.answer || j.error || 'No answer — try again.';
-    } catch { turn.answer = 'Couldn’t reach the tutor — check your connection.'; }
+    Object.assign(turn, await tutor(ask, qu, history));
     q.asking = false;
     if (q.i !== at) return;
-    renderQuiz();
-    document.getElementById('askField')?.focus();
-    if (speak) say(turn.answer);
+    answered(turn);
   };
 }
 
@@ -605,6 +720,7 @@ function onQuizKey(e) {
 }
 
 load();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
 </html>
