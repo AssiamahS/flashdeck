@@ -224,6 +224,34 @@
                   "performance based"
                 ]
               }
+            },
+            {
+              "name": {
+                "value": "security plus set two",
+                "synonyms": [
+                  "set two",
+                  "set 2",
+                  "ivy set two",
+                  "second set",
+                  "the new set",
+                  "security set two",
+                  "security plus set 2"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "security plus simulations practice",
+                "synonyms": [
+                  "sims practice",
+                  "sims quiz",
+                  "simulation practice",
+                  "simulations quiz",
+                  "simulation quiz",
+                  "security sims practice",
+                  "practice the sims"
+                ]
+              }
             }
           ]
         }
