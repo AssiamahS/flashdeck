@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-10-22 · echo slots + ivy mirror
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Slot values "security plus set two" / "security plus simulations practice" pushed to the hosted skill | simulate-skill: "study set two" → Set Two (89), "study sims practice" → Sims Practice (64), "the dump" still → Dump | ✅ |
+| `ask smapi simulate-skill -l` | unknown option; locale flag is `--device-locale` only | ⚠️ |
+| ivy repo `tools/export_decks.py` | all four Security+ decks → cards/*.json with why/whyNot, TSV backs carry the why | ✅ |
+
 ## 2026-10-22 · v0.16.0 — ask about this question
 
 | Tried | Result | Verdict |
