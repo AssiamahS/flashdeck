@@ -314,11 +314,12 @@ private struct AskBox: View {
     let picked: Set<Int>
     @Binding var open: Bool
 
-    @EnvironmentObject private var store: DeckStore
     @State private var text = ""
-    @State private var turns: [(ask: String, answer: String, source: Tutor.Source)] = []
+    @State private var turns: [(ask: String, answer: String)] = []
     @State private var busy = false
     @FocusState private var focused: Bool
+
+    private static let endpoint = URL(string: "https://flashdeck-relay.sylvesterassiamahpm.workers.dev/explain")!
 
     var body: some View {
         if !open {
@@ -338,19 +339,15 @@ private struct AskBox: View {
                 ForEach(turns.indices, id: \.self) { i in
                     Text(turns[i].ask).font(.subheadline.weight(.semibold))
                     Text(turns[i].answer).font(.subheadline)
-                    if let note = Self.note(turns[i].source) {
-                        Text(note).font(.caption2).foregroundStyle(.secondary)
-                    }
                 }
                 if busy { ProgressView().controlSize(.small) }
-                suggestions
                 HStack {
                     TextField("e.g. what's the difference between RPO and RTO?", text: $text, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
                         .focused($focused)
-                        .onSubmit { send(text) }
+                        .onSubmit(send)
                         .accessibilityIdentifier("quizAskField")
-                    Button { send(text) } label: {
+                    Button(action: send) {
                         Image(systemName: "arrow.up.circle.fill").font(.title2)
                     }
                     .buttonStyle(.plain)
@@ -363,60 +360,39 @@ private struct AskBox: View {
         }
     }
 
-    /// The card's banked follow-ups not asked yet: one tap, instant answer, no network.
-    @ViewBuilder private var suggestions: some View {
-        let left = (question.card.asks ?? []).filter { a in !turns.contains { $0.ask == a.q } }
-        if !left.isEmpty {
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(left, id: \.q) { a in
-                    Button {
-                        answered(a.q, a.a, .bank)
-                    } label: {
-                        Text(a.q)
-                            .font(.footnote.weight(.medium))
-                            .multilineTextAlignment(.leading)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 6)
-                            .background(Color.teal.opacity(0.18), in: Capsule())
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.teal)
-                }
-            }
-            .accessibilityIdentifier("quizAskSuggestions")
-        }
-    }
-
-    private static func note(_ source: Tutor.Source) -> String? {
-        switch source {
-        case .online, .bank: nil
-        case .onDevice: "Answered on this device (offline)"
-        case .notes: "Offline: from this deck's explanations. Connect for the full tutor."
-        }
-    }
-
-    private func answered(_ ask: String, _ answer: String, _ source: Tutor.Source) {
-        turns.append((ask, answer, source))
-        if CardSpeaker.shared.enabled { CardSpeaker.shared.speak(answer) }
-    }
-
-    private func send(_ typed: String) {
-        let ask = typed.trimmingCharacters(in: .whitespacesAndNewlines)
+    private func send() {
+        let ask = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !ask.isEmpty, !busy else { return }
         text = ""
         busy = true
         let q = question
-        let context = Tutor.Context(
-            question: ([q.prompt] + q.options.indices.map { QuizBuilder.label(q, $0) }).joined(separator: "\n"),
-            answer: q.correct.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", "),
-            picked: picked.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", "),
-            why: q.card.why ?? "",
-            whyNot: q.card.whyNot ?? [:])
-        let history = turns.map { (ask: $0.ask, answer: $0.answer) }
+        let body: [String: Any] = [
+            "question": ([q.prompt] + q.options.indices.map { QuizBuilder.label(q, $0) }).joined(separator: "\n"),
+            "answer": q.correct.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", "),
+            "picked": picked.sorted().map { QuizBuilder.label(q, $0) }.joined(separator: ", "),
+            "why": q.card.why ?? "",
+            "ask": ask,
+            "history": turns.map { ["ask": $0.ask, "answer": $0.answer] },
+        ]
         Task {
-            let reply = await Tutor.answer(ask, about: context, card: q.card, history: history, decks: store.decks)
+            let answer = await Self.post(body)
+            turns.append((ask, answer))
             busy = false
-            answered(ask, reply.text, reply.source)
+            if CardSpeaker.shared.enabled { CardSpeaker.shared.speak(answer) }
+        }
+    }
+
+    private static func post(_ body: [String: Any]) async -> String {
+        var req = URLRequest(url: endpoint)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        do {
+            let (data, _) = try await URLSession.shared.data(for: req)
+            let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            return (json?["answer"] ?? json?["error"]) as? String ?? "No answer — try again."
+        } catch {
+            return "Couldn’t reach the tutor — check your connection."
         }
     }
 }
