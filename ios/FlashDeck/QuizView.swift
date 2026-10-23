@@ -7,7 +7,7 @@ import SwiftUI
 struct QuizView: View {
     @EnvironmentObject var store: DeckStore
     @ObservedObject private var speaker = CardSpeaker.shared
-    @AppStorage("quizAutoNext") private var autoNext = true
+    @AppStorage("quizAutoNext") private var autoNext = false
     let deck: Deck
 
     @State private var questions: [QuizQuestion] = []

@@ -3,6 +3,14 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.16.1 — 2026-10-23
+
+Practice test waits for you (iPhone / iPad / Mac 1.11.1 + web).
+
+- Auto-next is now OFF by default: a right answer stays on screen with its
+  explanation until you tap the arrow. The forward button in the nav bar
+  (⏩ on the web) still turns auto-next back on.
+
 ## v0.16.0 — 2026-10-22
 
 Ask about any question (iPhone / iPad / Mac 1.11.0 + web).

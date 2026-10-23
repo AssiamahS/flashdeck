@@ -135,7 +135,7 @@ const store = {
 // Leitner boxes 1-5 keyed by deck id + card front, same grading as the apps
 let boxes = store.get('fd.boxes', {});
 let speak = store.get('fd.speak', true);
-let autoNext = store.get('fd.autoNext', true); // practice test: move on by itself after a right answer
+let autoNext = store.get('fd.autoNext', false); // practice test: move on by itself after a right answer
 let decks = [];
 let s = null; // study session
 let q = null; // practice test session
