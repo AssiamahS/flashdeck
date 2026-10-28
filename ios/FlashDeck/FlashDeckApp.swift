@@ -8,6 +8,9 @@ struct FlashDeckApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(store)
+                #if os(iOS)
+                .updateCheck(site: "https://assiamahs.github.io/flashdeck")
+                #endif
                 #if os(macOS)
                 .frame(minWidth: 420, minHeight: 640)
                 #endif

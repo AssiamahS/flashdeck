@@ -3,6 +3,14 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-10-28 · v0.17.0 — practice-test widget
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Widget filter: single answer, prompt ≤ 200, options ≤ 45 | fits: sec+ dump 145/475, NASM 355/507, PA-CAT review 401/564, sims quiz 55/62 | ✅ |
+| `.disabled(answered)` on the answer tiles | faded every tile to ~40% after a tap | ❌ → no disable; `QuizStore.answer` ignores taps once picked |
+| adhoc watch strip `sed '/dependencies:/{N;/Watch/d}'` with a 2nd dependency | would orphan the widget line | ❌ → delete only the `- target: FlashDeckWatch` line |
+
 ## 2026-10-22 · echo slots + ivy mirror
 
 | Tried | Result | Verdict |

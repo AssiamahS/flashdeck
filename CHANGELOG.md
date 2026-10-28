@@ -3,6 +3,23 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.17.0 — 2026-10-28
+
+Practice-test widget + in-app updates (iPhone 1.12.0).
+
+- Home Screen widget "Practice Test" (medium / large): one question, four
+  answer tiles in the practice-test colors (teal / green / orange / red).
+  Tap an answer → ✓ on the right one, ✗ on yours, "Correct" or
+  "Answer: B" up top, Next → for a new question. Score per deck in the
+  corner. Long-press → Edit Widget to pick the deck.
+- Only single-answer questions with a short prompt (≤ 200 chars) and short
+  options (≤ 45 chars) are used, so everything fits on a tile. Answered
+  questions roll over to a new one after an hour.
+- The widget reads decks.json from GitHub itself (cached for offline).
+- Update banner: on launch the app checks the install page and offers
+  "Update available → Install" when a newer build is published.
+- Card / Deck types moved to Cards.swift so the widget and watch share them.
+
 ## v0.16.1 — 2026-10-23
 
 Practice test waits for you (iPhone / iPad / Mac 1.11.1 + web).

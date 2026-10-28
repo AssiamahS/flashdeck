@@ -101,7 +101,7 @@ jobs:
         run: |
           sed -i '' "s/^    CURRENT_PROJECT_VERSION: .*/    CURRENT_PROJECT_VERSION: $GITHUB_RUN_NUMBER/" project.yml
           if [ "$ADHOC_WATCH" != "1" ]; then
-            sed -i '' '/^    dependencies:$/{N;/FlashDeckWatch/d;}' project.yml
+            sed -i '' '/^      - target: FlashDeckWatch$/d' project.yml
           fi
           xcodegen generate
       - name: Archive (unsigned — export does the cloud signing)
