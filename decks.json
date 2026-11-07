@@ -15256,6 +15256,36 @@
           "back": "B. Sartorius, gracilis, semitendinosus"
         }
       ]
+    },
+    {
+      "id": "verizon-business-internet-pitch",
+      "name": "Verizon Business Internet Pitch",
+      "cards": [
+        {
+          "front": "Introduction",
+          "back": "CPR; SEE Factors; Hey, how are you today?"
+        },
+        {
+          "front": "Short Story",
+          "back": "My name is Jenna and I'm here with Verizon. We just launched our 5G Business Internet. I'm here to speak to the person who handles the internet. That's you, right?"
+        },
+        {
+          "front": "Qualifying Questions (ETEH)",
+          "back": "A lot of your neighbors have been EXCITED because up to this point Comcast and AT&T have been the only two options. Which one do you use?\n\nOk, what your neighbors have been TELLING me about Comcast/AT&T is that it fluctuates throughout the day and it tends to cut out frequently. I'm assuming that's the same for you, right?\n\nOk, no worries. The biggest thing with Comcast/AT&T is that it is just really EXPENSIVE. What plan are you on?\n\nI've been able to HELP a lot of your neighbors reduce costs while increasing speed and reliability, so go ahead and grab a copy of your bill and we'll take a look real quick."
+        },
+        {
+          "front": "Presentation",
+          "back": "Right now you're on a wired connection, so you're sharing your internet with all your neighbors, which causes slowdowns and fluctuations throughout the day. Instead, I'm going to set you up with a dedicated 5G connection to your business, which will ensure that you don't have any more issues. insert hotspot And I get to do all of that for just $99/month."
+        },
+        {
+          "front": "Hotspots (7)",
+          "back": "speed; 10 year price lock; no long term contracts; unlimited data & no throttling; waive installation fees; free equipment; port number for free"
+        },
+        {
+          "front": "Close",
+          "back": "My job is simple, while I'm out here today I get to guarantee that price, just like I did for Mike down the street. So,\n- What's the best email for you?\n- What's the best phone number for the account?\n- What is your EIN/Tax ID Number?"
+        }
+      ]
     }
   ]
 }
