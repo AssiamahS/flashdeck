@@ -15380,6 +15380,618 @@
           "back": "To finalize the sale by addressing key benefits and incentives."
         }
       ]
+    },
+    {
+      "id": "verizon-sales-training",
+      "name": "Verizon Sales Training (Door-to-Door)",
+      "cards": [
+        {
+          "front": "8 Steps to Success",
+          "back": "1. Great attitude\n2. On time\n3. Prepared\n4. Work full time\n5. Work your territory\n6. Maintain a great attitude\n7. Why are you here?\n8. Take control"
+        },
+        {
+          "front": "5 steps to a conversation",
+          "back": "Introduction, Short Story, Presentation, Close, Rehash"
+        },
+        {
+          "front": "Introduction",
+          "back": "Introducing yourself and beginning the conversation. SEEN Factors"
+        },
+        {
+          "front": "SEEN Factors",
+          "back": "Smile\nEye contact\nEnthusiasm\nNodding (yes snowball)"
+        },
+        {
+          "front": "Short Story",
+          "back": "Keep it short and simple\nDONT keep it long and lengthy"
+        },
+        {
+          "front": "Presentation",
+          "back": "Bulk of convo.\nUnderstand their 3x3s\nCPR Through Fords"
+        },
+        {
+          "front": "3x3s",
+          "back": "Wants, needs, negatives with TV, Internet, and Phone"
+        },
+        {
+          "front": "CPR through FORDS",
+          "back": "create personal relationships through\nfamily, occupations, recreations, dogs, sports"
+        },
+        {
+          "front": "MIMS",
+          "back": "make it make sense\nexplain it easily to customers"
+        },
+        {
+          "front": "Close",
+          "back": "Last part of a sale"
+        },
+        {
+          "front": "ABC's of closing",
+          "back": "Assume the sale\nBe assertive\nClose with confidence"
+        },
+        {
+          "front": "REHASH",
+          "back": "Remember everyone has another sale hidden"
+        },
+        {
+          "front": "Three calls after sale",
+          "back": "Adam with customer service\nTechnician confirming install date\nCompetition trying to lower their current prices"
+        },
+        {
+          "front": "Apps for customers",
+          "back": "My Fios\nFios TV"
+        },
+        {
+          "front": "Mega Center",
+          "back": "main line for anything\n8778715456"
+        },
+        {
+          "front": "CVC",
+          "back": "confirm cvc number while finalizing a sale\n8665154891"
+        },
+        {
+          "front": "Law of Averages",
+          "back": "3 Laps\n60 houses\n30 Talks\n12-15 3x3s\n6-8 presentations\n1-4 sales\nMORE = MORE"
+        },
+        {
+          "front": "Garden Theory Lap 1",
+          "back": "2:30-4:30\nNot a lot of sales"
+        },
+        {
+          "front": "Garden Theory Lap 2",
+          "back": "4:30-6:30\nQuality conversations\nFew more sales"
+        },
+        {
+          "front": "Garden Theory Lap 3",
+          "back": "6:30-8\nMost sales"
+        },
+        {
+          "front": "X / X mbps",
+          "back": "upload speed / download speed\nalways match"
+        },
+        {
+          "front": "Upload speed",
+          "back": "Emails"
+        },
+        {
+          "front": "Download speed",
+          "back": "Streaming"
+        },
+        {
+          "front": "GIG 1000/1000 mbps",
+          "back": "Business class\n$89.99 with ap\nfree router & extender\n325 ft of coverage\nsupports 100 devices\nfree install"
+        },
+        {
+          "front": "500/500 mbps",
+          "back": "$79.99 with ap\n225 ft of coverage\nsupports 50 devices\n$99 install fee"
+        },
+        {
+          "front": "300/300 Mbps",
+          "back": "residential speed\n$49.99 w/autopay\n125 ft of coverage\nsupports 35 devices\n$99 install fee"
+        },
+        {
+          "front": "Router prices",
+          "back": "To buy: $399.99\nTo rent: $18 per month"
+        },
+        {
+          "front": "Extender prices",
+          "back": "To buy: $299.99\nTo rent: $10 per month"
+        },
+        {
+          "front": "Your Fios",
+          "back": "$75\n225 channels (pick 5)\nNo DVR credit"
+        },
+        {
+          "front": "More Fios",
+          "back": "$99\n425 channels\nDVR $12 credit\n1st cable box free"
+        },
+        {
+          "front": "Most Fios",
+          "back": "$119\n625 channels\nDVR $20 credit\n1st cable box free\nPremium channels"
+        },
+        {
+          "front": "Premium channels",
+          "back": "Sportspass\nShowtime\nEpix / MGM\nStarz\nEncore"
+        },
+        {
+          "front": "Moving Channel Pricing",
+          "back": "1- $15\n2- $25\n3- $30\n4- $40 (max price)"
+        },
+        {
+          "front": "Test Drive",
+          "back": "2 month on MOST then move to YOUR\nVerizon will pick if customer doesn't, won't pick YOUR\n$75\nAnalysis & easy sign up"
+        },
+        {
+          "front": "Cable box pricing",
+          "back": "(Each)\n1- free\n2- $12\n3- $12\n4- $6\n5- $6\n6- $6\n7+ - free"
+        },
+        {
+          "front": "Home phone",
+          "back": "$25\nFree calling to 11 international countries\n1 calling of choice\n25 per month for 1\n10 for each extra"
+        },
+        {
+          "front": "DVR Standard",
+          "back": "1 box- $12 a month\nRecords two shows at once\n50 hours"
+        },
+        {
+          "front": "DVR Multiroom Enhanced",
+          "back": "1-6 boxes- $20 a month\n100 hrs (one terabyte)\nRecords 6 shows at once"
+        },
+        {
+          "front": "DVR Multiroom Premium",
+          "back": "2-10 boxes- $30 a month\n200 hrs (2 terabytes)\n12 shows at once"
+        },
+        {
+          "front": "DVR Credit",
+          "back": "Applied to the DVR price, customer pays difference"
+        }
+      ]
+    },
+    {
+      "id": "verizon-sales-objections",
+      "name": "Verizon Sales Objections",
+      "cards": [
+        {
+          "front": "Customer won't upgrade other lines because other people aren't physically present in the store.",
+          "back": "- customer will miss out on today's great promos\n- people do not need to be in store to have their phones upgraded\n- \"I can give a 20 dollar discount on in store fees for 3+ lines\"\n\nthese create urgency"
+        },
+        {
+          "front": "Customer needs to talk with their spouse about trying Verizon Home Internet",
+          "back": "\"Luckily we have a special deal today where you can try the WiFi for 30 days and if doesn't work for you, you will not be billed\"\n- physically get the box and put it in front of them to explain how it works"
+        },
+        {
+          "front": "Customer wants to wait to upgrade their phone because \"it works fine\"",
+          "back": "Tell the customer that if they wait to upgrade they risk loosing hundreds of dollars in promotional value. \"Expensive not to upgrade\""
+        },
+        {
+          "front": "Customer doesn't want VMP",
+          "back": "Create fear and explain how VMP works and tell them how bad it will be if something happens to their phone."
+        },
+        {
+          "front": "Customer doesn't have perks",
+          "back": "Ask them if they have any streaming services currently. Act surprised that they haven't got the streaming discounts that they are entitled to because they are Verizon customers"
+        },
+        {
+          "front": "Pitching VHI",
+          "back": "Ask the customer if the address on file is current. Ask them who they use for internet. Tell them about how fast and cheap our internet is. *Cox internet customers should be easiest because we are cheaper and faster"
+        },
+        {
+          "front": "Pitching VHI but customer has cox cable bundle",
+          "back": "Let them know that pairing our VHI with something like YouTube TV will save them a ton of money. Cox cable bundles are predatory towards old people and mostly a scam"
+        },
+        {
+          "front": "Customer says Verizon plans are too expensive",
+          "back": "Explain to customer that Verizon is a \"premium carrier\" compared to companies like T-mobile and cricket. This creates value"
+        },
+        {
+          "front": "Pushing for internet when upgrading phones",
+          "back": "Tell customer that we have a special deal today where you can take off some in store fees on the phones when you try our 30 day internet trial. *physically get internet box and put it in front of customer"
+        },
+        {
+          "front": "Ways to get BYOD plus",
+          "back": "Any no trade promotion on the customers account can free up their old phone for the BYOD plus. Tell the customer that instead of trading in their phone, we are going to add the phone as a free line as part of the promotion."
+        },
+        {
+          "front": "Customer says that they don't need extra line for BYOD plus",
+          "back": "Tell them that most customers just throw the phone in a drawer but it is worth it for the promotion."
+        },
+        {
+          "front": "Two key things to emphasize when pitching anything.",
+          "back": "Value and Urgency"
+        },
+        {
+          "front": "Customer wants to make bill \"cheaper\"",
+          "back": "Everything that you take away from their account, fully communicate the value that they are loosing. Try pitching VHI and perks to make their \"overall bills\" cheaper"
+        },
+        {
+          "front": "Customer comes in for phone case",
+          "back": "\"Let me pull up your account so that I can see the exact dimensions\""
+        }
+      ]
+    },
+    {
+      "id": "victra-sandler-sales",
+      "name": "Victra Sandler Sales Process",
+      "cards": [
+        {
+          "front": "Features",
+          "back": "Victra offers Verizon's full suite of wireless products and services, including smartphones, tablets, smartwatches, mobile broadband, and accessories."
+        },
+        {
+          "front": "Pricing",
+          "back": "Victra generally mirrors Verizon's standard pricing, though specific promotions and deals may vary by location."
+        },
+        {
+          "front": "Current Verizon plans",
+          "back": "Include Simplicity at $45/line (promotional $30 for switchers) and Verizon One bundling mobile and home internet for $70/month."
+        },
+        {
+          "front": "Discounts",
+          "back": "Verizon offers discounts for military, first responders, students, and nurses."
+        },
+        {
+          "front": "Problems it solves",
+          "back": "Victra addresses the need for accessible, in-person wireless retail services."
+        },
+        {
+          "front": "Service",
+          "back": "Victra operates over 1,800 Verizon-branded stores across all 50 states."
+        },
+        {
+          "front": "In-store services",
+          "back": "Include device sales and activations, plan changes, bill payments, trade-ins, tech support, home internet setup, and business solutions."
+        },
+        {
+          "front": "Competition",
+          "back": "Victra competes with other Verizon authorized retailers, corporate Verizon stores, and retailers for competing carriers like AT&T and T-Mobile."
+        },
+        {
+          "front": "Use cases",
+          "back": "Victra serves everyday consumers purchasing or upgrading phones, adding lines, or setting up home internet."
+        },
+        {
+          "front": "Overall value equation",
+          "back": "Victra's value proposition centers on convenient in-person access to Verizon's network and products with personalized service from trained staff."
+        },
+        {
+          "front": "Presence",
+          "back": "A critical skill that includes dress, handshake, grooming, hygiene, body language, posture, jewelry, tattoos, piercings, being on time, preparation, attention to detail, positivity, capability, humility, and authenticity."
+        },
+        {
+          "front": "Building Rapport",
+          "back": "A critical skill in establishing a connection with customers."
+        },
+        {
+          "front": "Questioning",
+          "back": "A critical skill used to gather information from customers."
+        },
+        {
+          "front": "Listening",
+          "back": "A critical skill that involves actively understanding customer needs."
+        },
+        {
+          "front": "Product Positioning",
+          "back": "A critical skill that involves presenting products in a way that meets customer needs."
+        },
+        {
+          "front": "Checking",
+          "back": "A critical skill to ensure understanding and agreement."
+        },
+        {
+          "front": "7 step Sandler process",
+          "back": "Includes bonding and rapport, upfront contracts, pain, budget, decision, fulfillment, and post-sell."
+        },
+        {
+          "front": "Upfront contract",
+          "back": "A process that includes appreciation, agreement on time, meeting objectives, prospect agenda, seller agenda, agreement on 'no', agreement on 'yes', and next steps."
+        },
+        {
+          "front": "6 step process",
+          "back": "Includes opening, customer needs, product positioning, objections, close/action step, and follow up."
+        },
+        {
+          "front": "Pain Funnel",
+          "back": "Stages include problem identification, cost implications, and emotional impact."
+        }
+      ]
+    },
+    {
+      "id": "verizon-fios-sales-training",
+      "name": "Verizon Fios Sales Training",
+      "cards": [
+        {
+          "front": "What is the first step to success according to the 8 Steps to Success?",
+          "back": "Have a positive attitude."
+        },
+        {
+          "front": "Why is being on time important for success?",
+          "back": "It sets an example and allows time to achieve goals."
+        },
+        {
+          "front": "What does it mean to be prepared in the context of success?",
+          "back": "Being ready for success, both physically and mentally, and having contingency plans."
+        },
+        {
+          "front": "What is emphasized in Step 4 of the 8 Steps to Success?",
+          "back": "Work your full day and put 100% into everything you do."
+        },
+        {
+          "front": "What does 'manage your T = time/territory' mean?",
+          "back": "Work the territory correctly and don't prejudge potential buyers."
+        },
+        {
+          "front": "How should you maintain your positive attitude?",
+          "back": "Safeguard your attitude and remember that each 'no' brings you closer to a 'yes'."
+        },
+        {
+          "front": "What is the significance of knowing your 'why'?",
+          "back": "It helps define your purpose and set both short-term and long-term goals."
+        },
+        {
+          "front": "What does it mean to take control in the sales process?",
+          "back": "Take control of your customers and your situation to influence outcomes."
+        },
+        {
+          "front": "What are the 5 Steps to a Conversation?",
+          "back": "Introduction, Short Story, Presentation, Close, Rehash."
+        },
+        {
+          "front": "What is the purpose of the introduction in a conversation?",
+          "back": "To create a positive first impression through factors like smile, eye contact, and enthusiasm."
+        },
+        {
+          "front": "What does K.I.S.S. stand for in the Short Story step?",
+          "back": "Keep it Short and Simple."
+        },
+        {
+          "front": "What is the goal of the Presentation step?",
+          "back": "Provide information about the product and build impulse."
+        },
+        {
+          "front": "What does 'Assume the Sale' mean in the Close step?",
+          "back": "Approach the close with confidence as if the customer is ready to buy."
+        },
+        {
+          "front": "What is the purpose of the Rehash step?",
+          "back": "Review the order and explain the installation process to avoid buyer's remorse."
+        },
+        {
+          "front": "What are the advantages of Fiber Optics over copper technology?",
+          "back": "Newer technology, less susceptible to weather, dedicated lines, and future-proof."
+        },
+        {
+          "front": "What is a key difference in internet speed guarantees between Fios and competition?",
+          "back": "Fios guarantees consistent speeds, while competitors state 'up to' certain speeds."
+        },
+        {
+          "front": "What is the A.I.R. approach to overturning objections?",
+          "back": "Acknowledge, Ignore, Resume."
+        },
+        {
+          "front": "What does the 'A' in A.I.R. stand for?",
+          "back": "Acknowledge the customer's concern."
+        },
+        {
+          "front": "What does the 'I' in A.I.R. represent?",
+          "back": "Ignore the objection and continue the pitch."
+        },
+        {
+          "front": "What does the 'R' in A.I.R. mean?",
+          "back": "Resume where you left off in the conversation."
+        },
+        {
+          "front": "What is the Garden Theory in sales?",
+          "back": "It describes the types of people encountered in the field and assures there is always money to be made."
+        },
+        {
+          "front": "What is the primary objective of LAP 1?",
+          "back": "Weeding out unqualified leads."
+        },
+        {
+          "front": "Who are considered the most unqualified leads in LAP 1?",
+          "back": "Work/stay at home individuals, 3rd shift workers, retirees, and kids/sitters."
+        },
+        {
+          "front": "What is the time frame for LAP 1?",
+          "back": "2:00 PM to 4:30 PM."
+        },
+        {
+          "front": "What is the focus of LAP 2?",
+          "back": "Planting seeds with some qualified leads."
+        },
+        {
+          "front": "Which types of workers are included in LAP 2?",
+          "back": "First shift workers, typical 9 to 5 workers, and odd shift workers."
+        },
+        {
+          "front": "What is the time frame for LAP 2?",
+          "back": "4:30 PM to 6:30 PM."
+        },
+        {
+          "front": "What is the main goal of LAP 3?",
+          "back": "Harvesting or closing sales with mostly qualified leads."
+        },
+        {
+          "front": "What types of individuals are included in LAP 3?",
+          "back": "Business owners, 2nd shift workers, and whole families."
+        },
+        {
+          "front": "What is the time frame for LAP 3?",
+          "back": "6:30 PM to 8:00 PM."
+        },
+        {
+          "front": "What is the significance of the 'Features vs Benefits' concept?",
+          "back": "Features tell what a product does, while benefits show how it helps the customer."
+        },
+        {
+          "front": "What is one benefit of the Fiber Optic Network service?",
+          "back": "99.9% reliability and guaranteed speeds that are not weather affected."
+        },
+        {
+          "front": "What does the Quantum Enhanced DVR allow users to do?",
+          "back": "Record up to 6 shows at once and store 100 HD hours."
+        },
+        {
+          "front": "What is the maximum storage capacity of the Quantum Premium DVR?",
+          "back": "200 HD hours and can record up to 12 shows at once."
+        },
+        {
+          "front": "What is the purpose of the My Fios App?",
+          "back": "To provide parental controls, run speed tests, and access customer service."
+        },
+        {
+          "front": "What is the price for the 2 Gig internet package?",
+          "back": "$109.99 with autopay."
+        },
+        {
+          "front": "What is the one-time fee for installation of Fios services?",
+          "back": "$99."
+        },
+        {
+          "front": "What discounts are available for military and first responders?",
+          "back": "$10 off for each service."
+        },
+        {
+          "front": "What does the term 'A.R.B.C.' stand for in sales training?",
+          "back": "Acknowledge, Relate, Bullet, Continue."
+        },
+        {
+          "front": "What does 'Acknowledge' mean in the A.R.B.C. approach?",
+          "back": "To recognize the customer's concern or objection."
+        },
+        {
+          "front": "What is the purpose of the 'Bullet' step in A.R.B.C.?",
+          "back": "To counter the customer's objections with positive information."
+        },
+        {
+          "front": "What behaviors indicate a 'Walk Away' customer?",
+          "back": "Won't give info, always making excuses, and always asking for price."
+        },
+        {
+          "front": "What is the goal with every sale according to the training?",
+          "back": "To get the customer installed."
+        },
+        {
+          "front": "What is the recommended approach for closing a sale?",
+          "back": "Use alternative close options (Yes or Yes)."
+        },
+        {
+          "front": "What is the coverage range of the Whole Home Router?",
+          "back": "325 ft, approximately the length of a football field."
+        },
+        {
+          "front": "What is the benefit of having a Gigabit internet connection?",
+          "back": "Connects up to 100 devices at once without lagging."
+        },
+        {
+          "front": "What is a key feature of the Fios TV App?",
+          "back": "Allows users to watch TV on their phone and set DVR recordings."
+        },
+        {
+          "front": "What is the first step in the 'Either / or - Top down sell' technique?",
+          "back": "Discuss package"
+        },
+        {
+          "front": "What should you say after dropping the price during a sale?",
+          "back": "A lot of your neighbors are getting installed in the next few days, would you prefer mornings or afternoons?"
+        },
+        {
+          "front": "What does the Assumptive Close technique emphasize?",
+          "back": "Confidence, taking control, and commanding the conversation."
+        },
+        {
+          "front": "How can you create a sense of urgency during a sales pitch?",
+          "back": "By looking at your watch, using body language, and stating that deals leave with you."
+        },
+        {
+          "front": "What is the Fear of Loss factor in sales?",
+          "back": "Making the customer think they will lose their chance if they don't act immediately."
+        },
+        {
+          "front": "What is the Greed/Jones Effect?",
+          "back": "The tendency for people to buy when they know they will get something for free or when they see others qualifying for deals."
+        },
+        {
+          "front": "What does the Indifference factor entail in sales?",
+          "back": "Acting as if you don't care whether the customer makes a purchase or not."
+        },
+        {
+          "front": "What is the White Glove Policy?",
+          "back": "90% of the work is done outside the home, and only 10% is done inside."
+        },
+        {
+          "front": "How long is the price lock for the gig package?",
+          "back": "A minimum of 4 years."
+        },
+        {
+          "front": "What is the process for keeping your phone number when switching to Verizon?",
+          "back": "The port over process."
+        },
+        {
+          "front": "What is the maximum duration for suspending service for snowbirds?",
+          "back": "Nine months."
+        },
+        {
+          "front": "What is the minimum service suspension period for Verizon?",
+          "back": "30 days."
+        },
+        {
+          "front": "What is the discount amount for qualified Lifeline and Verizon Forward customers?",
+          "back": "Up to $30 off their internet service for six months."
+        },
+        {
+          "front": "What is required to qualify for Verizon Forward?",
+          "back": "Household income at or below 135% of the Federal Poverty Guidelines or participation in specific assistance programs."
+        },
+        {
+          "front": "What should you do to ensure the Verizon Forward discount appears on your bill?",
+          "back": "Apply the discount promptly to ensure it appears within 1-2 billing cycles."
+        },
+        {
+          "front": "When is the first bill due after installation?",
+          "back": "About 25 days after installation."
+        },
+        {
+          "front": "What should you say if a customer is hesitant during a sales pitch?",
+          "back": "Walk away and let them know you can be around if they have questions."
+        },
+        {
+          "front": "What does the acronym F.O.R.D.S stand for in building rapport?",
+          "back": "Family, Occupation, Recreation, Dreams, and Stories."
+        },
+        {
+          "front": "What is the purpose of the S.T.O.P. SIGNS technique?",
+          "back": "To encourage sales representatives to engage customers effectively by asking questions and building rapport."
+        },
+        {
+          "front": "What is the importance of body language in sales?",
+          "back": "It helps convey confidence and urgency, influencing the customer's decision."
+        },
+        {
+          "front": "What is the key phrase to memorize when stating the price?",
+          "back": "After taxes and fees, the price will ONLY be 89.99."
+        },
+        {
+          "front": "What is the typical response to a customer asking if Verizon provides home security?",
+          "back": "No, but SimpliSafe is recommended for about $20 per month."
+        },
+        {
+          "front": "What should you do before performing a credit check?",
+          "back": "Verify the customer's identity and ensure no existing accounts are in their name."
+        },
+        {
+          "front": "What is the role of positive body language in sales?",
+          "back": "It helps create a welcoming atmosphere and encourages customer engagement."
+        },
+        {
+          "front": "How can you utilize the 'Yes' Man technique?",
+          "back": "Encourage agreement by framing questions positively to build rapport."
+        },
+        {
+          "front": "What should you do to build value in yourself as a salesperson?",
+          "back": "Be confident and present yourself as an expert."
+        }
+      ]
     }
   ]
 }
