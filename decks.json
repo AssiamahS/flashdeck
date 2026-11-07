@@ -15992,6 +15992,162 @@
           "back": "Be confident and present yourself as an expert."
         }
       ]
+    },
+    {
+      "id": "verizon-sales-quiz",
+      "name": "Verizon Sales Quiz",
+      "cards": [
+        {
+          "front": "Customer says they need to talk to their spouse before trying home internet. Best move?\nA. Ask for the spouse's number\nB. Offer the 30-day trial, no bill if it fails\nC. Leave a flyer and come back\nD. Lower the price on the spot",
+          "back": "B. Offer the 30-day trial, no bill if it fails",
+          "why": "The 30-day trial removes the risk, so there's nothing to wait on. Put the box in front of them."
+        },
+        {
+          "front": "Customer won't upgrade because their phone 'works fine.' What do you say?\nA. Offer a free case\nB. It's expensive NOT to upgrade today\nC. Tell them the phone is outdated\nD. Agree and walk away",
+          "back": "B. It's expensive NOT to upgrade today",
+          "why": "Waiting risks losing hundreds in promo value. Frame it as a cost of waiting."
+        },
+        {
+          "front": "Two things to stress in EVERY pitch:\nA. Value and urgency\nB. Price and speed\nC. Brand and coverage\nD. Features and contracts",
+          "back": "A. Value and urgency",
+          "why": "Value makes them want it; urgency makes them buy today."
+        },
+        {
+          "front": "Customer says Verizon plans are too expensive. How do you respond?\nA. Agree and suggest Cricket\nB. Position Verizon as the premium carrier\nC. Match T-Mobile's price\nD. Drop their lines",
+          "back": "B. Position Verizon as the premium carrier",
+          "why": "Compare to T-Mobile/Cricket as premium vs budget. That builds value instead of cutting price."
+        },
+        {
+          "front": "Customer wants a cheaper bill. What do you do?\nA. Tell them it can't go lower\nB. Remove lines right away\nC. Show the value they lose + pitch internet\nD. Switch them to prepaid",
+          "back": "C. Show the value they lose + pitch internet",
+          "why": "Communicate what they lose with every cut, then lower the OVERALL bill by adding home internet and perks."
+        },
+        {
+          "front": "Customer has no streaming perks yet. Best approach?\nA. Charge them for a perk\nB. Tell them perks are a scam\nC. Skip it, not important\nD. Ask what they stream, act surprised",
+          "back": "D. Ask what they stream, act surprised",
+          "why": "Ask what services they pay for and show the discount they're entitled to as a Verizon customer."
+        },
+        {
+          "front": "Customer comes in just for a phone case. Best opener?\nA. Let me pull up your account for the size\nB. Ring them up fast\nC. Ask if they want insurance\nD. Point to the case wall",
+          "back": "A. Let me pull up your account for the size",
+          "why": "Pulling up the account opens the door to upgrades, perks and internet."
+        },
+        {
+          "front": "Customer has a Cox cable bundle. How do you pitch home internet?\nA. Tell them to call Cox\nB. Don't pitch, they're locked in\nC. Offer Fios TV only\nD. Pair our internet with YouTube TV to save",
+          "back": "D. Pair our internet with YouTube TV to save",
+          "why": "Home internet plus a streaming TV service beats a cable bundle on price."
+        },
+        {
+          "front": "Other family lines aren't in the store. Can they still upgrade?\nA. Yes, they don't need to be there\nB. Only with an appointment\nC. No, everyone must be present\nD. Only online",
+          "back": "A. Yes, they don't need to be there",
+          "why": "People don't need to be in store. Mention today's promo and the in-store fee discount for 3+ lines."
+        },
+        {
+          "front": "What does BYOD Plus do with a phone freed up by a no-trade promo?\nA. Adds it as a free line\nB. Sells it back\nC. Trades it for credit\nD. Recycles it",
+          "back": "A. Adds it as a free line",
+          "why": "Instead of trading it in, the old phone becomes a free line as part of the promotion."
+        },
+        {
+          "front": "Customer doesn't want Verizon Mobile Protect (VMP). Best move?\nA. Offer a discount on it\nB. Drop it immediately\nC. Explain what happens if the phone breaks\nD. Add it without asking",
+          "back": "C. Explain what happens if the phone breaks",
+          "why": "Show the real cost of a cracked or lost phone without coverage."
+        },
+        {
+          "front": "In the business internet pitch, what does ETEH stand for?\nA. Engage, Talk, Explain, Hook\nB. Excited, Telling, Expensive, Help\nC. Easy, Trusted, Effective, Honest\nD. Explain, Test, Engage, Hold",
+          "back": "B. Excited, Telling, Expensive, Help",
+          "why": "Excited (neighbors), Telling (what neighbors say), Expensive (their plan), Help (lower costs)."
+        },
+        {
+          "front": "Business 5G internet price in the pitch?\nA. $129/month\nB. $99/month\nC. $49/month\nD. $79/month",
+          "back": "B. $99/month",
+          "why": "Dedicated 5G connection to the business for $99/month."
+        },
+        {
+          "front": "How long is the price lock in the business internet pitch?\nA. 3 years\nB. 10 years\nC. 1 year\nD. 5 years",
+          "back": "B. 10 years",
+          "why": "One of the 7 hotspots: a 10-year price lock."
+        },
+        {
+          "front": "Why is wired Comcast/AT&T internet slower per the pitch?\nA. It's shared with neighbors\nB. Data caps\nC. Bad weather\nD. Old routers",
+          "back": "A. It's shared with neighbors",
+          "why": "A wired connection is shared with the neighbors, so it slows down and fluctuates."
+        },
+        {
+          "front": "What three things do you collect at the close of the business pitch?\nA. Email, phone, EIN/Tax ID\nB. Name, address, card\nC. SSN, DOB, email\nD. Bill, ID, card",
+          "back": "A. Email, phone, EIN/Tax ID",
+          "why": "Best email, best phone number for the account, and the EIN/Tax ID."
+        },
+        {
+          "front": "What are the 5 steps to a conversation, in order?\nA. Intro, Story, Presentation, Close, Rehash\nB. Greet, Qualify, Pitch, Close, Thank\nC. Hook, Pitch, Close, Follow-up, Rehash\nD. Intro, Presentation, Story, Close, Rehash",
+          "back": "A. Intro, Story, Presentation, Close, Rehash",
+          "why": "Introduction, Short Story, Presentation, Close, Rehash."
+        },
+        {
+          "front": "What do the SEEN factors stand for?\nA. Smile, Energy, Empathy, Nerve\nB. Smile, Eye contact, Enthusiasm, Nodding\nC. Speak, Explain, Engage, Note\nD. Sell, Earn, Excite, Negotiate",
+          "back": "B. Smile, Eye contact, Enthusiasm, Nodding",
+          "why": "Nodding starts the 'yes snowball.'"
+        },
+        {
+          "front": "What does CPR through FORDS mean?\nA. Check price, review, decide\nB. Close, Pitch, Rehash\nC. Call, Pitch, Repeat\nD. Build rapport via family, job, hobbies...",
+          "back": "D. Build rapport via family, job, hobbies...",
+          "why": "Create Personal Relationships through Family, Occupation, Recreation, Dogs, Sports."
+        },
+        {
+          "front": "What are the ABCs of closing?\nA. Agree, Bargain, Close\nB. Assume, Be assertive, Close confident\nC. Ask, Build, Commit\nD. Always Be Closing",
+          "back": "B. Assume, Be assertive, Close confident",
+          "why": "Assume the sale, Be assertive, Close with confidence."
+        },
+        {
+          "front": "What does REHASH remind you?\nA. Repeat the price\nB. Re-check the paperwork\nC. Everyone has another sale hidden\nD. Restate objections",
+          "back": "C. Everyone has another sale hidden",
+          "why": "Remember Everyone Has Another Sale Hidden: ask for referrals and add-ons."
+        },
+        {
+          "front": "What does MIMS mean?\nA. Maximize income, minimize spend\nB. Make it make sense\nC. Meet in middle, settle\nD. Mention internet, mobile, streaming",
+          "back": "B. Make it make sense",
+          "why": "Explain it simply so the customer gets it."
+        },
+        {
+          "front": "What are the 3x3s in the presentation?\nA. 3 laps of 3 streets\nB. 3 calls, 3 visits, 3 offers\nC. 3 plans at 3 prices\nD. Wants, needs, negatives for TV/Net/Phone",
+          "back": "D. Wants, needs, negatives for TV/Net/Phone",
+          "why": "Find wants, needs and negatives for TV, Internet and Phone."
+        },
+        {
+          "front": "Which lap usually has the most sales (Garden Theory)?\nA. Lap 3 (6:30-8)\nB. Lap 1 (2:30-4:30)\nC. All the same\nD. Lap 2 (4:30-6:30)",
+          "back": "A. Lap 3 (6:30-8)",
+          "why": "Lap 3 in the evening when people are home has the most sales."
+        },
+        {
+          "front": "Law of Averages: about how many houses per day?\nA. 60\nB. 20\nC. 40\nD. 100",
+          "back": "A. 60",
+          "why": "3 laps, 60 houses, 30 talks, 12-15 3x3s, 6-8 presentations, 1-4 sales. More = more."
+        },
+        {
+          "front": "Download speed matters most for:\nA. Texting\nB. Streaming\nC. Phone calls\nD. Emails",
+          "back": "B. Streaming",
+          "why": "Download = streaming; upload = sending (emails, video calls)."
+        },
+        {
+          "front": "Fios upload and download speeds are:\nA. Download much faster\nB. Always matched\nC. Random\nD. Upload much faster",
+          "back": "B. Always matched",
+          "why": "Fiber is symmetrical: e.g. 1000/1000 Mbps."
+        },
+        {
+          "front": "Main difference between Fios and Xfinity in the pitch?\nA. Fios is cheaper TV\nB. Private fiber line straight to the home\nC. Xfinity has no contracts\nD. Fios is wireless",
+          "back": "B. Private fiber line straight to the home",
+          "why": "Xfinity is a shared network; Fios is a private fiber line, so speeds stay fast."
+        },
+        {
+          "front": "How do you prove speed to a Fios prospect?\nA. Quote the Mbps\nB. Have them run a speed test\nC. Call support\nD. Show a brochure",
+          "back": "B. Have them run a speed test",
+          "why": "Ask them to run a speed test on google.com and compare."
+        },
+        {
+          "front": "What fee can be waived in the Fios pitch?\nA. $100 install fee\nB. Router rental\nC. First month\nD. Activation on phones",
+          "back": "A. $100 install fee",
+          "why": "Waiving the $100 install fee is a key closing incentive."
+        }
+      ]
     }
   ]
 }
