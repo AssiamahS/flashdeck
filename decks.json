@@ -15286,6 +15286,100 @@
           "back": "My job is simple, while I'm out here today I get to guarantee that price, just like I did for Mike down the street. So,\n- What's the best email for you?\n- What's the best phone number for the account?\n- What is your EIN/Tax ID Number?"
         }
       ]
+    },
+    {
+      "id": "verizon-fios-sales-pitch",
+      "name": "Verizon Fios Sales Pitch",
+      "cards": [
+        {
+          "front": "What is the purpose of the Verizon Fios pitch?",
+          "back": "To offer customized internet and TV packages to customers."
+        },
+        {
+          "front": "What type of lines has Verizon recently updated?",
+          "back": "Fiber optic lines."
+        },
+        {
+          "front": "What is a common complaint from Xfinity customers?",
+          "back": "Declining quality of service or increasing prices."
+        },
+        {
+          "front": "What question should you ask to qualify a customer?",
+          "back": "How much are they charging you for TV and Internet?"
+        },
+        {
+          "front": "What should you ask if the customer has TV service?",
+          "back": "What are your favorite channels to watch? Any premiums?"
+        },
+        {
+          "front": "What is the main difference between Verizon and Xfinity's service?",
+          "back": "Verizon runs a private fiber optic line straight to the home, ensuring faster speeds."
+        },
+        {
+          "front": "What should you do to demonstrate internet speed?",
+          "back": "Ask the customer to run a speed test on google.com."
+        },
+        {
+          "front": "What does a shared network mean for Xfinity customers?",
+          "back": "They are competing for internet speed with their neighbors."
+        },
+        {
+          "front": "What internet package is recommended for customers who need high speed?",
+          "back": "Gigabit Internet connection."
+        },
+        {
+          "front": "What can be waived for customers during the sales pitch?",
+          "back": "$100 install fee."
+        },
+        {
+          "front": "What is the first bill due date after installation?",
+          "back": "2-3 weeks after install."
+        },
+        {
+          "front": "What should you do at the end of the pitch?",
+          "back": "Secure the price and any extra incentives."
+        },
+        {
+          "front": "What is an effective way to start the conversation?",
+          "back": "Use an icebreaker, such as a compliment and a question."
+        },
+        {
+          "front": "What is the significance of knowing the customer's internet usage?",
+          "back": "It helps customize the package to their needs."
+        },
+        {
+          "front": "What should you ask about the customer's cell phone carrier?",
+          "back": "Who do you use for your cell phone carrier and how much are they charging?"
+        },
+        {
+          "front": "What is a good follow-up question regarding internet issues?",
+          "back": "What do you do when you experience lagging or slowdowns?"
+        },
+        {
+          "front": "What should you confirm about the customer's phones?",
+          "back": "Are your phones paid off?"
+        },
+        {
+          "front": "What is the goal of the 'Pre-Close' section?",
+          "back": "To present the best TV and internet package options based on customer needs."
+        },
+        {
+          "front": "What is the main goal of the presentation?",
+          "back": "To customize a package that makes sense for the customer."
+        },
+        {
+          "front": "What should you do if the customer has gamers in the house?",
+          "back": "Ask about their experience with lagging or slowdowns."
+        },
+        {
+          "front": "What is the importance of knowing the customer's favorite channels?",
+          "back": "It helps tailor the TV package to their preferences."
+        },
+        {
+          "front": "What is the significance of the '4 Points to Close'?",
+          "back": "To finalize the sale by addressing key benefits and incentives."
+        }
+      ]
     }
   ]
 }
