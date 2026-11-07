@@ -16146,6 +16146,10 @@
           "front": "What fee can be waived in the Fios pitch?\nA. $100 install fee\nB. Router rental\nC. First month\nD. Activation on phones",
           "back": "A. $100 install fee",
           "why": "Waiving the $100 install fee is a key closing incentive."
+        },
+        {
+          "front": "Customer says they need to talk to their spouse before trying home internet. Best move?\nA. x\nB. y",
+          "back": "B. y"
         }
       ]
     }
