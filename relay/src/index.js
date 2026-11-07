@@ -10,6 +10,8 @@
 // /explain is the practice test's "Ask" box: a follow-up question about the
 // card on screen, answered by Workers AI (no Mac needed).
 
+import { mcp } from './mcp.js';
+
 const ORIGINS = ['https://assiamahs.github.io', 'http://localhost:8931', 'http://127.0.0.1:8931'];
 const TIMEOUT_MS = 45000;
 const MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
@@ -78,6 +80,10 @@ export default {
     if (pathname === '/agent') {
       if (new URL(req.url).searchParams.get('key') !== env.AGENT_KEY) return new Response('forbidden', { status: 403 });
       return hub.fetch(req);
+    }
+    if (pathname.startsWith('/mcp/')) {
+      if (!env.MCP_KEY || pathname !== `/mcp/${env.MCP_KEY}`) return new Response('forbidden', { status: 403 });
+      return mcp(req, env, { hub, setId });
     }
     if (pathname === '/explain' && req.method === 'POST') return explain(req, env);
     if (pathname === '/health') {
