@@ -25,6 +25,18 @@ enum WidgetDecks {
               let file = try? JSONDecoder().decode(DeckFile.self, from: data) else { return [] }
         return file.decks
     }
+
+    /// Cache-first: tapping a Lock Screen widget reloads its timeline, and re-downloading
+    /// 1.5 MB of decks.json on every tap would make the flip feel broken.
+    static func loadCached(maxAge: TimeInterval = 6 * 3600) async -> [Deck] {
+        let modified = (try? cacheFile.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate
+        if let modified, Date.now.timeIntervalSince(modified) < maxAge,
+           let data = try? Data(contentsOf: cacheFile),
+           let file = try? JSONDecoder().decode(DeckFile.self, from: data) {
+            return file.decks
+        }
+        return await load()
+    }
 }
 
 // MARK: - Configuration: which practice test
@@ -359,5 +371,6 @@ struct QuizWidget: Widget {
 struct FlashDeckWidgets: WidgetBundle {
     var body: some Widget {
         QuizWidget()
+        CardWidget()
     }
 }

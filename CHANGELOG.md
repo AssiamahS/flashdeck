@@ -3,6 +3,21 @@
 All notable changes to Flash Deck. Versions are git tags; every change that
 alters behavior gets an entry here plus a worked/didn't note in docs/LOG.md.
 
+## v0.18.0 — 2026-11-11
+
+Lock Screen flash card widget (iPhone 1.13.0).
+
+- New widget "Flash Card" for the Lock Screen (rectangular + inline) and the
+  Home Screen (small): one card's question, swapping to a new card every
+  15 minutes.
+- Tap it → the answer. Tap again → the next card.
+- Long-press → Edit Widget → pick a deck (default: all decks). Only text cards
+  short enough for the Lock Screen are used (question ≤ 140, answer ≤ 220,
+  no image/video): 602 cards across 21 of 23 decks.
+- Lives in the same widget extension as the Practice Test widget and reads the
+  same cached decks.json, cache-first (6 h) so a tap flips instantly instead of
+  re-downloading 1.5 MB.
+
 ## v0.17.0 — 2026-10-28
 
 Practice-test widget + in-app updates (iPhone 1.12.0).

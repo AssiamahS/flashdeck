@@ -3,6 +3,13 @@
 Running record so we can see what moved the needle. Newest first.
 Format: date · tried · result · verdict.
 
+## 2026-11-11 · v0.18.0 — lock screen flash card widget
+
+| Tried | Result | Verdict |
+| --- | --- | --- |
+| Card filter: text only, front ≤ 140, back ≤ 220 | 602 / 2556 cards, 21 / 23 decks (Security+ decks mostly too long: dump 18/532) | ✅ |
+| Network fetch of decks.json on every timeline reload | every tap on an interactive widget reloads the timeline → 1.5 MB download per flip | ❌ → `WidgetDecks.loadCached` (6 h, cache-first) |
+
 ## 2026-10-28 · v0.17.0 — practice-test widget
 
 | Tried | Result | Verdict |
